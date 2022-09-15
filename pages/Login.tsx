@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import { Input } from "@rneui/themed";
-import { Button } from "@rneui/themed";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
 import LogoTitle from "../component/LogoTitle";
+// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  function logInHandler() {
+    console.log("로그인 실행");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,21 +30,7 @@ export default function Login({ navigation }: any) {
         value={password}
       />
       <View style={styles.div} />
-      <Button
-        containerStyle={{
-          width: "80%",
-        }}
-        buttonStyle={{
-          backgroundColor: basic_theme.buttoncolor,
-          borderColor: "white",
-          borderRadius: 10,
-        }}
-        titleStyle={{
-          fontWeight: "bold",
-          fontSize: 20,
-        }}
-        title="로그인"
-      />
+      <PrimaryButton onPress={logInHandler}>로그인</PrimaryButton>
       <View>
         <Text style={styles.text}>
           {"아이디가 없으면? "}

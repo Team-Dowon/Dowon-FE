@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Button, Card } from "@rneui/themed";
+import { Card } from "@rneui/themed";
 import { basic_theme } from "../theme";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 type Posttype = {
   username: string;
