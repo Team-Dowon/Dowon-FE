@@ -2,7 +2,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 
 /* props.children으로 접근 안해도 들어오는 props 객체에서 children 프로퍼티를 추출할 수 있음 
 자고로 children이란 특정 컴포넌트 사이에 있는 컴포넌트(값)를 받아올 수 있음*/
-function PrimaryButton({ children, onPress }) {
+function PrimaryButton({ children, onPress }: any) {
   return (
     <View style={styles.buttonOuterContainer}>
       <Pressable

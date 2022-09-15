@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button, ListItem } from "@rneui/themed";
 import { basic_theme } from "../theme";
 
@@ -16,7 +15,6 @@ export default function SlangList({ navigation }: any) {
     return (
       <ListItem
         onPress={() => {
-          alert(`${item.name}`);
           navigation.navigate("WordInfo");
         }}
         bottomDivider

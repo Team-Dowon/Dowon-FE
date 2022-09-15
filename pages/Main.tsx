@@ -3,9 +3,8 @@ import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import Card from "../component/Card";
 import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
-// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const CustomTextInput = (props) => {
+const CustomTextInput = (props: any) => {
   return (
     <TextInput
       {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
@@ -24,7 +23,7 @@ export default function Main() {
       <CustomTextInput
         multiline
         numberOfLines={4}
-        onChangeText={(text) => setSentence(text)}
+        onChangeText={(text: any) => setSentence(text)}
         value={sentence}
         style={styles.input}
       />

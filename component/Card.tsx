@@ -1,6 +1,6 @@
 import { View, StyleSheet, Dimensions } from "react-native";
 
-function Card({ children }) {
+function Card({ children }: any) {
   return <View style={styles.card}>{children}</View>;
 }
 

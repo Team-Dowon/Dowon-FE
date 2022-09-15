@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { basic_theme } from "../theme";
 
 type Slangtype = {

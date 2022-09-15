@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Input } from "@rneui/themed";
 import { Button } from "@rneui/themed";
+import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
 import LogoTitle from "../component/LogoTitle";
+import { axios_post } from "../api/api";
 
-export default function Signup() {
+export default function Signup({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -14,7 +15,32 @@ export default function Signup() {
   const [password, setPassword] = useState<string>("");
   const [checkpassword, setCheckPassword] = useState<string>("");
 
-  const onSignUpPressed = () => {};
+  const submitSignUpData = async () => {
+    //modal 같은 거 만들어서 화면에 띄어주게 할 예정
+    if (!(userid && nickname && email && phone && password && checkpassword)) {
+      console.log("빈칸은 다 채워야함!");
+    } else if (password !== checkpassword) {
+      console.log("비밀번호가 일치하지 않음!");
+    } else {
+      axios_post("user/register", {
+        u_id: userid,
+        nickname: nickname,
+        email: email,
+        telephone: phone,
+        password: password,
+      })
+        .then((response) => {
+          // 중복되는 닉네임입니다, 중복되는 이메일입니다 메세지로 표시하고 싶은데
+          // 전부다 예외처리로 들어가서 이건 좀 봐야할듯
+          console.log(response.data.message); //회원가입 성공하면 회원가입 완료라고 뜸
+          navigation.navigate("Login");
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.log("회원가입 실패");
+        });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,21 +82,7 @@ export default function Signup() {
         value={checkpassword}
       />
       <View style={styles.div} />
-      <Button
-        containerStyle={{
-          width: "80%",
-        }}
-        buttonStyle={{
-          backgroundColor: basic_theme.buttoncolor,
-          borderColor: "white",
-          borderRadius: 10,
-        }}
-        titleStyle={{
-          fontWeight: "bold",
-          fontSize: 20,
-        }}
-        title="회원가입"
-      />
+      <PrimaryButton onPress={submitSignUpData}>회원가입</PrimaryButton>
     </SafeAreaView>
   );
 }

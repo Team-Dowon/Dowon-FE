@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { basic_theme } from "../theme";
 import PrimaryButton from "../component/PrimaryButton";
-// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Profile({ navigation }: any) {
   function goToLogin() {

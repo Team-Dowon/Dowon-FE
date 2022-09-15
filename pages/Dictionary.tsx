@@ -10,7 +10,6 @@ import {
 import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
-// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Dictionary({ navigation }: any) {
   const ListConsonant: string[] = [
@@ -55,8 +54,8 @@ export default function Dictionary({ navigation }: any) {
           //   </ListItem.Content>
           // </ListItem>
           <Pressable
+            key={i}
             onPress={() => {
-              alert(`${consonant}`);
               navigation.navigate("SlangList");
             }}
           >

@@ -4,7 +4,6 @@ import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
 import LogoTitle from "../component/LogoTitle";
-// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");

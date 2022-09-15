@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
 
