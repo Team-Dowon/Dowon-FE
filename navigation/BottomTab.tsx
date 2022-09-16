@@ -1,7 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, FontAwesome, AntDesign, Feather } from "@expo/vector-icons";
-import { Button } from "@rneui/themed";
 import Community from "../pages/Community";
 import Profile from "../pages/Profile";
 import WordExtract from "../pages/WordExtract";
@@ -41,10 +40,10 @@ export default function BottomTab({ navigation }: any) {
         }}
       />
       <Tab.Screen
-        name="Search"
+        name="StackDictionary"
         component={StackDictionary}
         options={{
-          title: "검색",
+          title: "신조어 사전",
           headerShown: false,
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (

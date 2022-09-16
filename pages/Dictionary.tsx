@@ -1,36 +1,30 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
+import { axios_post } from "../api/api";
 
 export default function Dictionary({ navigation }: any) {
-  const ListConsonant: string[] = [
-    "ㄱ",
-    "ㄴ",
-    "ㄷ",
-    "ㄹ",
-    "ㅁ",
-    "ㅂ",
-    "ㅅ",
-    "ㅇ",
-    "ㅈ",
-    "ㅊ",
-    "ㅋ",
-    "ㅌ",
-    "ㅍ",
-    "ㅎ",
-  ];
+  const ListConsonant: string[] = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
 
   function pressHandler() {
     navigation.navigate("Search");
+  }
+
+  function SlangListHandler(params: any) {
+    axios_post("dictionary", {
+      search: params,
+    })
+      .then((response) => {
+        // 어떤 식으로 오류나는지 메세지로 표시하고 싶은데 아직 잘 안됨 일단 보류
+        console.log(response.data); //로그인 성공하면 로그인 완료라고 뜸
+        navigation.navigate("SlangList", { name: response.data });
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log("신조어 불러오기 실패");
+      });
   }
 
   return (
@@ -53,12 +47,7 @@ export default function Dictionary({ navigation }: any) {
           //     </ListItem.Title>
           //   </ListItem.Content>
           // </ListItem>
-          <Pressable
-            key={i}
-            onPress={() => {
-              navigation.navigate("SlangList");
-            }}
-          >
+          <Pressable key={i} onPress={() => SlangListHandler(consonant)}>
             <View style={styles.listItem}>
               <Text>{consonant}</Text>
             </View>

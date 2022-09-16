@@ -20,14 +20,16 @@ export default function Login({ navigation }: any) {
         password: password,
       })
         .then((response) => {
-          // 중복되는 닉네임입니다, 중복되는 이메일입니다 메세지로 표시하고 싶은데
-          // 전부다 예외처리로 들어가서 이건 좀 봐야할듯
-          console.log(response.data.message); //회원가입 성공하면 회원가입 완료라고 뜸
+          // 어떤 식으로 오류나는지 메세지로 표시하고 싶은데 아직 잘 안됨 일단 보류
+          console.log(response.data.message); //로그인 성공하면 로그인 완료라고 뜸
+          console.log(response.data.nickname);
+          console.log(response.data.refresh);
+          console.log(response.data.access);
           navigation.navigate("Profile");
         })
         .catch(function (error) {
           console.log(error);
-          console.log("회원가입 실패");
+          console.log("로그인 실패");
         });
     }
   };
