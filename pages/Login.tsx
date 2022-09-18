@@ -10,6 +10,7 @@ export default function Login({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  // 로그인 기능 연동
   const logInHandler = async () => {
     //modal 같은 거 만들어서 화면에 띄어주게 할 예정
     if (!(userid && password)) {

@@ -1,40 +1,18 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
 import { axios_post } from "../api/api";
 
-const ListConsonant: string[] = [
-  "ㄱ",
-  "ㄴ",
-  "ㄷ",
-  "ㄹ",
-  "ㅁ",
-  "ㅂ",
-  "ㅅ",
-  "ㅇ",
-  "ㅈ",
-  "ㅊ",
-  "ㅋ",
-  "ㅌ",
-  "ㅍ",
-  "ㅎ",
-];
+const ListConsonant: string[] = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
 
 export default function Dictionary({ navigation }: any) {
   function pressHandler() {
     navigation.navigate("Search");
   }
 
-  // 초성클릭하면 실행되는 함수
+  // 초성클릭하면 초성변수 SlangList에 파라미터로 전달
   function SlangListHandler(params: any) {
     //console.log(params);
     navigation.navigate("SlangList", { alphabet: params });

@@ -5,7 +5,8 @@ import { basic_theme } from "../theme";
 import { axios_get } from "../api/api";
 
 type Posttype = {
-  username: string;
+  id: number;
+  user_nickname: string;
   title: string;
   content: string;
   date: string;
@@ -14,6 +15,7 @@ type Posttype = {
 export default function Community({ navigation }: any) {
   const [ListPost, setListPost] = useState<Posttype[]>([]);
 
+  // 커뮤니티 게시글 가져오기
   const getListPost = async () => {
     axios_get("post")
       .then((response) => {
@@ -27,6 +29,7 @@ export default function Community({ navigation }: any) {
 
   useEffect(() => {
     getListPost();
+    console.log(ListPost);
   }, []);
 
   const renderItem = ({ item }: { item: Posttype }) => {
@@ -34,13 +37,13 @@ export default function Community({ navigation }: any) {
       <Card>
         <Card.Title
           onPress={() => {
-            navigation.navigate("Comment");
+            navigation.navigate("Comment", { postid: item.id });
           }}
         >
           {item.title}
         </Card.Title>
         <Card.Divider />
-        <Text>{item.username}</Text>
+        <Text>{item.user_nickname}</Text>
         <Text>{item.date}</Text>
         <Text>{item.content}</Text>
       </Card>
