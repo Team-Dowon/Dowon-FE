@@ -1,21 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
 import { basic_theme } from "../theme";
+import { axios_get } from "../api/api";
 
 type Slangtype = {
+  id: number;
   name: string;
   mean: string;
   example: string;
   replace: string;
 };
 
-export default function WordInfo() {
+export default function WordInfo({ route }: any) {
+  const [Slang, setSlang] = useState<Slangtype>({
+    id: 0,
+    name: "",
+    mean: "",
+    example: "",
+    replace: "",
+  });
+
+  const getSlang = async () => {
+    axios_get(`dictionary/${route.params.slang}`)
+      .then((response) => {
+        console.log(response.data);
+        setSlang(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log("신조어 정보 가져오기 실패");
+      });
+  };
+
+  useEffect(() => {
+    getSlang();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>{ListSlang[0].name}</Text>
-      <Text style={styles.text}>{ListSlang[0].mean}</Text>
-      <Text style={styles.text}>{ListSlang[0].example}</Text>
-      <Text style={styles.text}>{ListSlang[0].replace}</Text>
+      <Text style={styles.text}>{Slang.name} </Text>
+      <Text style={styles.text}>{Slang.mean}</Text>
+      <Text style={styles.text}>{Slang.example}</Text>
+      <Text style={styles.text}>{Slang.replace}</Text>
     </SafeAreaView>
   );
 }
@@ -39,109 +65,3 @@ const styles = StyleSheet.create({
     height: 100,
   },
 });
-
-//임시 더미데이터
-const ListSlang: Slangtype[] = [
-  {
-    name: "가즈아",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "가봉맨",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "급식충",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "가불기",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "갑분싸",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "개돼지",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "고소미",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "관종",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "귀두컷",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "극혐",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "극딜",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "근자감",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "깜놀",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "깐부",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "꿀벅지",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "꿀잼",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "끌올",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-];
