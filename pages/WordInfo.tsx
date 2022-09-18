@@ -20,6 +20,7 @@ export default function WordInfo({ route }: any) {
     replace: "",
   });
 
+  // 해당 신조어 상세정보 가져오기
   const getSlang = async () => {
     axios_get(`dictionary/${route.params.slang}`)
       .then((response) => {
