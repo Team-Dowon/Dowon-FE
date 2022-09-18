@@ -1,7 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, FontAwesome, AntDesign, Feather } from "@expo/vector-icons";
-import { Button } from "@rneui/themed";
 import Community from "../pages/Community";
 import Profile from "../pages/Profile";
 import WordExtract from "../pages/WordExtract";
@@ -15,7 +14,7 @@ export default function BottomTab({ navigation }: any) {
 
   return (
     <Tab.Navigator
-      initialRouteName="신조어 번역"
+      initialRouteName="Main"
       screenOptions={{
         headerTitleAlign: "center",
         headerTitleStyle: {
@@ -24,9 +23,10 @@ export default function BottomTab({ navigation }: any) {
       }}
     >
       <Tab.Screen
-        name="신조어 번역"
+        name="Main"
         component={Main}
         options={{
+          title: "신조어 번역",
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -40,9 +40,10 @@ export default function BottomTab({ navigation }: any) {
         }}
       />
       <Tab.Screen
-        name="검색"
+        name="StackDictionary"
         component={StackDictionary}
         options={{
+          title: "신조어 사전",
           headerShown: false,
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
@@ -57,18 +58,11 @@ export default function BottomTab({ navigation }: any) {
         }}
       />
       <Tab.Screen
-        name="커뮤니티"
+        name="Community"
         component={Community}
         options={{
-          headerRight: () => (
-            <Feather
-              name="plus-square"
-              size={24}
-              color="black"
-              style={{ paddingRight: 15 }}
-              onPress={() => navigation.navigate("Post")}
-            />
-          ),
+          title: "커뮤니티",
+          headerRight: () => <Feather name="plus-square" size={24} color="black" style={{ paddingRight: 15 }} onPress={() => navigation.navigate("Post")} />,
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <AntDesign
@@ -82,9 +76,10 @@ export default function BottomTab({ navigation }: any) {
         }}
       />
       <Tab.Screen
-        name="추출"
+        name="WordExtract"
         component={WordExtract}
         options={{
+          title: "추출",
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <FontAwesome
@@ -98,9 +93,10 @@ export default function BottomTab({ navigation }: any) {
         }}
       />
       <Tab.Screen
-        name="프로필"
+        name="Profile"
         component={Profile}
         options={{
+          title: "프로필",
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons

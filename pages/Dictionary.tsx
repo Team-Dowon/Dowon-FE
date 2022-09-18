@@ -10,27 +10,34 @@ import {
 import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
+import { axios_post } from "../api/api";
+
+const ListConsonant: string[] = [
+  "ㄱ",
+  "ㄴ",
+  "ㄷ",
+  "ㄹ",
+  "ㅁ",
+  "ㅂ",
+  "ㅅ",
+  "ㅇ",
+  "ㅈ",
+  "ㅊ",
+  "ㅋ",
+  "ㅌ",
+  "ㅍ",
+  "ㅎ",
+];
 
 export default function Dictionary({ navigation }: any) {
-  const ListConsonant: string[] = [
-    "ㄱ",
-    "ㄴ",
-    "ㄷ",
-    "ㄹ",
-    "ㅁ",
-    "ㅂ",
-    "ㅅ",
-    "ㅇ",
-    "ㅈ",
-    "ㅊ",
-    "ㅋ",
-    "ㅌ",
-    "ㅍ",
-    "ㅎ",
-  ];
-
   function pressHandler() {
     navigation.navigate("Search");
+  }
+
+  // 초성클릭하면 실행되는 함수
+  function SlangListHandler(params: any) {
+    //console.log(params);
+    navigation.navigate("SlangList", { alphabet: params });
   }
 
   return (
@@ -53,12 +60,7 @@ export default function Dictionary({ navigation }: any) {
           //     </ListItem.Title>
           //   </ListItem.Content>
           // </ListItem>
-          <Pressable
-            key={i}
-            onPress={() => {
-              navigation.navigate("SlangList");
-            }}
-          >
+          <Pressable key={i} onPress={() => SlangListHandler(consonant)}>
             <View style={styles.listItem}>
               <Text>{consonant}</Text>
             </View>

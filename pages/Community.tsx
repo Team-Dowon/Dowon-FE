@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Card } from "@rneui/themed";
 import { basic_theme } from "../theme";
+import { axios_get } from "../api/api";
 
 type Posttype = {
   username: string;
@@ -11,6 +12,23 @@ type Posttype = {
 };
 
 export default function Community({ navigation }: any) {
+  const [ListPost, setListPost] = useState<Posttype[]>([]);
+
+  const getListPost = async () => {
+    axios_get("post")
+      .then((response) => {
+        setListPost(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log("게시글 가져오기 실패");
+      });
+  };
+
+  useEffect(() => {
+    getListPost();
+  }, []);
+
   const renderItem = ({ item }: { item: Posttype }) => {
     return (
       <Card>
@@ -31,12 +49,7 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.scroll}
-        data={ListPost}
-        renderItem={renderItem}
-        keyExtractor={(item: Posttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
     </SafeAreaView>
   );
 }
@@ -61,6 +74,7 @@ const styles = StyleSheet.create({
   },
 });
 
+/*
 //임시 더미데이터
 const ListPost: Posttype[] = [
   {
@@ -138,3 +152,4 @@ const ListPost: Posttype[] = [
     date: "2022-01-02 13:45",
   },
 ];
+*/

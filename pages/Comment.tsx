@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Input, Card } from "@rneui/themed";
 import { basic_theme } from "../theme";
+import { axios_get } from "../api/api";
 
 type Commenttype = {
   username: string;
@@ -11,6 +12,25 @@ type Commenttype = {
 
 export default function Comment() {
   const [comment, setComment] = useState<string>("");
+
+  /* 댓글 가져오기 하는중 무시해도 됨
+  const [ListComment, setListComment] = useState<Commenttype[]>([]);
+
+  const getListComment = async () => {
+    axios_get(`post/${게시글번호}/comment`)
+      .then((response) => {
+        setListComment(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log("댓글 가져오기 실패");
+      });
+  };
+
+  useEffect(() => {
+    getListComment();
+  }, []);
+  */
 
   const renderItem = ({ item }: { item: Commenttype }) => {
     return (
@@ -25,18 +45,8 @@ export default function Comment() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input
-        style={styles.input}
-        placeholder="댓글"
-        onChangeText={setComment}
-        value={comment}
-      />
-      <FlatList
-        style={styles.scroll}
-        data={ListComment}
-        renderItem={renderItem}
-        keyExtractor={(item: Commenttype, index: number) => index.toString()}
-      />
+      <Input style={styles.input} placeholder="댓글" onChangeText={setComment} value={comment} />
+      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
     </SafeAreaView>
   );
 }

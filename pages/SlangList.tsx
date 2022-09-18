@@ -1,21 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
 import { Button, ListItem } from "@rneui/themed";
 import { basic_theme } from "../theme";
+import { axios_post } from "../api/api";
 
 type Slangtype = {
+  id: number;
   name: string;
   mean: string;
   example: string;
   replace: string;
 };
 
-export default function SlangList({ navigation }: any) {
+export default function SlangList({ navigation, route }: any) {
+  const [ListSlang, setListSlang] = useState<Slangtype[]>([]);
+
+  // 각 초성으로 시작하는 신조어 가져오기
+  const getListSlang = async () => {
+    axios_post("dictionary", {
+      search: route.params.alphabet,
+    })
+      .then((response) => {
+        //console.log(response.data);
+        setListSlang(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log("신조어 불러오기 실패");
+      });
+  };
+
+  useEffect(() => {
+    getListSlang();
+  }, []);
+
   const renderItem = ({ item }: { item: Slangtype }) => {
     return (
       <ListItem
         onPress={() => {
-          navigation.navigate("WordInfo");
+          navigation.navigate("WordInfo", { slang: item.name });
         }}
         bottomDivider
       >
@@ -56,109 +79,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
-//임시 더미데이터
-const ListSlang: Slangtype[] = [
-  {
-    name: "가즈아",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "가봉맨",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "급식충",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "가불기",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "갑분싸",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "개돼지",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "고소미",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "관종",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "귀두컷",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "극혐",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "극딜",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "근자감",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "깜놀",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "깐부",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "꿀벅지",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "꿀잼",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-  {
-    name: "끌올",
-    mean: "몰?루",
-    example: "몰?루",
-    replace: "몰?루",
-  },
-];
