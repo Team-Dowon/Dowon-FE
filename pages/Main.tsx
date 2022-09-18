@@ -20,13 +20,7 @@ export default function Main() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <CustomTextInput
-        multiline
-        numberOfLines={4}
-        onChangeText={(text: any) => setSentence(text)}
-        value={sentence}
-        style={styles.input}
-      />
+      <CustomTextInput multiline numberOfLines={4} onChangeText={(text: any) => setSentence(text)} value={sentence} style={styles.input} />
       <PrimaryButton>문장 변환</PrimaryButton>
       <Card>
         <Text>변환된 문장이 출력되는 곳 입니다.</Text>
