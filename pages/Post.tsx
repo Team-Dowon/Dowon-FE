@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Input } from "@rneui/themed";
-import { Button } from "@rneui/themed";
+import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
 
 export default function Post() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+
+  function postHandler() {
+    console.log("게시글 등록");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,21 +26,7 @@ export default function Post() {
         onChangeText={setContent}
         value={content}
       />
-      <Button
-        containerStyle={{
-          width: "80%",
-        }}
-        buttonStyle={{
-          backgroundColor: basic_theme.buttoncolor,
-          borderColor: "white",
-          borderRadius: 10,
-        }}
-        titleStyle={{
-          fontWeight: "bold",
-          fontSize: 20,
-        }}
-        title="등록하기"
-      />
+      <PrimaryButton onPress={postHandler}>등록하기</PrimaryButton>
     </SafeAreaView>
   );
 }

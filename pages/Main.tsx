@@ -1,37 +1,35 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Button, Card } from "@rneui/themed";
+import Card from "../component/Card";
+import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
+
+const CustomTextInput = (props: any) => {
+  return (
+    <TextInput
+      {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
+      editable
+      maxLength={100}
+      placeholder="문장을 입력하세요. (길이 제한 100자)"
+    />
+  );
+};
 
 export default function Main() {
   const [sentence, setSentence] = useState<string>("");
 
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="변환할 문장을 입력해주세요."
-        onChangeText={setSentence}
+      <CustomTextInput
+        multiline
+        numberOfLines={4}
+        onChangeText={(text: any) => setSentence(text)}
         value={sentence}
+        style={styles.input}
       />
-      <Button
-        containerStyle={{
-          width: "80%",
-        }}
-        buttonStyle={{
-          backgroundColor: basic_theme.buttoncolor,
-          borderColor: "white",
-          borderRadius: 10,
-        }}
-        titleStyle={{
-          fontWeight: "bold",
-          fontSize: 20,
-        }}
-        title="문장 변환"
-      />
-      <Card containerStyle={{ marginTop: 15 }}>
-        <Text style={styles.text}>테스트입니다.</Text>
+      <PrimaryButton>문장 변환</PrimaryButton>
+      <Card>
+        <Text>변환된 문장이 출력되는 곳 입니다.</Text>
       </Card>
     </SafeAreaView>
   );
@@ -52,10 +50,11 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   input: {
-    width: "70%",
-    height: 40,
+    width: "80%",
+    height: 200,
+    padding: 10,
     margin: 12,
     borderWidth: 1,
-    padding: 10,
+    elevation: 3,
   },
 });

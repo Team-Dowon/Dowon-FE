@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Input, Card } from "@rneui/themed";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { basic_theme } from "../theme";
 
 type Commenttype = {

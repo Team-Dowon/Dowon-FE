@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Input } from "@rneui/themed";
-import { Button } from "@rneui/themed";
 import { basic_theme } from "../theme";
+import PrimaryButton from "../component/PrimaryButton";
 
 export default function WordRequest() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [name, setName] = useState<string>("");
+
+  function addStart() {
+    console.log("단어 등록 실행");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,21 +33,7 @@ export default function WordRequest() {
         onChangeText={setName}
         value={name}
       />
-      <Button
-        containerStyle={{
-          width: "80%",
-        }}
-        buttonStyle={{
-          backgroundColor: basic_theme.buttoncolor,
-          borderColor: "white",
-          borderRadius: 10,
-        }}
-        titleStyle={{
-          fontWeight: "bold",
-          fontSize: 20,
-        }}
-        title="등록하기"
-      />
+      <PrimaryButton onPress={addStart}>등록하기</PrimaryButton>
     </SafeAreaView>
   );
 }
