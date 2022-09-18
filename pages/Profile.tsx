@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { basic_theme } from "../theme";
 import PrimaryButton from "../component/PrimaryButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Profile({ navigation }: any) {
+  const [userlogin, setUserlogin] = useState<boolean>(false);
+  const isFocused = useIsFocused();
+
+  const islogin = async (key: string) => {
+    try {
+      const token = await AsyncStorage.getItem(key);
+      if (token !== null) {
+        setUserlogin(true);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    islogin("access");
+  }, [isFocused]);
+
   function goToLogin() {
     navigation.navigate("Login");
   }
@@ -11,12 +31,31 @@ export default function Profile({ navigation }: any) {
   function goToSignUp() {
     navigation.navigate("SignUp");
   }
+
+  const logouthandler = async (key: string) => {
+    try {
+      await AsyncStorage.removeItem(key);
+      setUserlogin(false);
+      console.log("로그아웃 완료");
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>로그인을 해주세요</Text>
-      <PrimaryButton onPress={goToLogin}>로그인 </PrimaryButton>
-      <Text style={styles.text}>아이디가 없으면?</Text>
-      <PrimaryButton onPress={goToSignUp}>회원가입</PrimaryButton>
+      {userlogin ? (
+        <PrimaryButton onPress={() => logouthandler("access")}>
+          로그아웃
+        </PrimaryButton>
+      ) : (
+        <>
+          <Text style={styles.text}>로그인을 해주세요</Text>
+          <PrimaryButton onPress={goToLogin}>로그인 </PrimaryButton>
+          <Text style={styles.text}>아이디가 없으면?</Text>
+          <PrimaryButton onPress={goToSignUp}>회원가입</PrimaryButton>
+        </>
+      )}
     </SafeAreaView>
   );
 }
