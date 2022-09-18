@@ -4670,11 +4670,7 @@
   "resolved" "https://registry.npmjs.org/expo-updates-interface/-/expo-updates-interface-0.7.0.tgz"
   "version" "0.7.0"
 
-<<<<<<< HEAD
 "expo-updates@^0.14.5":
-=======
-"expo-updates@~0.14.5":
->>>>>>> 74b2ec8fed2c79160b8301fd11a5316c8b0b3f5a
   "integrity" "sha512-m6IOiETTwsJhL93meHG/Y3FWuaRQIbn9LJ5wpWurQ7RniqIV9Ae61SRmJJyYtxk1qLy/dKJ/jHyF1xp8PKIlnQ=="
   "resolved" "https://registry.npmjs.org/expo-updates/-/expo-updates-0.14.5.tgz"
   "version" "0.14.5"
