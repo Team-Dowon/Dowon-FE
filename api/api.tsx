@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const baseUrl =
-  "http://ec2-43-200-254-39.ap-northeast-2.compute.amazonaws.com/api//api/";
+const baseUrl = "http://ec2-43-200-254-39.ap-northeast-2.compute.amazonaws.com/api/";
 
 //url은 string 타입 sendData는 json 형식으로 받음
 export const axios_post = async (url: string, sendData: any) => {
