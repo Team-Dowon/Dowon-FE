@@ -1,17 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
 import { Input } from "@rneui/themed";
 import { basic_theme } from "../theme";
 import PrimaryButton from "../component/PrimaryButton";
+import { axios_post } from "../api/api";
+import UserContext from "../service/UserContext";
 
 export default function WordRequest() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
-  function addStart() {
+  const addStart = async ({ navigation }: any) => {
+    if (!userContext.userlogin) {
+      console.log("로그인 하셔야합니다!");
+    } else if (!(title && content && name)) {
+      console.log("빈칸은 다 채워야함!");
+    } else {
+      axios_post("request", {
+        title: title,
+        content: content,
+        name: name,
+      })
+        .then(async (response) => {
+          console.log(response.data); //request 게시 완료
+          navigation.navigate("Profile");
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.log("신조어 요청 실패");
+        });
+    }
     console.log("단어 등록 실행");
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>

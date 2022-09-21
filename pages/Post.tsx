@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { basic_theme } from "../theme";
+import { axios_post } from "../api/api";
+import UserContext from "../service/UserContext";
 
-export default function Post() {
+export default function Post({ navigation }: any) {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
-  function postHandler() {
-    console.log("게시글 등록");
-  }
+  const postHandler = async () => {
+    if (!userContext.userlogin) {
+      console.log("로그인 하셔야합니다!");
+    } else if (!(title && content)) {
+      console.log("빈칸은 다 채워야함!");
+    } else {
+      axios_post("post", {
+        title: title,
+        content: content,
+      })
+        .then(async (response) => {
+          console.log(response.data); //post 완료
+          navigation.navigate("Community");
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.log("게시 실패");
+        });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
