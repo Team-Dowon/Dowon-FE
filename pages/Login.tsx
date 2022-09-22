@@ -3,19 +3,21 @@ import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { basic_theme } from "../theme";
+import ModalWindow from "../component/ModalWindow";
 import LogoTitle from "../component/LogoTitle";
+import { basic_theme } from "../theme";
 import { axios_post } from "../api/api";
 
 export default function Login({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loginModal, setLoginModal] = useState(false);
 
   // 로그인 기능 연동
   const logInHandler = async () => {
     //modal 같은 거 만들어서 화면에 띄어주게 할 예정
     if (!(userid && password)) {
-      console.log("빈칸은 다 채워야함!");
+      setLoginModal(true);
     } else {
       axios_post("user/login", {
         u_id: userid,
@@ -37,18 +39,36 @@ export default function Login({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <LogoTitle />
-      <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
-      <Input style={styles.input} placeholder="비밀번호" onChangeText={setPassword} value={password} />
+      <Input
+        style={styles.input}
+        placeholder="아이디"
+        onChangeText={setUserId}
+        value={userid}
+      />
+      <Input
+        style={styles.input}
+        placeholder="비밀번호"
+        onChangeText={setPassword}
+        value={password}
+      />
       <View style={styles.div} />
       <PrimaryButton onPress={logInHandler}>로그인</PrimaryButton>
       <View>
         <Text style={styles.text}>
           {"아이디가 없으면? "}
-          <Text style={styles.navitext} onPress={() => navigation.navigate("SignUp")}>
+          <Text
+            style={styles.navitext}
+            onPress={() => navigation.navigate("SignUp")}
+          >
             {"회원가입"}
           </Text>
         </Text>
       </View>
+      <ModalWindow
+        open={loginModal}
+        okPress={() => setLoginModal(false)}
+        text2="테스트 입니다."
+      />
     </SafeAreaView>
   );
 }

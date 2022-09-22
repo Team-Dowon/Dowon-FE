@@ -66,7 +66,7 @@ export default function Profile({ navigation }: any) {
 
   useEffect(() => {
     islogin("access");
-    getUserData("access");
+    //getUserData("access");
   }, [isFocused]);
 
   return (
@@ -74,7 +74,9 @@ export default function Profile({ navigation }: any) {
       {userContext.userlogin ? (
         <>
           <Text style={styles.text}>안녕하세요! {userContext.username}님</Text>
-          <PrimaryButton onPress={() => logouthandler("access")}>로그아웃</PrimaryButton>
+          <PrimaryButton onPress={() => logouthandler("access")}>
+            로그아웃
+          </PrimaryButton>
         </>
       ) : (
         <>
