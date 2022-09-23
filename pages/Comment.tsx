@@ -2,11 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Input, Card } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { axios_get, axios_post } from "../api/api";
+import { axios_get, axios_post, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import UserContext from "../service/UserContext";
+import { Feather } from "@expo/vector-icons";
 
 type Commenttype = {
+  id: number;
   user_nickname: string;
   content: string;
   date: string;
@@ -51,6 +53,17 @@ export default function Comment({ route }: any) {
       });
   };
 
+  const deleteComment = async (key: number) => {
+    axios_delete(`post/${route.params.postid}/comment/${key}`)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log("댓글 삭제 실패");
+      });
+  };
+
   useEffect(() => {
     getListComment();
   }, [isFocused]);
@@ -58,7 +71,16 @@ export default function Comment({ route }: any) {
   const renderItem = ({ item }: { item: Commenttype }) => {
     return (
       <Card>
-        <Card.Title>{item.content}</Card.Title>
+        <Card.Title>
+          {item.content}
+          <Feather
+            name="x"
+            size={24}
+            color="black"
+            style={{ marginRight: "auto" }}
+            onPress={() => deleteComment(item.id)}
+          />
+        </Card.Title>
         <Card.Divider />
         <Text>작성자 : {item.user_nickname}</Text>
         <Text>작성 일자 : {item.date}</Text>
@@ -68,9 +90,19 @@ export default function Comment({ route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input style={styles.input} placeholder="댓글" onChangeText={setComment} value={comment} />
+      <Input
+        style={styles.input}
+        placeholder="댓글"
+        onChangeText={setComment}
+        value={comment}
+      />
       <PrimaryButton onPress={CommentHandler}>등록하기</PrimaryButton>
-      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListComment}
+        renderItem={renderItem}
+        keyExtractor={(item: Commenttype, index: number) => index.toString()}
+      />
     </SafeAreaView>
   );
 }
