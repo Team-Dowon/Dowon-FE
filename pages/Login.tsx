@@ -68,6 +68,7 @@ export default function Login({ navigation }: any) {
         open={loginModal}
         okPress={() => setLoginModal(false)}
         text2="테스트 입니다."
+        confirmText="확인"
       />
     </SafeAreaView>
   );

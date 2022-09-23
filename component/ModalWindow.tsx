@@ -15,13 +15,13 @@ export default function ModalWindow({
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
-    <Modal isVisible={open}>
+    <Modal isVisible={open} style={styles.modal}>
       <View>
-        {/*{title && <Text style={styles.textstyle}>{title}</Text>}
-        {text1 && <Text style={styles.textstyle}>{text1}</Text>}*/}
-        <Text>{text2}</Text>
+        {title && <Text style={styles.textstyle}>{title}</Text>}
+        {text1 && <Text style={styles.textstyle}>{text1}</Text>}
+        <Text style={styles.textstyle}>{text2}</Text>
       </View>
-      {/*  
+
       <View style={styles.modalButtons}>
         <Pressable onPress={okPress}>
           <View style={styles.modalButton}>
@@ -36,7 +36,6 @@ export default function ModalWindow({
           </Pressable>
         )}
       </View>
-      */}
     </Modal>
   );
 }
@@ -58,11 +57,11 @@ const styles = StyleSheet.create({
   },
   textstyle: {
     textAlign: "center",
-    fontSize: 20,
-    marginEnd: "5px",
+    fontSize: 30,
+    fontFamily: "notosanskr-bold",
   },
   modalButtons: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
   },
   modalButton: {
     borderRadius: 100,
-    height: 45,
+    height: 70,
     alignSelf: "center",
     justifyContent: "center",
     backgroundColor: "#ffffff",
