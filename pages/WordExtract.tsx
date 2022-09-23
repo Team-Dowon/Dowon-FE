@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import PrimaryButton from "../component/PrimaryButton";
-import { basic_theme } from "../theme";
 
 export default function WordExtract({ navigation }: any) {
   const [sentence, setSentence] = useState<string>("");
@@ -16,12 +15,7 @@ export default function WordExtract({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="문장을 입력해 주세요"
-        onChangeText={setSentence}
-        value={sentence}
-      />
+      <TextInput style={styles.input} placeholder="문장을 입력해 주세요" onChangeText={setSentence} value={sentence} />
       <PrimaryButton onPress={extractStart}>신조어 추출</PrimaryButton>
       <PrimaryButton onPress={addWordRequest}>신조어 등록 요청</PrimaryButton>
     </SafeAreaView>
@@ -31,7 +25,7 @@ export default function WordExtract({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

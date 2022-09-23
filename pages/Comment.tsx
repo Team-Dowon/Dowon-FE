@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Input, Card } from "@rneui/themed";
-import { basic_theme } from "../theme";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_get, axios_post } from "../api/api";
+import { useIsFocused } from "@react-navigation/native";
 import UserContext from "../service/UserContext";
 
 type Commenttype = {
@@ -15,6 +15,7 @@ type Commenttype = {
 export default function Comment({ route }: any) {
   const [comment, setComment] = useState<string>("");
   const [ListComment, setListComment] = useState<Commenttype[]>([]);
+  const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
   const CommentHandler = async () => {
@@ -27,7 +28,8 @@ export default function Comment({ route }: any) {
         content: comment,
       })
         .then(async (response) => {
-          console.log(response.data); //comment 게시 완료
+          setComment("");
+          getListComment();
         })
         .catch(function (error) {
           console.log(error);
@@ -41,7 +43,7 @@ export default function Comment({ route }: any) {
     axios_get(`post/${route.params.postid}/comment`)
       .then((response) => {
         console.log(response.data);
-        setListComment(response.data);
+        setListComment(response.data.reverse());
       })
       .catch(function (error) {
         console.log(error);
@@ -51,34 +53,24 @@ export default function Comment({ route }: any) {
 
   useEffect(() => {
     getListComment();
-  }, []);
+  }, [isFocused]);
 
   const renderItem = ({ item }: { item: Commenttype }) => {
     return (
       <Card>
         <Card.Title>{item.content}</Card.Title>
         <Card.Divider />
-        <Text>{item.user_nickname}</Text>
-        <Text>{item.date}</Text>
+        <Text>작성자 : {item.user_nickname}</Text>
+        <Text>작성 일자 : {item.date}</Text>
       </Card>
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input
-        style={styles.input}
-        placeholder="댓글"
-        onChangeText={setComment}
-        value={comment}
-      />
+      <Input style={styles.input} placeholder="댓글" onChangeText={setComment} value={comment} />
       <PrimaryButton onPress={CommentHandler}>등록하기</PrimaryButton>
-      <FlatList
-        style={styles.scroll}
-        data={ListComment}
-        renderItem={renderItem}
-        keyExtractor={(item: Commenttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
     </SafeAreaView>
   );
 }
@@ -86,7 +78,7 @@ export default function Comment({ route }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

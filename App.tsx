@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useWindowDimensions } from "react-native";
-import { basic_theme } from "./theme";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,7 +19,7 @@ const toastConfig = {
   success: (props: any) => (
     <BaseToast
       {...props}
-      style={{ borderLeftColor: basic_theme.fgColor }}
+      style={{ borderLeftColor: "#DEE8FF" }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 15,

@@ -5,7 +5,6 @@ import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import ModalWindow from "../component/ModalWindow";
 import LogoTitle from "../component/LogoTitle";
-import { basic_theme } from "../theme";
 import { axios_post } from "../api/api";
 
 export default function Login({ navigation }: any) {
@@ -39,37 +38,19 @@ export default function Login({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <LogoTitle />
-      <Input
-        style={styles.input}
-        placeholder="아이디"
-        onChangeText={setUserId}
-        value={userid}
-      />
-      <Input
-        style={styles.input}
-        placeholder="비밀번호"
-        onChangeText={setPassword}
-        value={password}
-      />
+      <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
+      <Input style={styles.input} placeholder="비밀번호" onChangeText={setPassword} value={password} />
       <View style={styles.div} />
       <PrimaryButton onPress={logInHandler}>로그인</PrimaryButton>
       <View>
         <Text style={styles.text}>
           {"아이디가 없으면? "}
-          <Text
-            style={styles.navitext}
-            onPress={() => navigation.navigate("SignUp")}
-          >
+          <Text style={styles.navitext} onPress={() => navigation.navigate("SignUp")}>
             {"회원가입"}
           </Text>
         </Text>
       </View>
-      <ModalWindow
-        open={loginModal}
-        okPress={() => setLoginModal(false)}
-        text2="테스트 입니다."
-        confirmText="확인"
-      />
+      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} title="하이" text1="바이" text2="빈칸을 다 채워주세요" cancel="true" />
     </SafeAreaView>
   );
 }
@@ -77,7 +58,7 @@ export default function Login({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

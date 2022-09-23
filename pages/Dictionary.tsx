@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { basic_theme } from "../theme";
 import { axios_post } from "../api/api";
 
 const ListConsonant: string[] = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
@@ -52,7 +51,7 @@ export default function Dictionary({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

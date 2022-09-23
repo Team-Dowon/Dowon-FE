@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { basic_theme } from "../theme";
 import PrimaryButton from "../component/PrimaryButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
@@ -17,6 +16,7 @@ export default function Profile({ navigation }: any) {
       const token = await AsyncStorage.getItem(key);
       if (token !== null) {
         userContext.setUserlogin(true);
+        getUserData("access");
       }
     } catch (error: any) {
       console.log(error.message);
@@ -49,6 +49,9 @@ export default function Profile({ navigation }: any) {
         console.log(response.data.message); //로그아웃 성공하면 로그아웃 완료라고 뜸
         AsyncStorage.clear();
         userContext.setUserlogin(false);
+        userContext.setUserId("");
+        userContext.setUserName("");
+        userContext.setUserEmail("");
       })
       .catch(function (error) {
         console.log(error);
@@ -66,7 +69,6 @@ export default function Profile({ navigation }: any) {
 
   useEffect(() => {
     islogin("access");
-    //getUserData("access");
   }, [isFocused]);
 
   return (
@@ -74,9 +76,7 @@ export default function Profile({ navigation }: any) {
       {userContext.userlogin ? (
         <>
           <Text style={styles.text}>안녕하세요! {userContext.username}님</Text>
-          <PrimaryButton onPress={() => logouthandler("access")}>
-            로그아웃
-          </PrimaryButton>
+          <PrimaryButton onPress={() => logouthandler("access")}>로그아웃</PrimaryButton>
         </>
       ) : (
         <>
@@ -93,7 +93,7 @@ export default function Profile({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "DEE8FF",
     alignItems: "center",
     justifyContent: "center",
   },

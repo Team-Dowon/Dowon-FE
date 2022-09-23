@@ -6,7 +6,6 @@ import Profile from "../pages/Profile";
 import WordExtract from "../pages/WordExtract";
 import Main from "../pages/Main";
 import StackDictionary from "../navigation/StackDictionary";
-import { basic_theme } from "../theme";
 import LogoTitle from "../component/LogoTitle";
 
 export default function BottomTab({ navigation }: any) {
@@ -32,7 +31,7 @@ export default function BottomTab({ navigation }: any) {
             <Ionicons
               name="ios-home"
               style={{
-                color: focused ? basic_theme.focusedin : basic_theme.focusedout,
+                color: focused ? "#640233" : "#777676",
               }}
               size={24}
             />
@@ -50,7 +49,7 @@ export default function BottomTab({ navigation }: any) {
             <FontAwesome
               name="search"
               style={{
-                color: focused ? basic_theme.focusedin : basic_theme.focusedout,
+                color: focused ? "#640233" : "#777676",
               }}
               size={24}
             />
@@ -68,7 +67,7 @@ export default function BottomTab({ navigation }: any) {
             <AntDesign
               name="eyeo"
               style={{
-                color: focused ? basic_theme.focusedin : basic_theme.focusedout,
+                color: focused ? "#640233" : "#777676",
               }}
               size={24}
             />
@@ -85,7 +84,7 @@ export default function BottomTab({ navigation }: any) {
             <FontAwesome
               name="file-word-o"
               style={{
-                color: focused ? basic_theme.focusedin : basic_theme.focusedout,
+                color: focused ? "#640233" : "#777676",
               }}
               size={24}
             />
@@ -102,7 +101,7 @@ export default function BottomTab({ navigation }: any) {
             <Ionicons
               name="person"
               style={{
-                color: focused ? basic_theme.focusedin : basic_theme.focusedout,
+                color: focused ? "#640233" : "#777676",
               }}
               size={24}
             />

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Card } from "@rneui/themed";
-import { basic_theme } from "../theme";
 import { axios_get } from "../api/api";
+import { useIsFocused } from "@react-navigation/native";
 
 type Posttype = {
   id: number;
@@ -14,12 +14,13 @@ type Posttype = {
 
 export default function Community({ navigation }: any) {
   const [ListPost, setListPost] = useState<Posttype[]>([]);
+  const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
 
   // 커뮤니티 게시글 가져오기
   const getListPost = async () => {
     axios_get("post")
       .then((response) => {
-        setListPost(response.data);
+        setListPost(response.data.reverse());
       })
       .catch(function (error) {
         console.log(error);
@@ -29,8 +30,7 @@ export default function Community({ navigation }: any) {
 
   useEffect(() => {
     getListPost();
-    console.log(ListPost);
-  }, []);
+  }, [isFocused]);
 
   const renderItem = ({ item }: { item: Posttype }) => {
     return (
@@ -43,9 +43,9 @@ export default function Community({ navigation }: any) {
           {item.title}
         </Card.Title>
         <Card.Divider />
-        <Text>{item.user_nickname}</Text>
-        <Text>{item.date}</Text>
-        <Text>{item.content}</Text>
+        <Text>내용 : {item.content}</Text>
+        <Text>작성자 : {item.user_nickname}</Text>
+        <Text>작성 일자 : {item.date}</Text>
       </Card>
     );
   };
@@ -60,7 +60,7 @@ export default function Community({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

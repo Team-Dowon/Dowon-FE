@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { basic_theme } from "../theme";
 import { axios_post } from "../api/api";
 import UserContext from "../service/UserContext";
 
@@ -34,18 +33,8 @@ export default function Post({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input
-        style={styles.title}
-        placeholder="제목을 입력하세요"
-        onChangeText={setTitle}
-        value={title}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="내용을 입력하세요"
-        onChangeText={setContent}
-        value={content}
-      />
+      <Input style={styles.title} placeholder="제목을 입력하세요" onChangeText={setTitle} value={title} />
+      <TextInput style={styles.input} placeholder="내용을 입력하세요" onChangeText={setContent} value={content} />
       <PrimaryButton onPress={postHandler}>등록하기</PrimaryButton>
     </SafeAreaView>
   );
@@ -54,7 +43,7 @@ export default function Post({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

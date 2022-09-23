@@ -1,18 +1,17 @@
 import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
 import { Input } from "@rneui/themed";
-import { basic_theme } from "../theme";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
 import UserContext from "../service/UserContext";
 
-export default function WordRequest() {
+export default function WordRequest({ navigation }: any) {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [name, setName] = useState<string>("");
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
-  const addStart = async ({ navigation }: any) => {
+  const addStart = async () => {
     if (!userContext.userlogin) {
       console.log("로그인 하셔야합니다!");
     } else if (!(title && content && name)) {
@@ -32,29 +31,13 @@ export default function WordRequest() {
           console.log("신조어 요청 실패");
         });
     }
-    console.log("단어 등록 실행");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input
-        style={styles.little}
-        placeholder="요청 제목"
-        onChangeText={setTitle}
-        value={title}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="요청 내용"
-        onChangeText={setContent}
-        value={content}
-      />
-      <Input
-        style={styles.little}
-        placeholder="요청 단어"
-        onChangeText={setName}
-        value={name}
-      />
+      <Input style={styles.little} placeholder="요청 제목" onChangeText={setTitle} value={title} />
+      <TextInput style={styles.input} placeholder="요청 내용" onChangeText={setContent} value={content} />
+      <Input style={styles.little} placeholder="요청 단어" onChangeText={setName} value={name} />
       <PrimaryButton onPress={addStart}>등록하기</PrimaryButton>
     </SafeAreaView>
   );
@@ -63,7 +46,7 @@ export default function WordRequest() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

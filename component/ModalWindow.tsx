@@ -2,21 +2,10 @@ import React, { useState } from "react";
 import Modal from "react-native-modal";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 
-export default function ModalWindow({
-  open,
-  okPress,
-  cancelPress,
-  title,
-  text1,
-  text2,
-  confirmText,
-  cancelText,
-}: any) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
+export default function ModalWindow({ open, okPress, cancelPress, title, text1, text2, cancel }: any) {
   return (
     <Modal isVisible={open} style={styles.modal}>
-      <View>
+      <View style={styles.textContainer}>
         {title && <Text style={styles.textstyle}>{title}</Text>}
         {text1 && <Text style={styles.textstyle}>{text1}</Text>}
         <Text style={styles.textstyle}>{text2}</Text>
@@ -24,14 +13,14 @@ export default function ModalWindow({
 
       <View style={styles.modalButtons}>
         <Pressable onPress={okPress}>
-          <View style={styles.modalButton}>
-            <Text style={styles.textstyle}>{confirmText}</Text>
+          <View style={styles.modalButtonyes}>
+            <Text style={styles.buttontextstyle}> 확인 </Text>
           </View>
         </Pressable>
-        {cancelText && (
+        {cancel && (
           <Pressable onPress={cancelPress}>
-            <View style={styles.modalButton}>
-              <Text style={styles.textstyle}>{cancelText}</Text>
+            <View style={styles.modalButtonno}>
+              <Text style={styles.buttontextstyle}> 취소 </Text>
             </View>
           </Pressable>
         )}
@@ -44,11 +33,13 @@ export default function ModalWindow({
 const styles = StyleSheet.create({
   modal: {
     backgroundColor: "#ffffff",
-    flex: 0.3,
+    borderRadius: 5,
     alignItems: "stretch",
     justifyContent: "center",
     alignSelf: "center",
-    width: Dimensions.get("window").width * 0.85,
+    marginTop: Dimensions.get("window").height * 0.3,
+    width: 300,
+    maxHeight: Dimensions.get("window").height * 0.3,
   },
   textContainer: {
     flex: 0.6,
@@ -57,7 +48,15 @@ const styles = StyleSheet.create({
   },
   textstyle: {
     textAlign: "center",
-    fontSize: 30,
+    fontSize: 20,
+    marginTop: "-5%",
+    fontFamily: "notosanskr-bold",
+  },
+  buttontextstyle: {
+    textAlign: "center",
+    fontSize: 20,
+    color: "#ffffff",
+    marginTop: "-5%",
     fontFamily: "notosanskr-bold",
   },
   modalButtons: {
@@ -67,12 +66,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     flex: 0.4,
   },
-  modalButton: {
+  modalButtonyes: {
     borderRadius: 100,
-    height: 70,
+    height: 45,
     alignSelf: "center",
     justifyContent: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#640233",
+    width: 90,
+  },
+  modalButtonno: {
+    borderRadius: 100,
+    height: 45,
+    alignSelf: "center",
+    justifyContent: "center",
+    backgroundColor: "#d3d3d3",
     width: 90,
   },
 });
