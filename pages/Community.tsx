@@ -4,6 +4,7 @@ import { Card } from "@rneui/themed";
 import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import MenuComponent from "../component/MenuComponent";
 
 type Posttype = {
   id: number;
@@ -42,6 +43,10 @@ export default function Community({ navigation }: any) {
       });
   };
 
+  const modifyPost = async () => {
+    console.log("게시글 수정");
+  };
+
   useEffect(() => {
     getListPost();
   }, [isFocused]);
@@ -50,19 +55,20 @@ export default function Community({ navigation }: any) {
     return (
       <Card>
         <Card.Title
-          style={{ flexDirection: "row", alignItems: "flex-start" }}
           onPress={() => {
             navigation.navigate("Comment", { postid: item.id });
           }}
         >
-          {item.title}
-          <SimpleLineIcons
-            name="options-vertical"
-            size={15}
-            color="black"
-            style={{ alignItems: "flex-end" }}
-            onPress={() => deletePost(item.id)}
-          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Text>{item.title}</Text>
+            <MenuComponent modifyfunc={() => modifyPost()} deletefunc={() => deletePost(item.id)} />
+            {/*<SimpleLineIcons name="options-vertical" size={15} color="black" style={{ alignItems: "flex-end" }} onPress={() => deletePost(item.id)} />*/}
+          </View>
         </Card.Title>
         <Card.Divider />
         <Text>내용 : {item.content}</Text>
@@ -74,12 +80,7 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.scroll}
-        data={ListPost}
-        renderItem={renderItem}
-        keyExtractor={(item: Posttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
     </SafeAreaView>
   );
 }
