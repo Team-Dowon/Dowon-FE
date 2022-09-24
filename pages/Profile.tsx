@@ -30,6 +30,7 @@ export default function Profile({ navigation }: any) {
     })
       .then((response) => {
         console.log("유저정보 불러오기 완료");
+        console.log(response.data);
         userContext.setUserId(response.data.u_id);
         userContext.setUserName(response.data.nickname);
         userContext.setUserEmail(response.data.email);
@@ -76,7 +77,9 @@ export default function Profile({ navigation }: any) {
       {userContext.userlogin ? (
         <>
           <Text style={styles.text}>안녕하세요! {userContext.username}님</Text>
-          <PrimaryButton onPress={() => logouthandler("access")}>로그아웃</PrimaryButton>
+          <PrimaryButton onPress={() => logouthandler("access")}>
+            로그아웃
+          </PrimaryButton>
         </>
       ) : (
         <>

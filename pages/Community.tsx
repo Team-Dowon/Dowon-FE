@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Card } from "@rneui/themed";
 import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
-import { Feather } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 type Posttype = {
   id: number;
@@ -33,6 +33,8 @@ export default function Community({ navigation }: any) {
     axios_delete(`post/${key}`)
       .then((response) => {
         console.log(response.data);
+        console.log("게시글 삭제 완료");
+        getListPost();
       })
       .catch(function (error) {
         console.log(error);
@@ -48,16 +50,17 @@ export default function Community({ navigation }: any) {
     return (
       <Card>
         <Card.Title
+          style={{ flexDirection: "row", alignItems: "flex-start" }}
           onPress={() => {
             navigation.navigate("Comment", { postid: item.id });
           }}
         >
           {item.title}
-          <Feather
-            name="x"
-            size={24}
+          <SimpleLineIcons
+            name="options-vertical"
+            size={15}
             color="black"
-            style={{ marginRight: "auto" }}
+            style={{ alignItems: "flex-end" }}
             onPress={() => deletePost(item.id)}
           />
         </Card.Title>

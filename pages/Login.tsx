@@ -6,6 +6,7 @@ import PrimaryButton from "../component/PrimaryButton";
 import ModalWindow from "../component/ModalWindow";
 import LogoTitle from "../component/LogoTitle";
 import { axios_post } from "../api/api";
+import axios from "axios";
 
 export default function Login({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");
@@ -24,9 +25,12 @@ export default function Login({ navigation }: any) {
       })
         .then(async (response) => {
           // 어떤 식으로 오류나는지 메세지로 표시하고 싶은데 아직 잘 안됨 일단 보류
-          console.log(response.data); //로그인 성공하면 로그인 완료라고 뜸
           await AsyncStorage.setItem("access", response.data.access);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${response.data.access}`;
           navigation.navigate("Profile");
+          console.log(response.data); //로그인 성공하면 로그인 완료라고 뜸
         })
         .catch(function (error) {
           console.log(error);
@@ -38,19 +42,39 @@ export default function Login({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <LogoTitle />
-      <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
-      <Input style={styles.input} placeholder="비밀번호" onChangeText={setPassword} value={password} />
+      <Input
+        style={styles.input}
+        placeholder="아이디"
+        onChangeText={setUserId}
+        value={userid}
+      />
+      <Input
+        style={styles.input}
+        placeholder="비밀번호"
+        onChangeText={setPassword}
+        value={password}
+      />
       <View style={styles.div} />
       <PrimaryButton onPress={logInHandler}>로그인</PrimaryButton>
       <View>
         <Text style={styles.text}>
           {"아이디가 없으면? "}
-          <Text style={styles.navitext} onPress={() => navigation.navigate("SignUp")}>
+          <Text
+            style={styles.navitext}
+            onPress={() => navigation.navigate("SignUp")}
+          >
             {"회원가입"}
           </Text>
         </Text>
       </View>
-      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} title="하이" text1="바이" text2="빈칸을 다 채워주세요" cancel="true" />
+      <ModalWindow
+        open={loginModal}
+        okPress={() => setLoginModal(false)}
+        title="하이"
+        text1="바이"
+        text2="빈칸을 다 채워주세요"
+        cancel="true"
+      />
     </SafeAreaView>
   );
 }

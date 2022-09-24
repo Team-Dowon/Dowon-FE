@@ -2,30 +2,48 @@ import React, { useState } from "react";
 import Modal from "react-native-modal";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 
-export default function ModalWindow({ open, okPress, cancelPress, title, text1, text2, cancel }: any) {
+export default function ModalWindow({
+  open,
+  okPress,
+  cancelPress,
+  title,
+  text1,
+  text2,
+  cancel,
+  option,
+}: any) {
   return (
-    <Modal isVisible={open} style={styles.modal}>
-      <View style={styles.textContainer}>
-        {title && <Text style={styles.textstyle}>{title}</Text>}
-        {text1 && <Text style={styles.textstyle}>{text1}</Text>}
-        <Text style={styles.textstyle}>{text2}</Text>
-      </View>
+    <>
+      <Modal isVisible={open} style={styles.modal}>
+        <View style={styles.textContainer}>
+          {title && <Text style={styles.textstyle}>{title}</Text>}
+          {text1 && <Text style={styles.textstyle}>{text1}</Text>}
+          <Text style={styles.textstyle}>{text2}</Text>
+        </View>
 
-      <View style={styles.modalButtons}>
-        <Pressable onPress={okPress}>
-          <View style={styles.modalButtonyes}>
-            <Text style={styles.buttontextstyle}> 확인 </Text>
-          </View>
-        </Pressable>
-        {cancel && (
-          <Pressable onPress={cancelPress}>
-            <View style={styles.modalButtonno}>
-              <Text style={styles.buttontextstyle}> 취소 </Text>
+        <View style={styles.modalButtons}>
+          <Pressable onPress={okPress}>
+            <View style={styles.modalButtonyes}>
+              <Text style={styles.buttontextstyle}> 확인 </Text>
             </View>
           </Pressable>
-        )}
-      </View>
-    </Modal>
+          {cancel && (
+            <Pressable onPress={cancelPress}>
+              <View style={styles.modalButtonno}>
+                <Text style={styles.buttontextstyle}> 취소 </Text>
+              </View>
+            </Pressable>
+          )}
+        </View>
+      </Modal>
+      <Modal
+        isVisible={option}
+        style={styles.modal}
+        swipeDirection={["up", "left", "right", "down"]}
+      >
+        <View style={styles.textContainer}></View>
+      </Modal>
+    </>
   );
 }
 

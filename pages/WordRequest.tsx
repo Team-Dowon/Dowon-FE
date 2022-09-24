@@ -11,7 +11,7 @@ export default function WordRequest({ navigation }: any) {
   const [name, setName] = useState<string>("");
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
-  const addStart = async () => {
+  const RequestHandler = async () => {
     if (!userContext.userlogin) {
       console.log("로그인 하셔야합니다!");
     } else if (!(title && content && name)) {
@@ -35,10 +35,25 @@ export default function WordRequest({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input style={styles.little} placeholder="요청 제목" onChangeText={setTitle} value={title} />
-      <TextInput style={styles.input} placeholder="요청 내용" onChangeText={setContent} value={content} />
-      <Input style={styles.little} placeholder="요청 단어" onChangeText={setName} value={name} />
-      <PrimaryButton onPress={addStart}>등록하기</PrimaryButton>
+      <Input
+        style={styles.little}
+        placeholder="요청 제목"
+        onChangeText={setTitle}
+        value={title}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="요청 내용"
+        onChangeText={setContent}
+        value={content}
+      />
+      <Input
+        style={styles.little}
+        placeholder="요청 단어"
+        onChangeText={setName}
+        value={name}
+      />
+      <PrimaryButton onPress={RequestHandler}>등록하기</PrimaryButton>
     </SafeAreaView>
   );
 }

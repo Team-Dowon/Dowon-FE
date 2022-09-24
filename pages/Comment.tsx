@@ -5,7 +5,7 @@ import PrimaryButton from "../component/PrimaryButton";
 import { axios_get, axios_post, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import UserContext from "../service/UserContext";
-import { Feather } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 type Commenttype = {
   id: number;
@@ -57,6 +57,8 @@ export default function Comment({ route }: any) {
     axios_delete(`post/${route.params.postid}/comment/${key}`)
       .then((response) => {
         console.log(response.data);
+        console.log("댓글 삭제 완료");
+        getListComment();
       })
       .catch(function (error) {
         console.log(error);
@@ -73,11 +75,11 @@ export default function Comment({ route }: any) {
       <Card>
         <Card.Title>
           {item.content}
-          <Feather
-            name="x"
-            size={24}
+          <SimpleLineIcons
+            name="options-vertical"
+            size={15}
             color="black"
-            style={{ marginRight: "auto" }}
+            style={{ alignItems: "flex-end" }}
             onPress={() => deleteComment(item.id)}
           />
         </Card.Title>
