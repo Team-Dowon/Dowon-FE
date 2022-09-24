@@ -4,7 +4,7 @@ import { Card } from "@rneui/themed";
 import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import MenuComponent from "../component/MenuComponent";
+import BottomWindow from "../component/BottomWindow";
 
 type Posttype = {
   id: number;
@@ -15,6 +15,8 @@ type Posttype = {
 };
 
 export default function Community({ navigation }: any) {
+  const [BottomVisible, setBottomVisible] = useState(false);
+  const [postid, setPostid] = useState<number>(0);
   const [ListPost, setListPost] = useState<Posttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
 
@@ -43,9 +45,13 @@ export default function Community({ navigation }: any) {
       });
   };
 
-  const modifyPost = async () => {
-    console.log("게시글 수정");
-  };
+  // 수정 클릭하면 postid변수 Post에 파라미터로 전달
+  function PostidHandler(params: number) {
+    //console.log(params);
+    navigation.navigate("Post", {
+      postid: params,
+    });
+  }
 
   useEffect(() => {
     getListPost();
@@ -66,8 +72,15 @@ export default function Community({ navigation }: any) {
             }}
           >
             <Text>{item.title}</Text>
-            <MenuComponent modifyfunc={() => modifyPost()} deletefunc={() => deletePost(item.id)} />
-            {/*<SimpleLineIcons name="options-vertical" size={15} color="black" style={{ alignItems: "flex-end" }} onPress={() => deletePost(item.id)} />*/}
+            <SimpleLineIcons
+              name="options-vertical"
+              size={30}
+              color="black"
+              onPress={() => {
+                setBottomVisible(true);
+                setPostid(item.id);
+              }}
+            />
           </View>
         </Card.Title>
         <Card.Divider />
@@ -80,7 +93,20 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListPost}
+        renderItem={renderItem}
+        keyExtractor={(item: Posttype, index: number) => index.toString()}
+      />
+      {BottomVisible ? (
+        <BottomWindow
+          BottomVisible={BottomVisible}
+          setBottomVisible={setBottomVisible}
+          modifyfunc={() => PostidHandler(postid)}
+          deletefunc={() => deletePost(postid)}
+        />
+      ) : null}
     </SafeAreaView>
   );
 }

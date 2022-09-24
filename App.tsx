@@ -56,8 +56,6 @@ export default function App() {
     setUserlogin,
   };
 
-  const { height, width } = useWindowDimensions();
-
   // font 불러오기
   useEffect(() => {
     const Load = async () => {
@@ -105,7 +103,11 @@ export default function App() {
               },
             }}
           >
-            <Stack.Screen name="BottomTab" component={BottomTab} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="BottomTab"
+              component={BottomTab}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Login"
               component={Login}

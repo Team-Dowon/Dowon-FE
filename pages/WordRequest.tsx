@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { axios_post } from "../api/api";
+import { axios_post, axios_put } from "../api/api";
 import UserContext from "../service/UserContext";
 
 export default function WordRequest({ navigation }: any) {
@@ -31,6 +31,23 @@ export default function WordRequest({ navigation }: any) {
           console.log("신조어 요청 실패");
         });
     }
+  };
+
+  //수정 작업중....
+  const modifyRequest = async (key: number) => {
+    axios_put(`post/${key}`, {
+      title: title,
+      content: content,
+      name: name,
+    })
+      .then((response) => {
+        console.log(response.data);
+        console.log("신조어 요청 수정 완료");
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log("신조어 요청 수정 실패");
+      });
   };
 
   return (
