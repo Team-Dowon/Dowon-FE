@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useWindowDimensions } from "react-native";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { Feather } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./pages/Login";
@@ -9,6 +9,7 @@ import Comment from "./pages/Comment";
 import SignUp from "./pages/SignUp";
 import WordRequest from "./pages/WordRequest";
 import Post from "./pages/Post";
+import RequestList from "./pages/RequestList";
 import BottomTab from "./navigation/BottomTab";
 import Toast, { BaseToast } from "react-native-toast-message";
 import UserContext from "./service/UserContext";
@@ -120,6 +121,13 @@ export default function App() {
               component={SignUp}
               options={{
                 title: "회원가입",
+              }}
+            />
+            <Stack.Screen
+              name="RequestList"
+              component={RequestList}
+              options={{
+                title: "신조어 요청 목록",
               }}
             />
             <Stack.Screen

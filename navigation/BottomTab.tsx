@@ -6,7 +6,6 @@ import Profile from "../pages/Profile";
 import WordExtract from "../pages/WordExtract";
 import Main from "../pages/Main";
 import StackDictionary from "../navigation/StackDictionary";
-import LogoTitle from "../component/LogoTitle";
 
 export default function BottomTab({ navigation }: any) {
   const Tab = createBottomTabNavigator();
@@ -61,7 +60,15 @@ export default function BottomTab({ navigation }: any) {
         component={Community}
         options={{
           title: "커뮤니티",
-          headerRight: () => <Feather name="plus-square" size={24} color="black" style={{ paddingRight: 15 }} onPress={() => navigation.navigate("Post")} />,
+          headerRight: () => (
+            <Feather
+              name="plus-square"
+              size={24}
+              color="black"
+              style={{ paddingRight: 15 }}
+              onPress={() => navigation.navigate("Post", { postid: null })}
+            />
+          ),
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <AntDesign

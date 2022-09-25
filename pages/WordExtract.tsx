@@ -9,15 +9,20 @@ export default function WordExtract({ navigation }: any) {
     console.log("신조어 추출 버튼 눌림");
   }
 
-  function addWordRequest() {
-    navigation.navigate("WordRequest");
+  function RequestList() {
+    navigation.navigate("RequestList");
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput style={styles.input} placeholder="문장을 입력해 주세요" onChangeText={setSentence} value={sentence} />
+      <TextInput
+        style={styles.input}
+        placeholder="문장을 입력해 주세요"
+        onChangeText={setSentence}
+        value={sentence}
+      />
       <PrimaryButton onPress={extractStart}>신조어 추출</PrimaryButton>
-      <PrimaryButton onPress={addWordRequest}>신조어 등록 요청</PrimaryButton>
+      <PrimaryButton onPress={RequestList}>신조어 등록 요청</PrimaryButton>
     </SafeAreaView>
   );
 }

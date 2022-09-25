@@ -8,8 +8,9 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   PanResponder,
-  Pressable,
+  TouchableHighlight,
 } from "react-native";
+import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 
 // 창 아래에서 modal창 나오게 하는 컴포넌트
 export default function BottomWindow(props: any) {
@@ -21,12 +22,14 @@ export default function BottomWindow(props: any) {
     outputRange: [0, 0, 1],
   });
 
+  // BottomSheet를 초기 위치로 움직이는 함수입니다.
   const resetBottomSheet = Animated.timing(panY, {
     toValue: 0,
     duration: 300,
     useNativeDriver: true,
   });
 
+  // BottomSheet를 내리는 함수입니다.
   const closeBottomSheet = Animated.timing(panY, {
     toValue: screenHeight,
     duration: 300,
@@ -41,7 +44,7 @@ export default function BottomWindow(props: any) {
         panY.setValue(gestureState.dy);
       },
       onPanResponderRelease: (event, gestureState) => {
-        if (gestureState.dy > 0 && gestureState.vy > 1.5) {
+        if (gestureState.dy > 0 && gestureState.vy > 0.5) {
           closeModal();
         } else {
           resetBottomSheet.start();
@@ -80,16 +83,24 @@ export default function BottomWindow(props: any) {
           }}
           {...panResponders.panHandlers}
         >
-          <Pressable onPress={modifyfunc}>
-            <View style={styles.modalButtonyes}>
-              <Text style={styles.buttontextstyle}> 수정 </Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={deletefunc}>
-            <View style={styles.modalButtonyes}>
-              <Text style={styles.buttontextstyle}> 삭제 </Text>
-            </View>
-          </Pressable>
+          <View style={{ marginTop: 20 }}>
+            <TouchableHighlight onPress={modifyfunc} underlayColor="#acacac">
+              <View style={styles.modalButton}>
+                <Text style={styles.buttontextstyle}>
+                  <SimpleLineIcons name="pencil" size={24} color="black" />
+                  &nbsp;&nbsp;수정
+                </Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={deletefunc} underlayColor="#acacac">
+              <View style={styles.modalButton}>
+                <Text style={styles.buttontextstyle}>
+                  <MaterialIcons name="delete" size={24} color="black" />
+                  &nbsp;&nbsp;삭제
+                </Text>
+              </View>
+            </TouchableHighlight>
+          </View>
         </Animated.View>
       </View>
     </Modal>
@@ -106,26 +117,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomSheetContainer: {
-    height: 300,
+    height: 150,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  modalButtonyes: {
+  modalButton: {
     borderRadius: 100,
     height: 45,
     alignSelf: "center",
-    justifyContent: "center",
-    backgroundColor: "#640233",
-    width: 90,
+    justifyContent: "flex-start",
+    minWidth: "100%",
+    flexDirection: "row",
+    marginTop: 10,
   },
   buttontextstyle: {
-    textAlign: "center",
-    fontSize: 20,
-    color: "#ffffff",
-    marginTop: "-5%",
+    textAlign: "left",
+    fontSize: 30,
+    color: "#000000",
+    marginLeft: 20,
+    marginTop: -25,
     fontFamily: "notosanskr-bold",
   },
 });

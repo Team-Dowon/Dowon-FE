@@ -10,6 +10,7 @@ export default function Post({ navigation, route }: any) {
   const [content, setContent] = useState<string>("");
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
+  //게시글 작성 게시
   const postHandler = async () => {
     if (!userContext.userlogin) {
       console.log("로그인 하셔야합니다!");
@@ -31,7 +32,7 @@ export default function Post({ navigation, route }: any) {
     }
   };
 
-  //수정 작업중....
+  //게시글 수정
   const modifyPost = async (key: number) => {
     if (!userContext.userlogin) {
       console.log("로그인 하셔야합니다!");
@@ -53,6 +54,7 @@ export default function Post({ navigation, route }: any) {
     }
   };
 
+  // 게시글 수정 할때 기존에 적혀있던 내용들 가져오는 함수
   useEffect(() => {
     if (route.params.postid) {
       axios_get(`post/${route.params.postid}`)
@@ -92,7 +94,7 @@ export default function Post({ navigation, route }: any) {
           수정하기
         </PrimaryButton>
       ) : (
-        <PrimaryButton onPress={() => postHandler}>등록하기</PrimaryButton>
+        <PrimaryButton onPress={postHandler}>등록하기</PrimaryButton>
       )}
     </SafeAreaView>
   );
