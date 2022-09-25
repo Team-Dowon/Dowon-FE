@@ -5,8 +5,11 @@ import { Button } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import LogoTitle from "../component/LogoTitle";
 import { axios_post } from "../api/api";
+import ModalWindow from "../component/ModalWindow";
 
 export default function Signup({ navigation }: any) {
+  const [blankModal, setBlankModal] = useState(false);
+  const [coincideModal, setCoincideModal] = useState(false);
   const [userid, setUserId] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -18,9 +21,9 @@ export default function Signup({ navigation }: any) {
   const submitSignUpData = async () => {
     //modal 같은 거 만들어서 화면에 띄어주게 할 예정
     if (!(userid && nickname && email && phone && password && checkpassword)) {
-      console.log("빈칸은 다 채워야함!");
+      setBlankModal(true);
     } else if (password !== checkpassword) {
-      console.log("비밀번호가 일치하지 않음!");
+      setCoincideModal(true);
     } else {
       axios_post("user/register", {
         u_id: userid,
@@ -45,14 +48,54 @@ export default function Signup({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <LogoTitle />
-      <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
-      <Input style={styles.input} placeholder="닉네임" onChangeText={setNickname} value={nickname} />
-      <Input style={styles.input} placeholder="이메일" onChangeText={setEmail} value={email} />
-      <Input style={styles.input} placeholder="전화번호" onChangeText={setPhone} value={phone} />
-      <Input style={styles.input} placeholder="비밀번호" onChangeText={setPassword} value={password} />
-      <Input style={styles.input} placeholder="비밀번호 확인" onChangeText={setCheckPassword} value={checkpassword} />
+      <Input
+        style={styles.input}
+        placeholder="아이디"
+        onChangeText={setUserId}
+        value={userid}
+      />
+      <Input
+        style={styles.input}
+        placeholder="닉네임"
+        onChangeText={setNickname}
+        value={nickname}
+      />
+      <Input
+        style={styles.input}
+        placeholder="이메일"
+        onChangeText={setEmail}
+        value={email}
+      />
+      <Input
+        style={styles.input}
+        placeholder="전화번호"
+        onChangeText={setPhone}
+        value={phone}
+      />
+      <Input
+        style={styles.input}
+        placeholder="비밀번호"
+        onChangeText={setPassword}
+        value={password}
+      />
+      <Input
+        style={styles.input}
+        placeholder="비밀번호 확인"
+        onChangeText={setCheckPassword}
+        value={checkpassword}
+      />
       <View style={styles.div} />
       <PrimaryButton onPress={submitSignUpData}>회원가입</PrimaryButton>
+      <ModalWindow
+        open={blankModal}
+        okPress={() => setBlankModal(false)}
+        text2="빈칸은 다 채우셔야합니다!"
+      />
+      <ModalWindow
+        open={coincideModal}
+        okPress={() => setCoincideModal(false)}
+        text2="비밀번호가 일치하지 않습니다!"
+      />
     </SafeAreaView>
   );
 }

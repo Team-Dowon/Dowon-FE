@@ -7,6 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 import UserContext from "../service/UserContext";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
+import ModalWindow from "../component/ModalWindow";
 
 type Commenttype = {
   id: number;
@@ -17,6 +18,8 @@ type Commenttype = {
 
 export default function Comment({ route }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+  const [blankModal, setBlankModal] = useState(false);
   const [ismodify, setIsModify] = useState(false);
   const [commentid, setCommentid] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
@@ -24,11 +27,12 @@ export default function Comment({ route }: any) {
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
+  // 댓글 작성 하는 함수
   const PostComment = async () => {
     if (!userContext.userlogin) {
-      console.log("로그인 하셔야합니다!");
+      setLoginModal(true);
     } else if (!comment) {
-      console.log("빈칸은 다 채워야함!");
+      setBlankModal(true);
     } else {
       axios_post(`post/${route.params.postid}/comment`, {
         content: comment,
@@ -57,6 +61,7 @@ export default function Comment({ route }: any) {
       });
   };
 
+  //댓글 삭제 하는 함수
   const deleteComment = async (key: number) => {
     axios_delete(`post/${route.params.postid}/comment/${key}`)
       .then((response) => {
@@ -70,6 +75,7 @@ export default function Comment({ route }: any) {
       });
   };
 
+  // 댓글 가져오는 함수
   const getComment = async (key: number) => {
     axios_get(`post/${route.params.postid}/comment/${key}`)
       .then((response) => {
@@ -83,12 +89,12 @@ export default function Comment({ route }: any) {
       });
   };
 
-  //댓글 수정
+  //댓글 수정하는 함수
   const modifyComment = async (key: number) => {
     if (!userContext.userlogin) {
-      console.log("로그인 하셔야합니다!");
+      setLoginModal(true);
     } else if (!comment) {
-      console.log("빈칸은 다 채워야함!");
+      setBlankModal(true);
     } else {
       axios_put(`post/${route.params.postid}/comment/${key}`, {
         content: comment,
@@ -106,6 +112,7 @@ export default function Comment({ route }: any) {
     }
   };
 
+  //페이지가 새로고침 될 때마다 댓글 가져옴
   useEffect(() => {
     getListComment();
   }, [isFocused]);
@@ -140,7 +147,6 @@ export default function Comment({ route }: any) {
         onChangeText={setComment}
         value={comment}
       />
-      {/* 수정 취소 같은거 하나 만들어야 함  */}
       {ismodify ? (
         <View style={styles.row}>
           <PrimaryButton
@@ -184,6 +190,16 @@ export default function Comment({ route }: any) {
           }}
         />
       ) : null}
+      <ModalWindow
+        open={loginModal}
+        okPress={() => setLoginModal(false)}
+        text2="로그인 하셔야 합니다!"
+      />
+      <ModalWindow
+        open={blankModal}
+        okPress={() => setBlankModal(false)}
+        text2="빈칸을 다 채워주세요!"
+      />
     </SafeAreaView>
   );
 }

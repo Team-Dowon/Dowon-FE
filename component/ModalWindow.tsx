@@ -10,7 +10,6 @@ export default function ModalWindow({
   text1,
   text2,
   cancel,
-  option,
 }: any) {
   return (
     <>
@@ -35,13 +34,6 @@ export default function ModalWindow({
             </Pressable>
           )}
         </View>
-      </Modal>
-      <Modal
-        isVisible={option}
-        style={styles.modal}
-        swipeDirection={["up", "left", "right", "down"]}
-      >
-        <View style={styles.textContainer}></View>
       </Modal>
     </>
   );

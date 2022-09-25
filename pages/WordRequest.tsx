@@ -4,8 +4,13 @@ import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post, axios_put, axios_get } from "../api/api";
 import UserContext from "../service/UserContext";
+import ModalWindow from "../component/ModalWindow";
 
 export default function WordRequest({ navigation, route }: any) {
+  const [loginModal, setLoginModal] = useState(false);
+  const [blankModal, setBlankModal] = useState(false);
+  const [failpostModal, setFailPostModal] = useState(false);
+  const [failmodifyModal, setFailModifyModal] = useState(false);
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -14,9 +19,9 @@ export default function WordRequest({ navigation, route }: any) {
   //신조어 요청
   const RequestHandler = async () => {
     if (!userContext.userlogin) {
-      console.log("로그인 하셔야합니다!");
+      setLoginModal(true);
     } else if (!(title && content && name)) {
-      console.log("빈칸은 다 채워야함!");
+      setBlankModal(true);
     } else {
       axios_post("request", {
         title: title,
@@ -106,6 +111,26 @@ export default function WordRequest({ navigation, route }: any) {
       ) : (
         <PrimaryButton onPress={RequestHandler}>등록하기</PrimaryButton>
       )}
+      <ModalWindow
+        open={loginModal}
+        okPress={() => setLoginModal(false)}
+        text2="로그인 하셔야 합니다!"
+      />
+      <ModalWindow
+        open={blankModal}
+        okPress={() => setBlankModal(false)}
+        text2="빈칸을 다 채워주세요!"
+      />
+      <ModalWindow
+        open={failpostModal}
+        okPress={() => setFailPostModal(false)}
+        text2="신조어 요청 실패!"
+      />
+      <ModalWindow
+        open={failmodifyModal}
+        okPress={() => setFailModifyModal(false)}
+        text2="신조어 요청 수정 실패!"
+      />
     </SafeAreaView>
   );
 }
