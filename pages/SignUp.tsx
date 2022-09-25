@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import { Input } from "@rneui/themed";
 import { Button } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { basic_theme } from "../theme";
 import LogoTitle from "../component/LogoTitle";
 import { axios_post } from "../api/api";
 
@@ -61,7 +60,7 @@ export default function Signup({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

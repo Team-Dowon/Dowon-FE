@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useWindowDimensions } from "react-native";
-import { basic_theme } from "./theme";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { Feather } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./pages/Login";
@@ -10,8 +9,10 @@ import Comment from "./pages/Comment";
 import SignUp from "./pages/SignUp";
 import WordRequest from "./pages/WordRequest";
 import Post from "./pages/Post";
+import RequestList from "./pages/RequestList";
 import BottomTab from "./navigation/BottomTab";
 import Toast, { BaseToast } from "react-native-toast-message";
+import UserContext from "./service/UserContext";
 
 const toastConfig = {
   // 어떤 type이 들어올지 몰라 type을 any로 설정했음
@@ -19,7 +20,7 @@ const toastConfig = {
   success: (props: any) => (
     <BaseToast
       {...props}
-      style={{ borderLeftColor: basic_theme.fgColor }}
+      style={{ borderLeftColor: "#DEE8FF" }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 15,
@@ -39,10 +40,22 @@ const toastConfig = {
 };
 
 export default function App() {
-  const [fontLoad, setFontLoad] = useState(false); // 폰트 불러오기
+  const [fontLoad, setFontLoad] = useState<boolean>(false); // 폰트 불러오기
+  const [userId, setUserId] = useState<string | null>(null); // 전역 아이디 변수
+  const [username, setUserName] = useState<string | null>(null); // 전역 닉네임 변수
+  const [useremail, setUserEmail] = useState<string | null>(null); // 전역 이메일 변수
+  const [userlogin, setUserlogin] = useState<boolean>(false); // 전역 로그인 여부 변수
   const Stack = createStackNavigator();
-
-  const { height, width } = useWindowDimensions();
+  const user = {
+    userId,
+    username,
+    useremail,
+    userlogin,
+    setUserId,
+    setUserName,
+    setUserEmail,
+    setUserlogin,
+  };
 
   // font 불러오기
   useEffect(() => {
@@ -80,59 +93,68 @@ export default function App() {
   // font Loading 여부에 따라 return
   return (
     <>
-      <NavigationContainer onReady={onFontLoadView}>
-        <Stack.Navigator
-          initialRouteName="BottomTab"
-          screenOptions={{
-            headerTitleAlign: "center",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
-        >
-          <Stack.Screen
-            name="BottomTab"
-            component={BottomTab}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              title: "로그인",
+      <UserContext.Provider value={user}>
+        <NavigationContainer onReady={onFontLoadView}>
+          <Stack.Navigator
+            initialRouteName="BottomTab"
+            screenOptions={{
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
             }}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{
-              title: "회원가입",
-            }}
-          />
-          <Stack.Screen
-            name="WordRequest"
-            component={WordRequest}
-            options={{
-              title: "신조어 추가 요청",
-            }}
-          />
-          <Stack.Screen
-            name="Post"
-            component={Post}
-            options={{
-              title: "게시글 작성",
-            }}
-          />
-          <Stack.Screen
-            name="Comment"
-            component={Comment}
-            options={{
-              title: "댓글",
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <Toast config={toastConfig} />
+          >
+            <Stack.Screen
+              name="BottomTab"
+              component={BottomTab}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                title: "로그인",
+              }}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUp}
+              options={{
+                title: "회원가입",
+              }}
+            />
+            <Stack.Screen
+              name="RequestList"
+              component={RequestList}
+              options={{
+                title: "신조어 요청 목록",
+              }}
+            />
+            <Stack.Screen
+              name="WordRequest"
+              component={WordRequest}
+              options={{
+                title: "신조어 추가 요청",
+              }}
+            />
+            <Stack.Screen
+              name="Post"
+              component={Post}
+              options={{
+                title: "게시글 작성",
+              }}
+            />
+            <Stack.Screen
+              name="Comment"
+              component={Comment}
+              options={{
+                title: "댓글",
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <Toast config={toastConfig} />
+      </UserContext.Provider>
     </>
   );
 }

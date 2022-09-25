@@ -3,34 +3,34 @@ import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { basic_theme } from "../theme";
+import ModalWindow from "../component/ModalWindow";
 import LogoTitle from "../component/LogoTitle";
-import UserContext from "../service/UserContext";
 import { axios_post } from "../api/api";
+import axios from "axios";
 
 export default function Login({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const userContext = useContext(UserContext);
+  const [loginModal, setLoginModal] = useState(false);
 
   // 로그인 기능 연동
   const logInHandler = async () => {
     //modal 같은 거 만들어서 화면에 띄어주게 할 예정
     if (!(userid && password)) {
-      console.log("빈칸은 다 채워야함!");
+      setLoginModal(true);
     } else {
       axios_post("user/login", {
         u_id: userid,
         password: password,
       })
-        .then((response) => {
+        .then(async (response) => {
           // 어떤 식으로 오류나는지 메세지로 표시하고 싶은데 아직 잘 안됨 일단 보류
-          console.log(response.data.message); //로그인 성공하면 로그인 완료라고 뜸
-          console.log(response.data.nickname);
-          console.log(response.data.refresh);
-          console.log(response.data.access);
-          AsyncStorage.setItem("access", JSON.stringify(response.data.access));
+          await AsyncStorage.setItem("access", response.data.access);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${response.data.access}`;
           navigation.navigate("Profile");
+          console.log(response.data); //로그인 성공하면 로그인 완료라고 뜸
         })
         .catch(function (error) {
           console.log(error);
@@ -67,6 +67,14 @@ export default function Login({ navigation }: any) {
           </Text>
         </Text>
       </View>
+      <ModalWindow
+        open={loginModal}
+        okPress={() => setLoginModal(false)}
+        title="하이"
+        text1="바이"
+        text2="빈칸을 다 채워주세요"
+        cancel="true"
+      />
     </SafeAreaView>
   );
 }
@@ -74,7 +82,7 @@ export default function Login({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

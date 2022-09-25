@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { basic_theme } from "../theme";
 
 export default function Search({ navigation }: any) {
   const [searchslang, setSearchSlang] = useState<string>("");
@@ -14,12 +13,7 @@ export default function Search({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.mainContainer}>
-        <SearchBar
-          containerStyle={styles.search}
-          placeholder="Search"
-          onChangeText={setSearchSlang}
-          value={searchslang}
-        />
+        <SearchBar containerStyle={styles.search} placeholder="Search" onChangeText={setSearchSlang} value={searchslang} />
         <PrimaryButton onPress={searchWord}>단어 검색</PrimaryButton>
       </View>
     </SafeAreaView>
@@ -29,7 +23,7 @@ export default function Search({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
   },
   mainContainer: {
     flex: 1,

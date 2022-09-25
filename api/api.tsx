@@ -13,12 +13,12 @@ export const axios_post = async (url: string, sendData: any) => {
   return response;
 };
 
-// 이건 나중에 더 확인해볼 예정
 export const axios_get = async (url: string) => {
   const response = await axios.get(`${baseUrl}${url}`);
   return response;
 };
 
+// 이건 나중에 더 확인해볼 예정
 export const axios_put = async (url: string, sendData: any) => {
   const response = await axios.put(`${baseUrl}${url}`, sendData, {
     headers: {

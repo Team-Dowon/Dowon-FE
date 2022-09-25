@@ -5,56 +5,58 @@ import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
+import PrimaryButton from "../component/PrimaryButton";
 
 type Posttype = {
   id: number;
   user_nickname: string;
+  name: string;
   title: string;
   content: string;
   date: string;
 };
 
-export default function Community({ navigation }: any) {
+export default function RequestList({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
-  const [postid, setPostid] = useState<number>(0);
-  const [ListPost, setListPost] = useState<Posttype[]>([]);
+  const [requestid, setRequestid] = useState<number>(0);
+  const [ListRequest, setListRequest] = useState<Posttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
 
-  // 커뮤니티 게시글 가져오기
-  const getListPost = async () => {
-    axios_get("post")
+  // 신조어 요청 목록 가져오기
+  const getListRequest = async () => {
+    axios_get("request")
       .then((response) => {
-        setListPost(response.data.reverse());
+        setListRequest(response.data.reverse());
       })
       .catch(function (error) {
         console.log(error);
-        console.log("게시글 가져오기 실패");
+        console.log("신조어 요청 목록 가져오기 실패");
       });
   };
 
-  const deletePost = async (key: number) => {
-    axios_delete(`post/${key}`)
+  const deleteRequest = async (key: number) => {
+    axios_delete(`request/${key}`)
       .then((response) => {
         console.log(response.data);
-        console.log("게시글 삭제 완료");
-        getListPost();
+        console.log("신조어 요청 삭제 완료");
+        getListRequest();
       })
       .catch(function (error) {
         console.log(error);
-        console.log("게시글 삭제 실패");
+        console.log("신조어 요청 삭제 실패");
       });
   };
 
-  // 수정 클릭하면 postid변수 Post에 파라미터로 전달
-  function PostidHandler(params: number) {
+  // 수정 클릭하면 requestid변수 WordRequest에 파라미터로 전달
+  function RequestidHandler(params: number) {
     //console.log(params);
-    navigation.navigate("Post", {
-      postid: params,
+    navigation.navigate("WordRequest", {
+      requestid: params,
     });
   }
 
   useEffect(() => {
-    getListPost();
+    getListRequest();
   }, [isFocused]);
 
   const renderItem = ({ item }: { item: Posttype }) => {
@@ -68,34 +70,33 @@ export default function Community({ navigation }: any) {
             color="black"
             onPress={() => {
               setBottomVisible(true);
-              setPostid(item.id);
+              setRequestid(item.id);
             }}
           />
         </Card.Title>
-
         <Card.Divider />
+        <Text>신조어 : {item.name}</Text>
         <Text>내용 : {item.content}</Text>
         <Text>작성자 : {item.user_nickname}</Text>
         <Text>작성 일자 : {item.date}</Text>
-        <View style={{ alignItems: "flex-end", marginTop: 10 }}>
-          <MaterialCommunityIcons
-            name="comment-text-outline"
-            size={24}
-            color="black"
-            onPress={() => {
-              navigation.navigate("Comment", { postid: item.id });
-            }}
-          />
-        </View>
       </Card>
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <PrimaryButton
+        onPress={() =>
+          navigation.navigate("WordRequest", {
+            requestid: null,
+          })
+        }
+      >
+        신조어 요청
+      </PrimaryButton>
       <FlatList
         style={styles.scroll}
-        data={ListPost}
+        data={ListRequest}
         renderItem={renderItem}
         keyExtractor={(item: Posttype, index: number) => index.toString()}
       />
@@ -103,9 +104,9 @@ export default function Community({ navigation }: any) {
         <BottomWindow
           BottomVisible={BottomVisible}
           setBottomVisible={setBottomVisible}
-          modifyfunc={() => PostidHandler(postid)}
+          modifyfunc={() => RequestidHandler(requestid)}
           deletefunc={() => {
-            deletePost(postid);
+            deleteRequest(requestid);
             setBottomVisible(false);
           }}
         />

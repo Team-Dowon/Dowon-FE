@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
 import { Button, ListItem } from "@rneui/themed";
-import { basic_theme } from "../theme";
 import { axios_post } from "../api/api";
 
 type Slangtype = {
@@ -51,12 +50,7 @@ export default function SlangList({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.scroll}
-        data={ListSlang}
-        renderItem={renderItem}
-        keyExtractor={(item: Slangtype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListSlang} renderItem={renderItem} keyExtractor={(item: Slangtype, index: number) => index.toString()} />
     </SafeAreaView>
   );
 }
@@ -64,7 +58,7 @@ export default function SlangList({ navigation, route }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

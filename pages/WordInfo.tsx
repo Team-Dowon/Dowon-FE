@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
-import { basic_theme } from "../theme";
 import { axios_get } from "../api/api";
 
 type Slangtype = {
@@ -50,7 +49,7 @@ export default function WordInfo({ route }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: basic_theme.bgColor,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },
