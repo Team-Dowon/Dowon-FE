@@ -32,6 +32,7 @@ export default function WordInfo({ route }: any) {
       });
   };
 
+  // 페이지가 나타날 때 신조어 상세정보 가져옴
   useEffect(() => {
     getSlang();
   }, []);

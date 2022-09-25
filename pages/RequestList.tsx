@@ -6,6 +6,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
 import PrimaryButton from "../component/PrimaryButton";
+import ModalWindow from "../component/ModalWindow";
 
 type Posttype = {
   id: number;
@@ -18,6 +19,7 @@ type Posttype = {
 
 export default function RequestList({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
+  const [faildeleteModal, setFailDeleteModal] = useState(false);
   const [requestid, setRequestid] = useState<number>(0);
   const [ListRequest, setListRequest] = useState<Posttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
@@ -34,6 +36,7 @@ export default function RequestList({ navigation }: any) {
       });
   };
 
+  // 신조어 요청 삭제
   const deleteRequest = async (key: number) => {
     axios_delete(`request/${key}`)
       .then((response) => {
@@ -44,6 +47,7 @@ export default function RequestList({ navigation }: any) {
       .catch(function (error) {
         console.log(error);
         console.log("신조어 요청 삭제 실패");
+        setFailDeleteModal(true);
       });
   };
 
@@ -55,6 +59,7 @@ export default function RequestList({ navigation }: any) {
     });
   }
 
+  // 페이지가 새로고침 될 때마다 신조어 요청 목록 가져오기
   useEffect(() => {
     getListRequest();
   }, [isFocused]);
@@ -111,6 +116,11 @@ export default function RequestList({ navigation }: any) {
           }}
         />
       ) : null}
+      <ModalWindow
+        open={faildeleteModal}
+        okPress={() => setFailDeleteModal(false)}
+        text2="삭제 실패!"
+      />
     </SafeAreaView>
   );
 }

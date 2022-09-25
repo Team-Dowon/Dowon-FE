@@ -29,6 +29,7 @@ export default function SlangList({ navigation, route }: any) {
       });
   };
 
+  // 페이지가 나타날 때 신조어 목록 가져옴
   useEffect(() => {
     getListSlang();
   }, []);
@@ -50,7 +51,12 @@ export default function SlangList({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList style={styles.scroll} data={ListSlang} renderItem={renderItem} keyExtractor={(item: Slangtype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListSlang}
+        renderItem={renderItem}
+        keyExtractor={(item: Slangtype, index: number) => index.toString()}
+      />
     </SafeAreaView>
   );
 }

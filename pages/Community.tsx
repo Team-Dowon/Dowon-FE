@@ -5,6 +5,7 @@ import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
+import ModalWindow from "../component/ModalWindow";
 
 type Posttype = {
   id: number;
@@ -16,6 +17,7 @@ type Posttype = {
 
 export default function Community({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
+  const [faildeleteModal, setFaildeleteModal] = useState(false);
   const [postid, setPostid] = useState<number>(0);
   const [ListPost, setListPost] = useState<Posttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
@@ -32,6 +34,7 @@ export default function Community({ navigation }: any) {
       });
   };
 
+  //게시글 삭제
   const deletePost = async (key: number) => {
     axios_delete(`post/${key}`)
       .then((response) => {
@@ -42,6 +45,7 @@ export default function Community({ navigation }: any) {
       .catch(function (error) {
         console.log(error);
         console.log("게시글 삭제 실패");
+        setFaildeleteModal(true);
       });
   };
 
@@ -53,6 +57,7 @@ export default function Community({ navigation }: any) {
     });
   }
 
+  // 페이지가 새로고침 될 때 마다 게시글 가져옴
   useEffect(() => {
     getListPost();
   }, [isFocused]);
@@ -110,6 +115,11 @@ export default function Community({ navigation }: any) {
           }}
         />
       ) : null}
+      <ModalWindow
+        open={faildeleteModal}
+        okPress={() => setFaildeleteModal(false)}
+        text2="게시글 작성자가 아닙니다!"
+      />
     </SafeAreaView>
   );
 }

@@ -12,10 +12,10 @@ export default function Login({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginModal, setLoginModal] = useState(false);
+  const [failloginModal, setFailLoginModal] = useState(false);
 
   // 로그인 기능 연동
   const logInHandler = async () => {
-    //modal 같은 거 만들어서 화면에 띄어주게 할 예정
     if (!(userid && password)) {
       setLoginModal(true);
     } else {
@@ -35,6 +35,7 @@ export default function Login({ navigation }: any) {
         .catch(function (error) {
           console.log(error);
           console.log("로그인 실패");
+          setFailLoginModal(true);
         });
     }
   };
@@ -70,10 +71,12 @@ export default function Login({ navigation }: any) {
       <ModalWindow
         open={loginModal}
         okPress={() => setLoginModal(false)}
-        title="하이"
-        text1="바이"
-        text2="빈칸을 다 채워주세요"
-        cancel="true"
+        text2="빈칸을 다 채워주세요!"
+      />
+      <ModalWindow
+        open={failloginModal}
+        okPress={() => setFailLoginModal(false)}
+        text2="로그인 실패!"
       />
     </SafeAreaView>
   );
