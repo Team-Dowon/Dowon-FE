@@ -8,6 +8,7 @@ import UserContext from "../service/UserContext";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
 import ModalWindow from "../component/ModalWindow";
+import Toast from "react-native-toast-message";
 
 type Commenttype = {
   id: number;
@@ -40,15 +41,22 @@ export default function Comment({ route }: any) {
         .then(async (response) => {
           setComment("");
           getListComment();
+          Toast.show({
+            type: "success",
+            text1: "댓글 게시 완료! 🎉",
+          });
         })
         .catch(function (error) {
           console.log(error);
-          console.log("댓글 게시 실패");
+          Toast.show({
+            type: "error",
+            text1: "댓글 게시 실패 😥",
+          });
         });
     }
   };
 
-  //댓글 가져오기
+  //댓글 목록 가져오기
   const getListComment = async () => {
     axios_get(`post/${route.params.postid}/comment`)
       .then((response) => {
@@ -66,16 +74,23 @@ export default function Comment({ route }: any) {
     axios_delete(`post/${route.params.postid}/comment/${key}`)
       .then((response) => {
         console.log(response.data);
-        console.log("댓글 삭제 완료");
         getListComment();
+        Toast.show({
+          type: "success",
+          text1: "댓글 삭제 완료! 🎉",
+        });
       })
       .catch(function (error) {
         console.log(error);
-        console.log("댓글 삭제 실패");
+        Toast.show({
+          type: "error",
+          text1: "댓글 삭제 실패 😥",
+          text2: "혹시 댓글 작성자 분이 아니신가요?",
+        });
       });
   };
 
-  // 댓글 가져오는 함수
+  // 특정 댓글 정보 가져오는 함수
   const getComment = async (key: number) => {
     axios_get(`post/${route.params.postid}/comment/${key}`)
       .then((response) => {
@@ -89,7 +104,7 @@ export default function Comment({ route }: any) {
       });
   };
 
-  //댓글 수정하는 함수
+  // 특정 댓글 수정하는 함수
   const modifyComment = async (key: number) => {
     if (!userContext.userlogin) {
       setLoginModal(true);
@@ -101,13 +116,20 @@ export default function Comment({ route }: any) {
       })
         .then((response) => {
           console.log(response.data);
-          console.log("댓글 수정 완료");
           setComment("");
           getListComment();
+          Toast.show({
+            type: "success",
+            text1: "댓글 수정 완료! 🎉",
+          });
         })
         .catch(function (error) {
           console.log(error);
-          console.log("댓글 수정 실패");
+          Toast.show({
+            type: "error",
+            text1: "댓글 수정 실패 😥",
+            text2: "혹시 댓글 작성자 분이 아니신가요?",
+          });
         });
     }
   };
@@ -141,12 +163,7 @@ export default function Comment({ route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input
-        style={styles.input}
-        placeholder="댓글"
-        onChangeText={setComment}
-        value={comment}
-      />
+      <Input style={styles.input} placeholder="댓글" onChangeText={setComment} value={comment} />
       {ismodify ? (
         <View style={styles.row}>
           <PrimaryButton
@@ -170,12 +187,7 @@ export default function Comment({ route }: any) {
       ) : (
         <PrimaryButton onPress={PostComment}>등록하기</PrimaryButton>
       )}
-      <FlatList
-        style={styles.scroll}
-        data={ListComment}
-        renderItem={renderItem}
-        keyExtractor={(item: Commenttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
@@ -190,16 +202,8 @@ export default function Comment({ route }: any) {
           }}
         />
       ) : null}
-      <ModalWindow
-        open={loginModal}
-        okPress={() => setLoginModal(false)}
-        text2="로그인 하셔야 합니다!"
-      />
-      <ModalWindow
-        open={blankModal}
-        okPress={() => setBlankModal(false)}
-        text2="빈칸을 다 채워주세요!"
-      />
+      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} text2="로그인 하셔야 합니다!" />
+      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
     </SafeAreaView>
   );
 }

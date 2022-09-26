@@ -14,13 +14,12 @@ import BottomTab from "./navigation/BottomTab";
 import Toast, { BaseToast } from "react-native-toast-message";
 import UserContext from "./service/UserContext";
 
+// Toast는 짧게 메시지 표시해주는 거
 const toastConfig = {
-  // 어떤 type이 들어올지 몰라 type을 any로 설정했음
-  // Toast는 짧게 메시지 표시해주는 거
   success: (props: any) => (
     <BaseToast
       {...props}
-      style={{ borderLeftColor: "#DEE8FF" }}
+      style={{ borderLeftColor: "#D2F39A" }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 15,
@@ -104,11 +103,7 @@ export default function App() {
               },
             }}
           >
-            <Stack.Screen
-              name="BottomTab"
-              component={BottomTab}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name="BottomTab" component={BottomTab} options={{ headerShown: false }} />
             <Stack.Screen
               name="Login"
               component={Login}
@@ -153,8 +148,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-        <Toast config={toastConfig} />
       </UserContext.Provider>
+      <Toast config={toastConfig} />
     </>
   );
 }

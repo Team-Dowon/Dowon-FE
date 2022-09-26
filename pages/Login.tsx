@@ -6,13 +6,13 @@ import PrimaryButton from "../component/PrimaryButton";
 import ModalWindow from "../component/ModalWindow";
 import LogoTitle from "../component/LogoTitle";
 import { axios_post } from "../api/api";
+import Toast from "react-native-toast-message";
 import axios from "axios";
 
 export default function Login({ navigation }: any) {
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginModal, setLoginModal] = useState(false);
-  const [failloginModal, setFailLoginModal] = useState(false);
 
   // 로그인 기능 연동
   const logInHandler = async () => {
@@ -26,16 +26,22 @@ export default function Login({ navigation }: any) {
         .then(async (response) => {
           // 어떤 식으로 오류나는지 메세지로 표시하고 싶은데 아직 잘 안됨 일단 보류
           await AsyncStorage.setItem("access", response.data.access);
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${response.data.access}`;
+          axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`;
           navigation.navigate("Profile");
           console.log(response.data); //로그인 성공하면 로그인 완료라고 뜸
+          Toast.show({
+            type: "success",
+            text1: `로그인되었습니다 ${response.data.nickname}님! 😊`,
+          });
         })
         .catch(function (error) {
           console.log(error);
           console.log("로그인 실패");
-          setFailLoginModal(true);
+          Toast.show({
+            type: "error",
+            text1: "로그인 실패 😥",
+            text2: "아이디가 없거나 비밀번호가 일치하지 않습니다",
+          });
         });
     }
   };
@@ -43,41 +49,19 @@ export default function Login({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <LogoTitle />
-      <Input
-        style={styles.input}
-        placeholder="아이디"
-        onChangeText={setUserId}
-        value={userid}
-      />
-      <Input
-        style={styles.input}
-        placeholder="비밀번호"
-        onChangeText={setPassword}
-        value={password}
-      />
+      <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
+      <Input style={styles.input} placeholder="비밀번호" onChangeText={setPassword} secureTextEntry={true} value={password} />
       <View style={styles.div} />
       <PrimaryButton onPress={logInHandler}>로그인</PrimaryButton>
       <View>
         <Text style={styles.text}>
           {"아이디가 없으면? "}
-          <Text
-            style={styles.navitext}
-            onPress={() => navigation.navigate("SignUp")}
-          >
+          <Text style={styles.navitext} onPress={() => navigation.navigate("SignUp")}>
             {"회원가입"}
           </Text>
         </Text>
       </View>
-      <ModalWindow
-        open={loginModal}
-        okPress={() => setLoginModal(false)}
-        text2="빈칸을 다 채워주세요!"
-      />
-      <ModalWindow
-        open={failloginModal}
-        okPress={() => setFailLoginModal(false)}
-        text2="로그인 실패!"
-      />
+      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} text2="빈칸을 다 채워주세요!" />
     </SafeAreaView>
   );
 }

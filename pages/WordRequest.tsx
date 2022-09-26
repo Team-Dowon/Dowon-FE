@@ -5,19 +5,18 @@ import PrimaryButton from "../component/PrimaryButton";
 import { axios_post, axios_put, axios_get } from "../api/api";
 import UserContext from "../service/UserContext";
 import ModalWindow from "../component/ModalWindow";
+import Toast from "react-native-toast-message";
 
 export default function WordRequest({ navigation, route }: any) {
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);
-  const [failpostModal, setFailPostModal] = useState(false);
-  const [failmodifyModal, setFailModifyModal] = useState(false);
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [name, setName] = useState<string>("");
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
   //신조어 요청
-  const RequestHandler = async () => {
+  const PostRequest = async () => {
     if (!userContext.userlogin) {
       setLoginModal(true);
     } else if (!(title && content && name)) {
@@ -31,10 +30,17 @@ export default function WordRequest({ navigation, route }: any) {
         .then(async (response) => {
           console.log(response.data); //request 게시 완료
           navigation.navigate("RequestList");
+          Toast.show({
+            type: "success",
+            text1: "신조어 요청 완료! 🎉",
+          });
         })
         .catch(function (error) {
           console.log(error);
-          console.log("신조어 요청 실패");
+          Toast.show({
+            type: "error",
+            text1: "신조어 요청 실패 😥",
+          });
         });
     }
   };
@@ -53,11 +59,18 @@ export default function WordRequest({ navigation, route }: any) {
       })
         .then((response) => {
           console.log(response.data);
-          console.log("신조어 요청 수정 완료");
+          Toast.show({
+            type: "success",
+            text1: "신조어 요청 수정 완료! 🎉",
+          });
         })
         .catch(function (error) {
           console.log(error);
-          console.log("신조어 요청 수정 실패");
+          Toast.show({
+            type: "error",
+            text1: "신조어 요청 수정 실패 😥",
+            text2: "혹시 작성자 분이 아니신가요?",
+          });
         });
     }
   };
@@ -81,24 +94,9 @@ export default function WordRequest({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input
-        style={styles.little}
-        placeholder="요청 제목을 입력하세요"
-        onChangeText={setTitle}
-        value={title}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="요청 내용을 입력하세요"
-        onChangeText={setContent}
-        value={content}
-      />
-      <Input
-        style={styles.little}
-        placeholder="요청 단어를 입력하세요"
-        onChangeText={setName}
-        value={name}
-      />
+      <Input style={styles.little} placeholder="요청 제목을 입력하세요" onChangeText={setTitle} value={title} />
+      <TextInput style={styles.input} placeholder="요청 내용을 입력하세요" onChangeText={setContent} value={content} />
+      <Input style={styles.little} placeholder="요청 단어를 입력하세요" onChangeText={setName} value={name} />
       {route.params.requestid ? (
         <PrimaryButton
           onPress={() => {
@@ -109,28 +107,10 @@ export default function WordRequest({ navigation, route }: any) {
           수정하기
         </PrimaryButton>
       ) : (
-        <PrimaryButton onPress={RequestHandler}>등록하기</PrimaryButton>
+        <PrimaryButton onPress={PostRequest}>등록하기</PrimaryButton>
       )}
-      <ModalWindow
-        open={loginModal}
-        okPress={() => setLoginModal(false)}
-        text2="로그인 하셔야 합니다!"
-      />
-      <ModalWindow
-        open={blankModal}
-        okPress={() => setBlankModal(false)}
-        text2="빈칸을 다 채워주세요!"
-      />
-      <ModalWindow
-        open={failpostModal}
-        okPress={() => setFailPostModal(false)}
-        text2="신조어 요청 실패!"
-      />
-      <ModalWindow
-        open={failmodifyModal}
-        okPress={() => setFailModifyModal(false)}
-        text2="신조어 요청 수정 실패!"
-      />
+      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} text2="로그인 하셔야 합니다!" />
+      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
     </SafeAreaView>
   );
 }
