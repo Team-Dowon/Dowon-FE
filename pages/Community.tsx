@@ -5,7 +5,7 @@ import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
-import ModalWindow from "../component/ModalWindow";
+import Toast from "react-native-toast-message";
 
 type Posttype = {
   id: number;
@@ -17,7 +17,6 @@ type Posttype = {
 
 export default function Community({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
-  const [faildeleteModal, setFaildeleteModal] = useState(false);
   const [postid, setPostid] = useState<number>(0);
   const [ListPost, setListPost] = useState<Posttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
@@ -39,19 +38,24 @@ export default function Community({ navigation }: any) {
     axios_delete(`post/${key}`)
       .then((response) => {
         console.log(response.data);
-        console.log("게시글 삭제 완료");
         getListPost();
+        Toast.show({
+          type: "success",
+          text1: "게시글 삭제 완료! 🎉",
+        });
       })
       .catch(function (error) {
         console.log(error);
-        console.log("게시글 삭제 실패");
-        setFaildeleteModal(true);
+        Toast.show({
+          type: "error",
+          text1: "게시글 삭제 실패 😥",
+          text2: "혹시 게시글 작성자 분이 아니신가요?",
+        });
       });
   };
 
   // 수정 클릭하면 postid변수 Post에 파라미터로 전달
   function PostidHandler(params: number) {
-    //console.log(params);
     navigation.navigate("Post", {
       postid: params,
     });
@@ -98,12 +102,7 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.scroll}
-        data={ListPost}
-        renderItem={renderItem}
-        keyExtractor={(item: Posttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
@@ -115,11 +114,6 @@ export default function Community({ navigation }: any) {
           }}
         />
       ) : null}
-      <ModalWindow
-        open={faildeleteModal}
-        okPress={() => setFaildeleteModal(false)}
-        text2="게시글 작성자가 아닙니다!"
-      />
     </SafeAreaView>
   );
 }

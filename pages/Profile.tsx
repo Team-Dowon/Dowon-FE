@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import UserContext from "../service/UserContext";
 import { axios_post, axios_get } from "../api/api";
+import Toast from "react-native-toast-message";
 
 export default function Profile({ navigation }: any) {
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
@@ -53,6 +54,10 @@ export default function Profile({ navigation }: any) {
         userContext.setUserId("");
         userContext.setUserName("");
         userContext.setUserEmail("");
+        Toast.show({
+          type: "success",
+          text1: "로그아웃되었습니다! 🖐",
+        });
       })
       .catch(function (error) {
         console.log(error);
@@ -77,9 +82,7 @@ export default function Profile({ navigation }: any) {
       {userContext.userlogin ? (
         <>
           <Text style={styles.text}>안녕하세요! {userContext.username}님</Text>
-          <PrimaryButton onPress={() => logouthandler("access")}>
-            로그아웃
-          </PrimaryButton>
+          <PrimaryButton onPress={() => logouthandler("access")}>로그아웃</PrimaryButton>
         </>
       ) : (
         <>

@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Card } from "@rneui/themed";
 import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
-import { SimpleLineIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
 import PrimaryButton from "../component/PrimaryButton";
-import ModalWindow from "../component/ModalWindow";
+import Toast from "react-native-toast-message";
 
 type Posttype = {
   id: number;
@@ -19,7 +19,6 @@ type Posttype = {
 
 export default function RequestList({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
-  const [faildeleteModal, setFailDeleteModal] = useState(false);
   const [requestid, setRequestid] = useState<number>(0);
   const [ListRequest, setListRequest] = useState<Posttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
@@ -41,17 +40,23 @@ export default function RequestList({ navigation }: any) {
     axios_delete(`request/${key}`)
       .then((response) => {
         console.log(response.data);
-        console.log("신조어 요청 삭제 완료");
         getListRequest();
+        Toast.show({
+          type: "success",
+          text1: "신조어 요청 삭제 완료! 🎉",
+        });
       })
       .catch(function (error) {
         console.log(error);
-        console.log("신조어 요청 삭제 실패");
-        setFailDeleteModal(true);
+        Toast.show({
+          type: "error",
+          text1: "신조어 요청 삭제 실패 😥",
+          text2: "혹시 작성자 분이 아니신가요?",
+        });
       });
   };
 
-  // 수정 클릭하면 requestid변수 WordRequest에 파라미터로 전달
+  // 수정 클릭하면 requestid변수를 WordRequest에 파라미터로 전달
   function RequestidHandler(params: number) {
     //console.log(params);
     navigation.navigate("WordRequest", {
@@ -99,12 +104,7 @@ export default function RequestList({ navigation }: any) {
       >
         신조어 요청
       </PrimaryButton>
-      <FlatList
-        style={styles.scroll}
-        data={ListRequest}
-        renderItem={renderItem}
-        keyExtractor={(item: Posttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListRequest} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
@@ -116,11 +116,6 @@ export default function RequestList({ navigation }: any) {
           }}
         />
       ) : null}
-      <ModalWindow
-        open={faildeleteModal}
-        okPress={() => setFailDeleteModal(false)}
-        text2="삭제 실패!"
-      />
     </SafeAreaView>
   );
 }
