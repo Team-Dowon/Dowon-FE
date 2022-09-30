@@ -73,6 +73,18 @@ export default function Profile({ navigation }: any) {
     navigation.navigate("SignUp");
   }
 
+  function reset() {
+    AsyncStorage.clear();
+    userContext.setUserlogin(false);
+    userContext.setUserId("");
+    userContext.setUserName("");
+    userContext.setUserEmail("");
+    Toast.show({
+      type: "success",
+      text1: "로그아웃되었습니다! 🖐",
+    });
+  }
+
   useEffect(() => {
     islogin("access");
   }, [isFocused]);
@@ -82,7 +94,16 @@ export default function Profile({ navigation }: any) {
       {userContext.userlogin ? (
         <>
           <Text style={styles.text}>안녕하세요! {userContext.username}님</Text>
-          <PrimaryButton onPress={() => logouthandler("access")}>로그아웃</PrimaryButton>
+          <PrimaryButton onPress={() => logouthandler("access")}>
+            로그아웃
+          </PrimaryButton>
+          <View style={{ marginTop: 20 }}>
+            <Text style={styles.text}>
+              <Text style={styles.navitext} onPress={reset}>
+                {"로그아웃이 안될경우 클릭"}
+              </Text>
+            </Text>
+          </View>
         </>
       ) : (
         <>
@@ -113,5 +134,10 @@ const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
+  },
+  navitext: {
+    fontSize: 15,
+    fontFamily: "notosanskr-medium",
+    color: "#a1a09e",
   },
 });

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import Card from "../component/Card";
 import PrimaryButton from "../component/PrimaryButton";
+import { axios_post } from "../api/api";
+import Toast from "react-native-toast-message";
 
 const CustomTextInput = (props: any) => {
   return (
@@ -16,13 +18,44 @@ const CustomTextInput = (props: any) => {
 
 export default function Main() {
   const [sentence, setSentence] = useState<string>("");
+  const [result, setResult] = useState<string>("");
+
+  // 신조어 문장 변환(임시 아직 개발중)
+  const Conversion = async (key: string) => {
+    axios_post("주소넣기", {
+      sentence: key,
+    })
+      .then(async (response) => {
+        console.log(response.data); //변환 완료
+        setResult(response.data);
+        Toast.show({
+          type: "success",
+          text1: "문장 변환 완료! 🎉",
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        Toast.show({
+          type: "error",
+          text1: "문장 변환 실패 😥",
+        });
+      });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <CustomTextInput multiline numberOfLines={4} onChangeText={(text: any) => setSentence(text)} value={sentence} style={styles.input} />
-      <PrimaryButton>문장 변환</PrimaryButton>
+      <CustomTextInput
+        multiline
+        numberOfLines={4}
+        onChangeText={(text: any) => setSentence(text)}
+        value={sentence}
+        style={styles.input}
+      />
+      <PrimaryButton onPress={() => Conversion(sentence)}>
+        문장 변환
+      </PrimaryButton>
       <Card>
-        <Text>변환된 문장이 출력되는 곳 입니다.</Text>
+        <Text>변환된 문장이 출력되는 곳 입니다. {/* {result} */}</Text>
       </Card>
     </SafeAreaView>
   );
