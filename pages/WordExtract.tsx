@@ -1,17 +1,68 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  SafeAreaView,
+  FlatList,
+} from "react-native";
 import PrimaryButton from "../component/PrimaryButton";
+import { AntDesign } from "@expo/vector-icons";
+import { Card } from "@rneui/themed";
+import { axios_post } from "../api/api";
+import Toast from "react-native-toast-message";
 
 export default function WordExtract({ navigation }: any) {
   const [sentence, setSentence] = useState<string>("");
+  const [extractlist, setExtractList] = useState<string[]>([]);
 
-  function extractStart() {
-    console.log("신조어 추출 버튼 눌림");
-  }
+  // 신조어 추출하기(임시 아직 개발중)
+  const Extract = async (key: string) => {
+    axios_post("주소넣기", {
+      sentence: key,
+    })
+      .then(async (response) => {
+        console.log(response.data); //추출 완료
+        setExtractList(response.data.reverse());
+        {
+          response.data.length === 0
+            ? Toast.show({
+                type: "success",
+                text1: "추출할 신조어가 없습니다! 😥",
+              })
+            : Toast.show({
+                type: "success",
+                text1: "신조어 추출 완료! 🎉",
+              });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        Toast.show({
+          type: "error",
+          text1: "신조어 추출 실패 😥",
+        });
+      });
+  };
 
-  function RequestList() {
-    navigation.navigate("RequestList");
-  }
+  const renderItem = ({ item }: { item: string }) => {
+    return (
+      <Card>
+        <Card.Title style={styles.row}>
+          <Text style={styles.titletext}>{item}</Text>
+          <AntDesign
+            name="arrowright"
+            size={24}
+            color="black"
+            onPress={() => {
+              navigation.navigate("WordInfo", { slang: item });
+            }}
+          />
+        </Card.Title>
+      </Card>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -21,8 +72,28 @@ export default function WordExtract({ navigation }: any) {
         onChangeText={setSentence}
         value={sentence}
       />
-      <PrimaryButton onPress={extractStart}>신조어 추출</PrimaryButton>
-      <PrimaryButton onPress={RequestList}>신조어 등록 요청</PrimaryButton>
+      <PrimaryButton onPress={() => Extract(sentence)}>
+        신조어 추출
+      </PrimaryButton>
+      {extractlist.length === 0 ? null : (
+        <FlatList
+          style={styles.scroll}
+          data={extractlist}
+          renderItem={renderItem}
+          keyExtractor={(item: string, index: number) => index.toString()}
+        />
+      )}
+      <View>
+        <Text style={styles.textrequest}>
+          {"찾으시는 신조어가 없으신가요? "}
+          <Text
+            style={styles.navitext}
+            onPress={() => navigation.navigate("RequestList")}
+          >
+            {"신조어 등록 요청하기"}
+          </Text>
+        </Text>
+      </View>
     </SafeAreaView>
   );
 }
@@ -41,11 +112,34 @@ const styles = StyleSheet.create({
     color: "black",
     textAlign: "center",
   },
+  textrequest: {
+    fontSize: 20,
+    fontFamily: "notosanskr-regular",
+    color: "black",
+    textAlign: "center",
+  },
   input: {
     width: "70%",
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  titletext: {
+    fontSize: 20,
+    textAlign: "left",
+  },
+  scroll: {
+    width: "100%",
+    marginTop: 10,
+  },
+  navitext: {
+    fontSize: 20,
+    fontFamily: "notosanskr-bold",
+    color: "#FF7F00",
   },
 });

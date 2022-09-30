@@ -24,9 +24,10 @@ export default function Login({ navigation }: any) {
         password: password,
       })
         .then(async (response) => {
-          // 어떤 식으로 오류나는지 메세지로 표시하고 싶은데 아직 잘 안됨 일단 보류
           await AsyncStorage.setItem("access", response.data.access);
-          axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`;
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${response.data.access}`;
           navigation.navigate("Profile");
           console.log(response.data); //로그인 성공하면 로그인 완료라고 뜸
           Toast.show({
@@ -49,19 +50,37 @@ export default function Login({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <LogoTitle />
-      <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
-      <Input style={styles.input} placeholder="비밀번호" onChangeText={setPassword} secureTextEntry={true} value={password} />
+      <Input
+        style={styles.input}
+        placeholder="아이디"
+        onChangeText={setUserId}
+        value={userid}
+      />
+      <Input
+        style={styles.input}
+        placeholder="비밀번호"
+        onChangeText={setPassword}
+        secureTextEntry={true}
+        value={password}
+      />
       <View style={styles.div} />
       <PrimaryButton onPress={logInHandler}>로그인</PrimaryButton>
       <View>
         <Text style={styles.text}>
           {"아이디가 없으면? "}
-          <Text style={styles.navitext} onPress={() => navigation.navigate("SignUp")}>
+          <Text
+            style={styles.navitext}
+            onPress={() => navigation.navigate("SignUp")}
+          >
             {"회원가입"}
           </Text>
         </Text>
       </View>
-      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} text2="빈칸을 다 채워주세요!" />
+      <ModalWindow
+        open={loginModal}
+        okPress={() => setLoginModal(false)}
+        text2="빈칸을 다 채워주세요!"
+      />
     </SafeAreaView>
   );
 }
