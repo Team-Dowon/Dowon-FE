@@ -19,14 +19,14 @@ export default function WordExtract({ navigation }: any) {
 
   // 신조어 추출하기(임시 아직 개발중)
   const Extract = async (key: string) => {
-    axios_post("주소넣기", {
-      sentence: key,
+    axios_post("sentence", {
+      text: key,
     })
       .then(async (response) => {
         console.log(response.data); //추출 완료
-        setExtractList(response.data.reverse());
+        setExtractList(response.data.doslang.reverse());
         {
-          response.data.length === 0
+          response.data.doslang.length === 0
             ? Toast.show({
                 type: "success",
                 text1: "추출할 신조어가 없습니다! 😥",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
-import { Button, ListItem } from "@rneui/themed";
+import { ListItem } from "@rneui/themed";
 import { axios_post } from "../api/api";
 
 type Slangtype = {

@@ -1,10 +1,37 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
 
-const ListConsonant: string[] = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+const ListConsonant: string[] = [
+  "ㄱ",
+  "ㄲ",
+  "ㄴ",
+  "ㄷ",
+  "ㄸ",
+  "ㄹ",
+  "ㅁ",
+  "ㅂ",
+  "ㅃ",
+  "ㅅ",
+  "ㅆ",
+  "ㅇ",
+  "ㅈ",
+  "ㅉ",
+  "ㅊ",
+  "ㅋ",
+  "ㅌ",
+  "ㅍ",
+  "ㅎ",
+];
 
 export default function Dictionary({ navigation }: any) {
   function pressHandler() {
