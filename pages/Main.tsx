@@ -22,12 +22,12 @@ export default function Main() {
 
   // 신조어 문장 변환(임시 아직 개발중)
   const Conversion = async (key: string) => {
-    axios_post("주소넣기", {
-      sentence: key,
+    axios_post("sentence", {
+      text: key,
     })
       .then(async (response) => {
         console.log(response.data); //변환 완료
-        setResult(response.data);
+        setResult(response.data.normalize);
         Toast.show({
           type: "success",
           text1: "문장 변환 완료! 🎉",
@@ -55,7 +55,11 @@ export default function Main() {
         문장 변환
       </PrimaryButton>
       <Card>
-        <Text>변환된 문장이 출력되는 곳 입니다. {/* {result} */}</Text>
+        {result ? (
+          <Text> {result} </Text>
+        ) : (
+          <Text>변환된 문장이 출력되는 곳 입니다. {result} </Text>
+        )}
       </Card>
     </SafeAreaView>
   );
