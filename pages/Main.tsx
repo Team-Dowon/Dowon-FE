@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import Card from "../component/Card";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
+import { Switch } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 
 const CustomTextInput = (props: any) => {
@@ -19,8 +20,9 @@ const CustomTextInput = (props: any) => {
 export default function Main() {
   const [sentence, setSentence] = useState<string>("");
   const [result, setResult] = useState<string>("");
+  const [checked, setChecked] = useState(false);
 
-  // 신조어 문장 변환(임시 아직 개발중)
+  // 신조어 문장 변환
   const Conversion = async (key: string) => {
     axios_post("sentence", {
       text: key,
@@ -28,10 +30,13 @@ export default function Main() {
       .then(async (response) => {
         console.log(response.data); //변환 완료
         setResult(response.data.normalize);
-        Toast.show({
-          type: "success",
-          text1: "문장 변환 완료! 🎉",
-        });
+        if (checked) SentimentAnalysis(response.data.normalize);
+        else {
+          Toast.show({
+            type: "success",
+            text1: "문장 변환 완료! 🎉",
+          });
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -42,8 +47,39 @@ export default function Main() {
       });
   };
 
+  // 신조어 문장 감성 분석
+  const SentimentAnalysis = async (key: string) => {
+    axios_post("test", {
+      sentence: key,
+    })
+      .then(async (response) => {
+        console.log(response.data); //감성 분석 완료
+        Toast.show({
+          type: "success",
+          text1: `이 문장은 ${response.data.예측값}으로 보여집니다!`,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        Toast.show({
+          type: "error",
+          text1: "감성 분석 실패 😥",
+        });
+      });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <View>
+        <Switch
+          value={checked}
+          onValueChange={(value) => {
+            setChecked(value);
+          }}
+          color="#640233"
+        />
+        <Text>감성 분석</Text>
+      </View>
       <CustomTextInput
         multiline
         numberOfLines={4}
@@ -56,9 +92,9 @@ export default function Main() {
       </PrimaryButton>
       <Card>
         {result ? (
-          <Text> {result} </Text>
+          <Text> {result.replace(/⠀/gi, " ")} </Text>
         ) : (
-          <Text>변환된 문장이 출력되는 곳 입니다. {result} </Text>
+          <Text>변환된 문장이 출력되는 곳 입니다. </Text>
         )}
       </Card>
     </SafeAreaView>
