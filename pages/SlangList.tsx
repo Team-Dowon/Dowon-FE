@@ -16,8 +16,8 @@ export default function SlangList({ navigation, route }: any) {
 
   // 각 초성으로 시작하는 신조어 가져오기
   const getListSlang = async () => {
-    axios_post("dictionary", {
-      search: route.params.alphabet,
+    axios_post("dictionary_cho", {
+      cho: route.params.alphabet,
     })
       .then((response) => {
         //console.log(response.data);
