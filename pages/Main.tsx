@@ -29,7 +29,7 @@ export default function Main() {
     })
       .then(async (response) => {
         console.log(response.data); //변환 완료
-        setResult(response.data.normalize);
+        setResult(response.data.normalize.replace(/⠀/gi, " "));
         if (checked) SentimentAnalysis(response.data.normalize);
         else {
           Toast.show({
@@ -92,7 +92,7 @@ export default function Main() {
       </PrimaryButton>
       <Card>
         {result ? (
-          <Text> {result.replace(/⠀/gi, " ")} </Text>
+          <Text> {result} </Text>
         ) : (
           <Text>변환된 문장이 출력되는 곳 입니다. </Text>
         )}
