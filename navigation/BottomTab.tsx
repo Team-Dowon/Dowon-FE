@@ -18,6 +18,7 @@ export default function BottomTab({ navigation }: any) {
         headerTitleStyle: {
           fontWeight: "bold",
         },
+        tabBarLabelStyle: { color: "#640233" },
       }}
     >
       <Tab.Screen
@@ -25,7 +26,6 @@ export default function BottomTab({ navigation }: any) {
         component={Main}
         options={{
           title: "신조어 번역",
-          tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="ios-home"
@@ -42,8 +42,8 @@ export default function BottomTab({ navigation }: any) {
         component={StackDictionary}
         options={{
           title: "신조어 사전",
+          tabBarLabelStyle: { color: "#640233" },
           headerShown: false,
-          tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="search"
@@ -60,6 +60,7 @@ export default function BottomTab({ navigation }: any) {
         component={Community}
         options={{
           title: "커뮤니티",
+          tabBarLabelStyle: { color: "#640233" },
           headerRight: () => (
             <Feather
               name="plus-square"
@@ -69,7 +70,6 @@ export default function BottomTab({ navigation }: any) {
               onPress={() => navigation.navigate("Post", { postid: null })}
             />
           ),
-          tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <AntDesign
               name="eyeo"
@@ -85,8 +85,8 @@ export default function BottomTab({ navigation }: any) {
         name="WordExtract"
         component={WordExtract}
         options={{
-          title: "추출",
-          tabBarShowLabel: false,
+          title: "신조어 추출",
+          tabBarLabelStyle: { color: "#640233" },
           tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="file-word-o"
@@ -103,7 +103,7 @@ export default function BottomTab({ navigation }: any) {
         component={Profile}
         options={{
           title: "프로필",
-          tabBarShowLabel: false,
+          tabBarLabelStyle: { color: "#640233" },
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="person"
