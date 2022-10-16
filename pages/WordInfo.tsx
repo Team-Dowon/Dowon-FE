@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { axios_get } from "../api/api";
 
 type Slangtype = {
@@ -39,10 +39,14 @@ export default function WordInfo({ route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>{Slang.name} </Text>
-      <Text style={styles.text}>{Slang.mean}</Text>
-      <Text style={styles.text}>{Slang.example}</Text>
-      <Text style={styles.text}>{Slang.replace}</Text>
+      <ScrollView style={styles.scrollView}>
+        <Text style={styles.text}>단어 : {Slang.name} </Text>
+        <Text style={styles.text}>의미 : {Slang.mean}</Text>
+        <Text style={styles.text}>예시문장 : {Slang.example}</Text>
+        <Text style={styles.text}>
+          대체단어 : {Slang.replace.replace(/⠀/gi, " ")}
+        </Text>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -61,8 +65,7 @@ const styles = StyleSheet.create({
     color: "black",
     textAlign: "center",
   },
-  logo: {
-    width: 100,
-    height: 100,
+  scrollView: {
+    marginHorizontal: 20,
   },
 });
