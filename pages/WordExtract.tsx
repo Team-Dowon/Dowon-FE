@@ -17,7 +17,7 @@ export default function WordExtract({ navigation }: any) {
   const [sentence, setSentence] = useState<string>("");
   const [extractlist, setExtractList] = useState<string[]>([]);
 
-  // 신조어 추출하기(임시 아직 개발중)
+  // 신조어 추출하기
   const Extract = async (key: string) => {
     axios_post("sentence", {
       text: key,
@@ -26,7 +26,12 @@ export default function WordExtract({ navigation }: any) {
         console.log(response.data); //추출 완료
         setExtractList(response.data.doslang.reverse());
         {
-          response.data.doslang.length === 0
+          response.data.normalize === ""
+            ? Toast.show({
+                type: "success",
+                text1: "문장을 입력해주세요! 😥",
+              })
+            : response.data.doslang.length === 0
             ? Toast.show({
                 type: "success",
                 text1: "추출할 신조어가 없습니다! 😥",

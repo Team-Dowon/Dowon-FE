@@ -10,11 +10,13 @@ import {
   Alert,
 } from "react-native";
 import PrimaryButton from "../component/PrimaryButton";
+import ModalWindow from "../component/ModalWindow";
 
-export default function UnlikeChange({ navigation }) {
+export default function UnlikeChange({ navigation }: any) {
   const [defaultRating, setdefuaultRating] = useState(2);
   const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
   const [isClicked, setClick] = useState(false);
+  const [geonuiModal, setGeonuiModal] = useState(false);
 
   const starImgFilled =
     "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
@@ -70,13 +72,21 @@ export default function UnlikeChange({ navigation }) {
       {isClicked && (
         <PrimaryButton
           onPress={() => {
-            Alert.alert("건의 완료", "건의 완료되었습니다."),
-              navigation.navigate("Main");
+            setGeonuiModal(true);
           }}
         >
           보내기
         </PrimaryButton>
       )}
+      <ModalWindow
+        open={geonuiModal}
+        okPress={() => {
+          setGeonuiModal(false);
+          navigation.navigate("Main");
+        }}
+        title="건의 완료"
+        text2="건의 완료되었습니다."
+      />
     </SafeAreaView>
   );
 }

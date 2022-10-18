@@ -15,7 +15,7 @@ export default function ModalWindow({
     <>
       <Modal isVisible={open} style={styles.modal}>
         <View style={styles.textContainer}>
-          {title && <Text style={styles.textstyle}>{title}</Text>}
+          {title && <Text style={styles.texttitlestyle}>{title}</Text>}
           {text1 && <Text style={styles.textstyle}>{text1}</Text>}
           <Text style={styles.textstyle}>{text2}</Text>
         </View>
@@ -56,11 +56,18 @@ const styles = StyleSheet.create({
     marginTop: "10%",
     justifyContent: "center",
   },
+  texttitlestyle: {
+    textAlign: "left",
+    fontSize: 25,
+    marginTop: "-5%",
+    marginLeft: "20%",
+    fontFamily: "notosanskr-bold",
+  },
   textstyle: {
     textAlign: "center",
     fontSize: 20,
     marginTop: "-5%",
-    fontFamily: "notosanskr-bold",
+    fontFamily: "notosanskr-medium",
   },
   buttontextstyle: {
     textAlign: "center",

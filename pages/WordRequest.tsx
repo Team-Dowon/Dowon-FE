@@ -47,10 +47,8 @@ export default function WordRequest({ navigation, route }: any) {
 
   //신조어 요청 수정
   const modifyRequest = async (key: number) => {
-    if (!userContext.userlogin) {
-      console.log("로그인 하셔야합니다!");
-    } else if (!(title && content)) {
-      console.log("빈칸은 다 채워야함!");
+    if (!(title && content)) {
+      setBlankModal(true);
     } else {
       axios_put(`request/${key}`, {
         title: title,
@@ -94,9 +92,24 @@ export default function WordRequest({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input style={styles.little} placeholder="요청 제목을 입력하세요" onChangeText={setTitle} value={title} />
-      <TextInput style={styles.input} placeholder="요청 내용을 입력하세요" onChangeText={setContent} value={content} />
-      <Input style={styles.little} placeholder="요청 단어를 입력하세요" onChangeText={setName} value={name} />
+      <Input
+        style={styles.little}
+        placeholder="요청 제목을 입력하세요"
+        onChangeText={setTitle}
+        value={title}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="요청 내용을 입력하세요"
+        onChangeText={setContent}
+        value={content}
+      />
+      <Input
+        style={styles.little}
+        placeholder="요청 단어를 입력하세요"
+        onChangeText={setName}
+        value={name}
+      />
       {route.params.requestid ? (
         <PrimaryButton
           onPress={() => {
@@ -109,8 +122,16 @@ export default function WordRequest({ navigation, route }: any) {
       ) : (
         <PrimaryButton onPress={PostRequest}>등록하기</PrimaryButton>
       )}
-      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} text2="로그인 하셔야 합니다!" />
-      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
+      <ModalWindow
+        open={loginModal}
+        okPress={() => setLoginModal(false)}
+        text2="로그인 하셔야 합니다!"
+      />
+      <ModalWindow
+        open={blankModal}
+        okPress={() => setBlankModal(false)}
+        text2="빈칸을 다 채워주세요!"
+      />
     </SafeAreaView>
   );
 }

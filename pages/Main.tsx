@@ -19,7 +19,7 @@ const CustomTextInput = (props: any) => {
   );
 };
 
-export default function Main({ navigation }) {
+export default function Main({ navigation }: any) {
   const [sentence, setSentence] = useState<string>("");
   const [result, setResult] = useState<string>("");
   const [checked, setChecked] = useState(false);
@@ -31,13 +31,19 @@ export default function Main({ navigation }) {
     })
       .then(async (response) => {
         console.log(response.data); //변환 완료
-        setResult(response.data.normalize.replace(/⠀/gi, " "));
-        if (checked) SentimentAnalysis(response.data.normalize);
-        else {
-          Toast.show({
-            type: "success",
-            text1: "문장 변환 완료! 🎉",
-          });
+        {
+          response.data.normalize === ""
+            ? Toast.show({
+                type: "success",
+                text1: "문장을 입력해주세요! 😥",
+              })
+            : (setResult(response.data.normalize.replace(/⠀/gi, " ")),
+              checked
+                ? SentimentAnalysis(response.data.normalize)
+                : Toast.show({
+                    type: "success",
+                    text1: "문장 변환 완료! 🎉",
+                  }));
         }
       })
       .catch(function (error) {
