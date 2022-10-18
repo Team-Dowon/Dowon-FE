@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: deviceWidth < 380 ? 18 : 36,
+    marginTop: deviceWidth < 380 ? 12 : 30,
     marginHorizontal: 24,
     padding: 16,
     borderRadius: 8,
-    elevation: 10,
+    elevation: 3,
     overflow: "hidden",
     /* iOS에서는 shadowColor, shadowOffset, shadowRadius, shadowOpacity로 그림자 생성*/
   },

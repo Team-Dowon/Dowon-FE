@@ -17,7 +17,7 @@ export default function WordExtract({ navigation }: any) {
   const [sentence, setSentence] = useState<string>("");
   const [extractlist, setExtractList] = useState<string[]>([]);
 
-  // 신조어 추출하기(임시 아직 개발중)
+  // 신조어 추출하기
   const Extract = async (key: string) => {
     axios_post("sentence", {
       text: key,

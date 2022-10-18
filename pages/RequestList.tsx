@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Card } from "@rneui/themed";
 import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import UserContext from "../service/UserContext";
 import BottomWindow from "../component/BottomWindow";
 import PrimaryButton from "../component/PrimaryButton";
 import Toast from "react-native-toast-message";
@@ -20,8 +21,10 @@ type Posttype = {
 export default function RequestList({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
   const [requestid, setRequestid] = useState<number>(0);
+  const [username, setUsername] = useState<string>("");
   const [ListRequest, setListRequest] = useState<Posttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
+  const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
   // 신조어 요청 목록 가져오기
   const getListRequest = async () => {
@@ -57,11 +60,18 @@ export default function RequestList({ navigation }: any) {
   };
 
   // 수정 클릭하면 requestid변수를 WordRequest에 파라미터로 전달
-  function RequestidHandler(params: number) {
-    //console.log(params);
-    navigation.navigate("WordRequest", {
-      requestid: params,
-    });
+  function RequestidHandler(params: number, username: string) {
+    if (userContext.username !== username) {
+      Toast.show({
+        type: "error",
+        text1: "신조어 요청 수정 실패 😥",
+        text2: "혹시 작성자 분이 아니신가요?",
+      });
+    } else {
+      navigation.navigate("WordRequest", {
+        requestid: params,
+      });
+    }
   }
 
   // 페이지가 새로고침 될 때마다 신조어 요청 목록 가져오기
@@ -81,6 +91,7 @@ export default function RequestList({ navigation }: any) {
             onPress={() => {
               setBottomVisible(true);
               setRequestid(item.id);
+              setUsername(item.user_nickname);
             }}
           />
         </Card.Title>
@@ -104,12 +115,20 @@ export default function RequestList({ navigation }: any) {
       >
         신조어 요청
       </PrimaryButton>
-      <FlatList style={styles.scroll} data={ListRequest} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListRequest}
+        renderItem={renderItem}
+        keyExtractor={(item: Posttype, index: number) => index.toString()}
+      />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
           setBottomVisible={setBottomVisible}
-          modifyfunc={() => RequestidHandler(requestid)}
+          modifyfunc={() => {
+            RequestidHandler(requestid, username);
+            setBottomVisible(false);
+          }}
           deletefunc={() => {
             deleteRequest(requestid);
             setBottomVisible(false);

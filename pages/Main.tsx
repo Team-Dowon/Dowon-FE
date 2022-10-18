@@ -5,6 +5,8 @@ import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
 import { Switch } from "@rneui/themed";
 import Toast from "react-native-toast-message";
+import SecondButton from "../component/SecondButton";
+import UnlikeChange from "./unlikeChange";
 
 const CustomTextInput = (props: any) => {
   return (
@@ -17,11 +19,11 @@ const CustomTextInput = (props: any) => {
   );
 };
 
-export default function Main() {
+export default function Main({ navigation }: any) {
   const [sentence, setSentence] = useState<string>("");
   const [result, setResult] = useState<string>("");
   const [checked, setChecked] = useState(false);
-
+  const [isChanged, setChanged] = useState(false);
   // 신조어 문장 변환
   const Conversion = async (key: string) => {
     axios_post("sentence", {
@@ -52,6 +54,7 @@ export default function Main() {
           text1: "문장 변환 실패 😥",
         });
       });
+    if (sentence.length != 0) setChanged(true);
   };
 
   // 신조어 문장 감성 분석
@@ -75,6 +78,12 @@ export default function Main() {
       });
   };
 
+  function clearInput() {
+    setSentence("");
+    setResult("");
+    setChanged(false);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -97,6 +106,7 @@ export default function Main() {
       <PrimaryButton onPress={() => Conversion(sentence)}>
         문장 변환
       </PrimaryButton>
+      <PrimaryButton onPress={clearInput}>입력 초기화</PrimaryButton>
       <Card>
         {result ? (
           <Text> {result} </Text>
@@ -104,6 +114,18 @@ export default function Main() {
           <Text>변환된 문장이 출력되는 곳 입니다. </Text>
         )}
       </Card>
+      {isChanged && (
+        <Text style={styles.unlike}>결과가 맘에드시지 않으신가요?</Text>
+      )}
+      {isChanged && (
+        <SecondButton
+          onPress={() => {
+            navigation.navigate("UnlikeChange"), clearInput();
+          }}
+        >
+          클릭해주세요!
+        </SecondButton>
+      )}
     </SafeAreaView>
   );
 }
@@ -129,5 +151,13 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     elevation: 3,
+    backgroundColor: "#ffffff",
+  },
+  unlike: {
+    marginVertical: 15,
+    fontSize: 12,
+  },
+  invalidInput: {
+    backgroundColor: "#fcc4e4",
   },
 });
