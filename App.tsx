@@ -13,6 +13,7 @@ import RequestList from "./pages/RequestList";
 import BottomTab from "./navigation/BottomTab";
 import Toast, { BaseToast } from "react-native-toast-message";
 import UserContext from "./service/UserContext";
+import UnlikeChange from "./pages//UnlikeChange";
 
 // Toast는 짧게 메시지 표시해주는 거
 const toastConfig = {
@@ -103,7 +104,11 @@ export default function App() {
               },
             }}
           >
-            <Stack.Screen name="BottomTab" component={BottomTab} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="BottomTab"
+              component={BottomTab}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Login"
               component={Login}
@@ -144,6 +149,13 @@ export default function App() {
               component={Comment}
               options={{
                 title: "댓글",
+              }}
+            />
+            <Stack.Screen
+              name="UnlikeChange"
+              component={UnlikeChange}
+              options={{
+                title: "번역 건의사항",
               }}
             />
           </Stack.Navigator>
