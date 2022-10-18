@@ -8,6 +8,7 @@ import UserContext from "../service/UserContext";
 import BottomWindow from "../component/BottomWindow";
 import PrimaryButton from "../component/PrimaryButton";
 import Toast from "react-native-toast-message";
+import moment from "moment";
 
 type Posttype = {
   id: number;
@@ -99,7 +100,9 @@ export default function RequestList({ navigation }: any) {
         <Text>신조어 : {item.name}</Text>
         <Text>내용 : {item.content}</Text>
         <Text>작성자 : {item.user_nickname}</Text>
-        <Text>작성 일자 : {item.date}</Text>
+        <Text>
+          작성 일자 : {moment(item.date).format("YYYY년MM월DD일 HH시mm분ss초")}
+        </Text>
       </Card>
     );
   };
