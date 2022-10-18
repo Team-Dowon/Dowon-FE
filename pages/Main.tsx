@@ -29,13 +29,20 @@ export default function Main() {
     })
       .then(async (response) => {
         console.log(response.data); //변환 완료
-        setResult(response.data.normalize.replace(/⠀/gi, " "));
-        if (checked) SentimentAnalysis(response.data.normalize);
-        else {
-          Toast.show({
-            type: "success",
-            text1: "문장 변환 완료! 🎉",
-          });
+        {
+          response.data.normalize === ""
+            ? Toast.show({
+                type: "success",
+                text1: "문장을 입력해주세요! 😥",
+              })
+            : // 감성 분석 키면 문장 변환 완료 메세지가 안뜨게 했는데 뜨게 할까 고민중
+              (setResult(response.data.normalize.replace(/⠀/gi, " ")),
+              checked
+                ? SentimentAnalysis(response.data.normalize)
+                : Toast.show({
+                    type: "success",
+                    text1: "문장 변환 완료! 🎉",
+                  }));
         }
       })
       .catch(function (error) {
