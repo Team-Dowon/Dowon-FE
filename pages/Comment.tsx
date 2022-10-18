@@ -9,6 +9,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
+import moment from "moment";
 
 type Commenttype = {
   id: number;
@@ -156,14 +157,21 @@ export default function Comment({ route }: any) {
         </Card.Title>
         <Card.Divider />
         <Text>작성자 : {item.user_nickname}</Text>
-        <Text>작성 일자 : {item.date}</Text>
+        <Text>
+          작성 일자 : {moment(item.date).format("YYYY년MM월DD일 HH시mm분ss초")}
+        </Text>
       </Card>
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input style={styles.input} placeholder="댓글" onChangeText={setComment} value={comment} />
+      <Input
+        style={styles.input}
+        placeholder="댓글"
+        onChangeText={setComment}
+        value={comment}
+      />
       {ismodify ? (
         <View style={styles.row}>
           <PrimaryButton
@@ -187,7 +195,12 @@ export default function Comment({ route }: any) {
       ) : (
         <PrimaryButton onPress={PostComment}>등록하기</PrimaryButton>
       )}
-      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListComment}
+        renderItem={renderItem}
+        keyExtractor={(item: Commenttype, index: number) => index.toString()}
+      />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
@@ -202,8 +215,16 @@ export default function Comment({ route }: any) {
           }}
         />
       ) : null}
-      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} text2="로그인 하셔야 합니다!" />
-      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
+      <ModalWindow
+        open={loginModal}
+        okPress={() => setLoginModal(false)}
+        text2="로그인 하셔야 합니다!"
+      />
+      <ModalWindow
+        open={blankModal}
+        okPress={() => setBlankModal(false)}
+        text2="빈칸을 다 채워주세요!"
+      />
     </SafeAreaView>
   );
 }

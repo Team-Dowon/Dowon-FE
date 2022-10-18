@@ -6,6 +6,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
 import Toast from "react-native-toast-message";
+import moment from "moment";
 
 type Posttype = {
   id: number;
@@ -85,7 +86,9 @@ export default function Community({ navigation }: any) {
         <Card.Divider />
         <Text>내용 : {item.content}</Text>
         <Text>작성자 : {item.user_nickname}</Text>
-        <Text>작성 일자 : {item.date}</Text>
+        <Text>
+          작성 일자 : {moment(item.date).format("YYYY년MM월DD일 HH시mm분ss초")}
+        </Text>
         <View style={{ alignItems: "flex-end", marginTop: 10 }}>
           <MaterialCommunityIcons
             name="comment-text-outline"
@@ -102,7 +105,12 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListPost}
+        renderItem={renderItem}
+        keyExtractor={(item: Posttype, index: number) => index.toString()}
+      />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
