@@ -28,6 +28,9 @@ export default function Comment({ route }: any) {
   const [ListComment, setListComment] = useState<Commenttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
+  const itemUser = route.params.writer;
+  const itemContext = route.params.itemContent;
+  const itemDate = route.params.itemDate;
 
   // 댓글 작성 하는 함수
   const PostComment = async () => {
@@ -143,8 +146,11 @@ export default function Comment({ route }: any) {
   const renderItem = ({ item }: { item: Commenttype }) => {
     return (
       <Card>
-        <Card.Title>
-          {item.content}
+        <View style={styles.title}>
+          <View>
+            <Text style={styles.nickname}>{item.user_nickname}</Text>
+            <Text style={styles.content}>{item.content}</Text>
+          </View>
           <SimpleLineIcons
             name="options-vertical"
             size={24}
@@ -154,18 +160,18 @@ export default function Comment({ route }: any) {
               setCommentid(item.id);
             }}
           />
-        </Card.Title>
-        <Card.Divider />
-        <Text>작성자 : {item.user_nickname}</Text>
-        <Text>
-          작성 일자 : {moment(item.date).format("YYYY년MM월DD일 HH시mm분ss초")}
-        </Text>
+        </View>
       </Card>
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.parentItem}>
+        <Text style={styles.parentUser}>{itemUser}</Text>
+        <Text style={styles.parentDate}>{itemDate}</Text>
+        <Text style={styles.parentContext}>{itemContext}</Text>
+      </View>
       <Input
         style={styles.input}
         placeholder="댓글"
@@ -257,5 +263,39 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  title: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  nickname: {
+    fontFamily: "notosanskr-bold",
+  },
+  content: {
+    marginVertical: 3,
+  },
+  parentItem: {
+    width: "80%",
+    borderWidth: 2,
+    borderColor: "#a6a6a6",
+    borderRadius: 40,
+    marginTop: 20,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+  parentUser: {
+    fontSize: 18,
+    fontFamily: "notosanskr-bold",
+  },
+  parentDate: {
+    marginTop: -15,
+    fontSize: 11,
+    marginBottom: 10,
+  },
+  parentContext: {
+    fontSize: 16,
+    marginBottom: 20,
   },
 });

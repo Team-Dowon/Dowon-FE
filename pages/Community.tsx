@@ -68,10 +68,14 @@ export default function Community({ navigation }: any) {
   }, [isFocused]);
 
   const renderItem = ({ item }: { item: Posttype }) => {
+    const date = moment(item.date).format("YYYY/MM/DD HH:mm");
     return (
       <Card>
-        <Card.Title style={styles.row}>
-          <Text style={styles.titletext}>{item.title}</Text>
+        <View style={styles.row}>
+          <View>
+            <Text style={styles.titletext}>{item.title}</Text>
+            <Text style={styles.user}>{item.user_nickname}</Text>
+          </View>
           <SimpleLineIcons
             name="options-vertical"
             size={24}
@@ -81,21 +85,23 @@ export default function Community({ navigation }: any) {
               setPostid(item.id);
             }}
           />
-        </Card.Title>
+        </View>
 
         <Card.Divider />
-        <Text>내용 : {item.content}</Text>
-        <Text>작성자 : {item.user_nickname}</Text>
-        <Text>
-          작성 일자 : {moment(item.date).format("YYYY년MM월DD일 HH시mm분ss초")}
-        </Text>
+        <Text style={styles.date}>{date}</Text>
+        <Text>{item.content}</Text>
         <View style={{ alignItems: "flex-end", marginTop: 10 }}>
           <MaterialCommunityIcons
             name="comment-text-outline"
             size={24}
             color="black"
             onPress={() => {
-              navigation.navigate("Comment", { postid: item.id });
+              navigation.navigate("Comment", {
+                postid: item.id,
+                writer: item.user_nickname,
+                itemContent: item.content,
+                itemDate: date,
+              });
             }}
           />
         </View>
@@ -149,7 +155,18 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   row: {
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  user: {
+    fontSize: 12,
+    fontFamily: "notosanskr-bold",
+  },
+  date: {
+    fontSize: 11,
+    textAlign: "right",
+    marginBottom: 20,
   },
 });

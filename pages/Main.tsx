@@ -6,7 +6,6 @@ import { axios_post } from "../api/api";
 import { Switch } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import SecondButton from "../component/SecondButton";
-import UnlikeChange from "./unlikeChange";
 
 const CustomTextInput = (props: any) => {
   return (
@@ -115,7 +114,7 @@ export default function Main({ navigation }: any) {
         )}
       </Card>
       {isChanged && (
-        <Text style={styles.unlike}>결과가 맘에드시지 않으신가요?</Text>
+        <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>
       )}
       {isChanged && (
         <SecondButton

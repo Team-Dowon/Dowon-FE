@@ -7,16 +7,18 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  Alert,
+  KeyboardAvoidingView,
 } from "react-native";
 import PrimaryButton from "../component/PrimaryButton";
 import ModalWindow from "../component/ModalWindow";
+import Toast from "react-native-toast-message";
 
 export default function UnlikeChange({ navigation }: any) {
   const [defaultRating, setdefuaultRating] = useState(2);
   const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
   const [isClicked, setClick] = useState(false);
   const [geonuiModal, setGeonuiModal] = useState(false);
+  const [betterTransfer, setbetterTransfer] = useState("");
 
   const starImgFilled =
     "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
@@ -51,7 +53,7 @@ export default function UnlikeChange({ navigation }: any) {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>번역이 맘에 들지 않으셨나요?</Text>
+      <Text style={styles.title}>번역이 마음에 드시지 않으신가요?</Text>
       <Text style={styles.title}>별점을 입력해주세요!</Text>
       <CustomRatingBar />
       <Text style={styles.textStyle}>
@@ -60,19 +62,28 @@ export default function UnlikeChange({ navigation }: any) {
       </Text>
       {isClicked && (
         <View style={styles.input}>
-          <TextInput
-            multiline
-            numberOfLines={5}
-            editable
-            maxLength={100}
-            placeholder="더 깔끔한 번역문장을 입력해주세요(100자 이내) &#13;&#10; "
-          />
+          <KeyboardAvoidingView>
+            <TextInput
+              multiline
+              numberOfLines={5}
+              editable
+              maxLength={100}
+              onChangeText={(text: any) => setbetterTransfer(text)}
+              placeholder="개선을 위해 깔끔한 번역문장을 입력해주세요&#13;&#10;(100자 이내) &#13;&#10; "
+            />
+          </KeyboardAvoidingView>
         </View>
       )}
       {isClicked && (
         <PrimaryButton
           onPress={() => {
-            setGeonuiModal(true);
+            if (betterTransfer.length != 0) {
+              setGeonuiModal(true);
+            } else {
+              Toast.show({
+                text1: `문장을 입력해주세요!`,
+              });
+            }
           }}
         >
           보내기

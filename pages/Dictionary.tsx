@@ -7,9 +7,7 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
-import { axios_post } from "../api/api";
 
 const ListConsonant: string[] = [
   "ㄱ",
@@ -97,8 +95,8 @@ const styles = StyleSheet.create({
   },
   scroll: {
     width: "100%",
-    marginTop: 10,
-    padding: 20,
+    marginVertical: 5,
+    paddingHorizontal: 20,
   },
   listItem: {
     borderColor: "#3b021f",

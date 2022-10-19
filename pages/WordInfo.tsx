@@ -40,13 +40,14 @@ export default function WordInfo({ route }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.text}>단어 : {Slang.name} </Text>
-        <Text style={styles.text}>의미 : {Slang.mean}</Text>
-        <Text style={styles.text}>예시문장 : {Slang.example}</Text>
-        <Text style={styles.text}>
-          대체단어 : {Slang.replace.replace(/⠀/gi, " ")}
-        </Text>
-      </ScrollView>
+        <Text style={styles.title}>{Slang.name} </Text>
+        <Text style={styles.sub}>의미 : </Text>
+        <Text style={styles.text}>{Slang.mean}</Text>
+        <Text style={styles.sub}>예시문장 :</Text>
+        <Text style={styles.text}> {Slang.example}</Text>
+        <Text style={styles.sub}>대체단어 :</Text>
+        <Text style={styles.text}>{Slang.replace.replace(/⠀/gi, " ")} </Text>
+      </ScrollView> 
     </SafeAreaView>
   );
 }
@@ -58,14 +59,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  text: {
-    fontSize: 48,
+  sub: {
+    fontSize: 22,
     fontFamily: "notosanskr-bold",
-    fontWeight: "400",
     color: "black",
+    textAlign: "center",
+  },
+  text: {
+    fontSize: 30,
+    fontFamily: "notosanskr-bold",
+    fontWeight: "100",
+    color: "black",
+    marginBottom: 50,
     textAlign: "center",
   },
   scrollView: {
     marginHorizontal: 20,
+  },
+  title: {
+    fontSize: 40,
+    fontFamily: "notosanskr-bold",
+    borderBottomWidth: 4,
+    borderColor: "#200364",
+    marginBottom: 20,
+  },
+  mean: {
+    fontSize: 20,
+    fontFamily: "notosanskr-bold",
   },
 });
