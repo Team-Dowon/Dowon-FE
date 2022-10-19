@@ -81,10 +81,14 @@ export default function RequestList({ navigation }: any) {
   }, [isFocused]);
 
   const renderItem = ({ item }: { item: Posttype }) => {
+    const date = moment(item.date).format("YYYY/MM/DD HH:mm");
     return (
       <Card>
-        <Card.Title style={styles.row}>
-          <Text style={styles.titletext}>{item.title}</Text>
+        <View style={styles.row}>
+          <View>
+            <Text style={styles.titletext}>{item.title}</Text>
+            <Text style={styles.user}>{item.user_nickname}</Text>
+          </View>
           <SimpleLineIcons
             name="options-vertical"
             size={24}
@@ -95,14 +99,11 @@ export default function RequestList({ navigation }: any) {
               setUsername(item.user_nickname);
             }}
           />
-        </Card.Title>
+        </View>
         <Card.Divider />
-        <Text>신조어 : {item.name}</Text>
-        <Text>내용 : {item.content}</Text>
-        <Text>작성자 : {item.user_nickname}</Text>
-        <Text>
-          작성 일자 : {moment(item.date).format("YYYY년MM월DD일 HH시mm분ss초")}
-        </Text>
+        <Text style={styles.date}>작성 일자 : {date}</Text>
+        <Text>요청 신조어 : {item.name}</Text>
+        <Text>{item.content}</Text>
       </Card>
     );
   };
@@ -165,7 +166,18 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   row: {
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  user: {
+    fontSize: 12,
+    fontFamily: "notosanskr-bold",
+  },
+  date: {
+    fontSize: 11,
+    textAlign: "right",
+    marginBottom: 20,
   },
 });

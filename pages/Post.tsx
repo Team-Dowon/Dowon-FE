@@ -91,8 +91,18 @@ export default function Post({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Input style={styles.title} placeholder="제목을 입력하세요" onChangeText={setTitle} value={title} />
-      <TextInput style={styles.input} placeholder="내용을 입력하세요" onChangeText={setContent} value={content} />
+      <Input
+        style={styles.title}
+        placeholder="제목을 입력하세요"
+        onChangeText={setTitle}
+        value={title}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="내용을 입력하세요"
+        onChangeText={setContent}
+        value={content}
+      />
       {route.params.postid ? (
         <PrimaryButton
           onPress={() => {
@@ -105,8 +115,18 @@ export default function Post({ navigation, route }: any) {
       ) : (
         <PrimaryButton onPress={postHandler}>등록하기</PrimaryButton>
       )}
-      <ModalWindow open={loginModal} okPress={() => setLoginModal(false)} text2="로그인 하셔야 합니다!" />
-      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
+      <ModalWindow
+        open={loginModal}
+        okPress={() => {
+          setLoginModal(false), navigation.navigate("Login");
+        }}
+        text2="로그인 하셔야 합니다!"
+      />
+      <ModalWindow
+        open={blankModal}
+        okPress={() => setBlankModal(false)}
+        text2="빈칸을 다 채워주세요!"
+      />
     </SafeAreaView>
   );
 }

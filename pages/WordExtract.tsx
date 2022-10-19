@@ -72,6 +72,8 @@ export default function WordExtract({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
+        multiline
+        numberOfLines={4}
         style={styles.input}
         placeholder="문장을 입력해 주세요"
         onChangeText={setSentence}
@@ -91,12 +93,14 @@ export default function WordExtract({ navigation }: any) {
       <View>
         <Text style={styles.textrequest}>
           {"찾으시는 신조어가 없으신가요? "}
-          <Text
-            style={styles.navitext}
-            onPress={() => navigation.navigate("RequestList")}
-          >
-            {"신조어 등록 요청하기"}
-          </Text>
+        </Text>
+      </View>
+      <View>
+        <Text
+          style={styles.navitext}
+          onPress={() => navigation.navigate("RequestList")}
+        >
+          {"신조어 등록 요청하기"}
         </Text>
       </View>
     </SafeAreaView>
@@ -124,11 +128,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    width: "70%",
-    height: 40,
+    width: "80%",
+    height: 100,
+    padding: 10,
     margin: 12,
     borderWidth: 1,
-    padding: 10,
+    elevation: 3,
+    backgroundColor: "#ffffff",
   },
   row: {
     flexDirection: "row",

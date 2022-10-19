@@ -9,7 +9,6 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
-import moment from "moment";
 
 type Commenttype = {
   id: number;
@@ -18,7 +17,7 @@ type Commenttype = {
   date: string;
 };
 
-export default function Comment({ route }: any) {
+export default function Comment({ route, navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);
@@ -223,7 +222,9 @@ export default function Comment({ route }: any) {
       ) : null}
       <ModalWindow
         open={loginModal}
-        okPress={() => setLoginModal(false)}
+        okPress={() => {
+          setLoginModal(false), navigation.navigate("Login");
+        }}
         text2="로그인 하셔야 합니다!"
       />
       <ModalWindow

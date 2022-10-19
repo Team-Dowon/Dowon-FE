@@ -98,18 +98,19 @@ export default function WordRequest({ navigation, route }: any) {
         onChangeText={setTitle}
         value={title}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="요청 내용을 입력하세요"
-        onChangeText={setContent}
-        value={content}
-      />
       <Input
         style={styles.little}
         placeholder="요청 단어를 입력하세요"
         onChangeText={setName}
         value={name}
       />
+      <TextInput
+        style={styles.input}
+        placeholder="요청 내용을 입력하세요"
+        onChangeText={setContent}
+        value={content}
+      />
+
       {route.params.requestid ? (
         <PrimaryButton
           onPress={() => {
@@ -124,7 +125,9 @@ export default function WordRequest({ navigation, route }: any) {
       )}
       <ModalWindow
         open={loginModal}
-        okPress={() => setLoginModal(false)}
+        okPress={() => {
+          setLoginModal(false), navigation.navigate("Login");
+        }}
         text2="로그인 하셔야 합니다!"
       />
       <ModalWindow
@@ -151,11 +154,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    width: "70%",
-    height: 40,
+    width: "80%",
+    height: 200,
+    padding: 10,
     margin: 12,
     borderWidth: 1,
-    padding: 10,
+    elevation: 3,
+    backgroundColor: "#ffffff",
   },
   little: {
     width: "70%",
