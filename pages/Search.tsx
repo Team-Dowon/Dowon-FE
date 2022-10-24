@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
-import { SearchBar } from "@rneui/themed";
+import { StyleSheet, TextInput, SafeAreaView, FlatList } from "react-native";
 import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
@@ -49,23 +48,21 @@ export default function Search({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.mainContainer}>
-        <SearchBar
-          containerStyle={styles.search}
-          placeholder="Search"
-          onChangeText={setSearchSlang}
-          value={searchslang}
+      <TextInput
+        style={styles.search}
+        placeholder="검색할 단어를 입력하세요"
+        onChangeText={setSearchSlang}
+        value={searchslang}
+      />
+      {ListSlang.length === 0 ? null : (
+        <FlatList
+          style={styles.scroll}
+          data={ListSlang}
+          renderItem={renderItem}
+          keyExtractor={(item: Slangtype, index: number) => index.toString()}
         />
-        {ListSlang.length === 0 ? null : (
-          <FlatList
-            style={styles.scroll}
-            data={ListSlang}
-            renderItem={renderItem}
-            keyExtractor={(item: Slangtype, index: number) => index.toString()}
-          />
-        )}
-        <PrimaryButton onPress={searchWord}>단어 검색</PrimaryButton>
-      </View>
+      )}
+      <PrimaryButton onPress={searchWord}>단어 검색</PrimaryButton>
     </SafeAreaView>
   );
 }
@@ -74,10 +71,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-  },
-  mainContainer: {
-    flex: 1,
     alignItems: "center",
+    padding: 20,
   },
   text: {
     fontSize: 48,
@@ -88,6 +83,10 @@ const styles = StyleSheet.create({
   },
   search: {
     width: "90%",
+    borderWidth: 1,
+    backgroundColor: "#ffffff",
+    borderColor: "white",
+    borderBottomColor: "gray",
   },
   scroll: {
     width: "100%",

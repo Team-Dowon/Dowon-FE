@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+  Pressable,
+} from "react-native";
 import { ListItem } from "@rneui/themed";
 import { axios_post } from "../api/api";
 
@@ -36,16 +43,24 @@ export default function SlangList({ navigation, route }: any) {
 
   const renderItem = ({ item }: { item: Slangtype }) => {
     return (
-      <ListItem
-        onPress={() => {
-          navigation.navigate("WordInfo", { slang: item.name });
-        }}
-        bottomDivider
+      // <ListItem
+      //   onPress={() => {
+      //     navigation.navigate("WordInfo", { slang: item.name });
+      //   }}
+      //   bottomDivider
+      // >
+      //   <ListItem.Content>
+      //     <ListItem.Title>{item.name}</ListItem.Title>
+      //   </ListItem.Content>
+      // </ListItem>
+      <Pressable
+        key={item}
+        onPress={() => navigation.navigate("WordInfo", { slang: item.name })}
       >
-        <ListItem.Content>
-          <ListItem.Title>{item.name}</ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
+        <View style={styles.listItem}>
+          <Text>{item.name}</Text>
+        </View>
+      </Pressable>
     );
   };
 
@@ -77,5 +92,19 @@ const styles = StyleSheet.create({
   scroll: {
     width: "100%",
     marginTop: 10,
+  },
+  listItem: {
+    borderColor: "#3b021f",
+    borderWidth: 1,
+    borderRadius: 40,
+    padding: 12,
+    marginVertical: 6,
+    backgroundColor: "#ddb52f",
+    margin: 12,
+    elevation: 4,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
   },
 });

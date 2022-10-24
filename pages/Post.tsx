@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
+import { StyleSheet, SafeAreaView, TextInput } from "react-native";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post, axios_put, axios_get } from "../api/api";
@@ -98,6 +98,7 @@ export default function Post({ navigation, route }: any) {
         value={title}
       />
       <TextInput
+        multiline
         style={styles.input}
         placeholder="내용을 입력하세요"
         onChangeText={setContent}
@@ -146,11 +147,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    width: "70%",
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
+    width: "95%",
+    height: 200,
     padding: 10,
+    margin: 10,
+    borderWidth: 1,
+    backgroundColor: "#ffffff",
+    borderColor: "white",
+    borderBottomColor: "gray",
   },
   title: {
     width: "70%",

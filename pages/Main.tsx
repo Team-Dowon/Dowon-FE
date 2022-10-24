@@ -85,7 +85,14 @@ export default function Main({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <CustomTextInput
+        multiline
+        numberOfLines={4}
+        onChangeText={(text: any) => setSentence(text)}
+        value={sentence}
+        style={styles.input}
+      />
+      <View style={styles.emotion}>
         <Switch
           value={checked}
           onValueChange={(value) => {
@@ -95,13 +102,6 @@ export default function Main({ navigation }: any) {
         />
         <Text>감성 분석</Text>
       </View>
-      <CustomTextInput
-        multiline
-        numberOfLines={4}
-        onChangeText={(text: any) => setSentence(text)}
-        value={sentence}
-        style={styles.input}
-      />
       <PrimaryButton onPress={() => Conversion(sentence)}>
         문장 변환
       </PrimaryButton>
@@ -151,6 +151,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     elevation: 3,
     backgroundColor: "#ffffff",
+    borderColor: "green",
+    borderRadius: 15,
   },
   unlike: {
     marginVertical: 15,
@@ -158,5 +160,9 @@ const styles = StyleSheet.create({
   },
   invalidInput: {
     backgroundColor: "#fcc4e4",
+  },
+  emotion: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
