@@ -9,6 +9,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import BottomWindow from "../component/BottomWindow";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
+import moment from "moment";
 
 type Commenttype = {
   id: number;
@@ -143,8 +144,9 @@ export default function Comment({ route, navigation }: any) {
   }, [isFocused]);
 
   const renderItem = ({ item }: { item: Commenttype }) => {
+    const date = moment(item.date).format("YYYY/MM/DD HH:mm");
     return (
-      <Card>
+      <>
         <View style={styles.title}>
           <View>
             <Text style={styles.nickname}>{item.user_nickname}</Text>
@@ -160,20 +162,24 @@ export default function Comment({ route, navigation }: any) {
             }}
           />
         </View>
-      </Card>
+        <Text style={styles.date}>{date}</Text>
+      </>
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.parentItem}>
-        <Text style={styles.parentUser}>{itemUser}</Text>
-        <Text style={styles.parentDate}>{itemDate}</Text>
-        <Text style={styles.parentContext}>{itemContext}</Text>
-      </View>
+      <Card>
+        <View>
+          <Text style={styles.parentUser}>{itemUser}</Text>
+          <Text style={styles.parentDate}>{itemDate}</Text>
+          <Card.Divider />
+          <Text style={styles.parentContext}>{itemContext}</Text>
+        </View>
+      </Card>
       <Input
         style={styles.input}
-        placeholder="댓글"
+        placeholder="댓글을 입력하세요.."
         onChangeText={setComment}
         value={comment}
       />
@@ -251,9 +257,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    width: "70%",
     height: 40,
     padding: 5,
+    marginTop: 30,
   },
   scroll: {
     width: "100%",
@@ -270,6 +276,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
+    borderWidth: 2,
+    borderRadius: 20,
+    margin: 10,
+    padding: 15,
   },
   nickname: {
     fontFamily: "notosanskr-bold",
@@ -277,15 +287,7 @@ const styles = StyleSheet.create({
   content: {
     marginVertical: 3,
   },
-  parentItem: {
-    width: "80%",
-    borderWidth: 2,
-    borderColor: "#a6a6a6",
-    borderRadius: 40,
-    marginTop: 20,
-    paddingHorizontal: 20,
-    marginBottom: 10,
-  },
+
   parentUser: {
     fontSize: 18,
     fontFamily: "notosanskr-bold",
@@ -298,5 +300,8 @@ const styles = StyleSheet.create({
   parentContext: {
     fontSize: 16,
     marginBottom: 20,
+  },
+  date: {
+    marginLeft: 20,
   },
 });

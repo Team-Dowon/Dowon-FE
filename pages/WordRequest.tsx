@@ -104,7 +104,7 @@ export default function WordRequest({ navigation, route }: any) {
         onChangeText={setName}
         value={name}
       />
-      <TextInput
+      <Input
         style={styles.input}
         placeholder="요청 내용을 입력하세요"
         onChangeText={setContent}
@@ -154,12 +154,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    width: "80%",
     height: 200,
-    padding: 10,
-    margin: 12,
-    borderWidth: 1,
-    elevation: 3,
+    padding: 5,
     backgroundColor: "#ffffff",
   },
   little: {

@@ -97,7 +97,7 @@ export default function Post({ navigation, route }: any) {
         onChangeText={setTitle}
         value={title}
       />
-      <TextInput
+      <Input
         multiline
         style={styles.input}
         placeholder="내용을 입력하세요"
@@ -147,14 +147,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    width: "95%",
     height: 200,
-    padding: 10,
-    margin: 10,
+    padding: 5,
     borderWidth: 1,
     backgroundColor: "#ffffff",
     borderColor: "white",
-    borderBottomColor: "gray",
   },
   title: {
     width: "70%",
