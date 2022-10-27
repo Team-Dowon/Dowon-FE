@@ -119,12 +119,7 @@ export default function RequestList({ navigation }: any) {
       >
         신조어 요청
       </PrimaryButton>
-      <FlatList
-        style={styles.scroll}
-        data={ListRequest}
-        renderItem={renderItem}
-        keyExtractor={(item: Posttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListRequest} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}

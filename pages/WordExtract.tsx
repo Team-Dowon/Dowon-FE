@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  SafeAreaView,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, TextInput, SafeAreaView, FlatList } from "react-native";
 import PrimaryButton from "../component/PrimaryButton";
 import { AntDesign } from "@expo/vector-icons";
 import { Card } from "@rneui/themed";
@@ -71,35 +64,16 @@ export default function WordExtract({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput
-        multiline
-        numberOfLines={4}
-        style={styles.input}
-        placeholder="문장을 입력해 주세요"
-        onChangeText={setSentence}
-        value={sentence}
-      />
-      <PrimaryButton onPress={() => Extract(sentence)}>
-        신조어 추출
-      </PrimaryButton>
+      <TextInput multiline numberOfLines={4} style={styles.input} placeholder="문장을 입력해 주세요" onChangeText={setSentence} value={sentence} />
+      <PrimaryButton onPress={() => Extract(sentence)}>신조어 추출</PrimaryButton>
       {extractlist.length === 0 ? null : (
-        <FlatList
-          style={styles.scroll}
-          data={extractlist}
-          renderItem={renderItem}
-          keyExtractor={(item: string, index: number) => index.toString()}
-        />
+        <FlatList style={styles.scroll} data={extractlist} renderItem={renderItem} keyExtractor={(item: string, index: number) => index.toString()} />
       )}
       <View>
-        <Text style={styles.textrequest}>
-          {"찾으시는 신조어가 없으신가요? "}
-        </Text>
+        <Text style={styles.textrequest}>{"찾으시는 신조어가 없으신가요? "}</Text>
       </View>
       <View>
-        <Text
-          style={styles.navitext}
-          onPress={() => navigation.navigate("RequestList")}
-        >
+        <Text style={styles.navitext} onPress={() => navigation.navigate("RequestList")}>
           {"신조어 등록 요청하기"}
         </Text>
       </View>

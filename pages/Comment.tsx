@@ -25,6 +25,7 @@ export default function Comment({ route, navigation }: any) {
   const [ismodify, setIsModify] = useState(false);
   const [commentid, setCommentid] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [ListComment, setListComment] = useState<Commenttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
@@ -65,7 +66,7 @@ export default function Comment({ route, navigation }: any) {
     axios_get(`post/${route.params.postid}/comment`)
       .then((response) => {
         console.log(response.data);
-        setListComment(response.data.reverse());
+        setListComment(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -159,6 +160,7 @@ export default function Comment({ route, navigation }: any) {
             onPress={() => {
               setBottomVisible(true);
               setCommentid(item.id);
+              setUsername(item.user_nickname);
             }}
           />
         </View>
@@ -177,12 +179,7 @@ export default function Comment({ route, navigation }: any) {
           <Text style={styles.parentContext}>{itemContext}</Text>
         </View>
       </Card>
-      <Input
-        style={styles.input}
-        placeholder="댓글을 입력하세요.."
-        onChangeText={setComment}
-        value={comment}
-      />
+      <Input style={styles.input} placeholder="댓글을 입력하세요.." onChangeText={setComment} value={comment} />
       {ismodify ? (
         <View style={styles.row}>
           <PrimaryButton
@@ -206,18 +203,19 @@ export default function Comment({ route, navigation }: any) {
       ) : (
         <PrimaryButton onPress={PostComment}>등록하기</PrimaryButton>
       )}
-      <FlatList
-        style={styles.scroll}
-        data={ListComment}
-        renderItem={renderItem}
-        keyExtractor={(item: Commenttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
           setBottomVisible={setBottomVisible}
           modifyfunc={() => {
-            getComment(commentid);
+            userContext.username !== username
+              ? Toast.show({
+                  type: "error",
+                  text1: "신조어 요청 수정 실패 😥",
+                  text2: "혹시 작성자 분이 아니신가요?",
+                })
+              : getComment(commentid);
             setBottomVisible(false);
           }}
           deletefunc={() => {
@@ -233,11 +231,7 @@ export default function Comment({ route, navigation }: any) {
         }}
         text2="로그인 하셔야 합니다!"
       />
-      <ModalWindow
-        open={blankModal}
-        okPress={() => setBlankModal(false)}
-        text2="빈칸을 다 채워주세요!"
-      />
+      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
     </SafeAreaView>
   );
 }

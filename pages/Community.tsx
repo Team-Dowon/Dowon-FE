@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Card } from "@rneui/themed";
 import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import UserContext from "../service/UserContext";
 import BottomWindow from "../component/BottomWindow";
 import Toast from "react-native-toast-message";
 import moment from "moment";
@@ -19,8 +20,10 @@ type Posttype = {
 export default function Community({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
   const [postid, setPostid] = useState<number>(0);
+  const [username, setUsername] = useState<string>("");
   const [ListPost, setListPost] = useState<Posttype[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
+  const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
   // 커뮤니티 게시글 가져오기
   const getListPost = async () => {
@@ -56,10 +59,18 @@ export default function Community({ navigation }: any) {
   };
 
   // 수정 클릭하면 postid변수 Post에 파라미터로 전달
-  function PostidHandler(params: number) {
-    navigation.navigate("Post", {
-      postid: params,
-    });
+  function PostidHandler(params: number, username: string) {
+    if (userContext.username !== username) {
+      Toast.show({
+        type: "error",
+        text1: "신조어 요청 수정 실패 😥",
+        text2: "혹시 작성자 분이 아니신가요?",
+      });
+    } else {
+      navigation.navigate("Post", {
+        postid: params,
+      });
+    }
   }
 
   // 페이지가 새로고침 될 때 마다 게시글 가져옴
@@ -83,6 +94,7 @@ export default function Community({ navigation }: any) {
             onPress={() => {
               setBottomVisible(true);
               setPostid(item.id);
+              setUsername(item.user_nickname);
             }}
           />
         </View>
@@ -111,17 +123,15 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.scroll}
-        data={ListPost}
-        renderItem={renderItem}
-        keyExtractor={(item: Posttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
           setBottomVisible={setBottomVisible}
-          modifyfunc={() => PostidHandler(postid)}
+          modifyfunc={() => {
+            PostidHandler(postid, username);
+            setBottomVisible(false);
+          }}
           deletefunc={() => {
             deletePost(postid);
             setBottomVisible(false);
