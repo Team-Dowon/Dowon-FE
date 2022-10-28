@@ -26,7 +26,7 @@ export default function BottomTab({ navigation }: any) {
         component={Main}
         options={{
           title: "신조어 번역",
-          unmountOnBlur: true,
+          unmountOnBlur: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="ios-home"
@@ -63,9 +63,15 @@ export default function BottomTab({ navigation }: any) {
         options={{
           title: "커뮤니티",
           tabBarLabelStyle: { color: "#640233" },
-          unmountOnBlur: true,
+          unmountOnBlur: false,
           headerRight: () => (
-            <Feather name="plus-square" size={24} color="black" style={{ paddingRight: 15 }} onPress={() => navigation.navigate("Post", { postid: null })} />
+            <Feather
+              name="plus-square"
+              size={24}
+              color="black"
+              style={{ paddingRight: 15 }}
+              onPress={() => navigation.navigate("Post", { postid: null })}
+            />
           ),
           tabBarIcon: ({ focused }) => (
             <AntDesign
@@ -84,7 +90,7 @@ export default function BottomTab({ navigation }: any) {
         options={{
           title: "신조어 추출",
           tabBarLabelStyle: { color: "#640233" },
-          unmountOnBlur: true,
+          unmountOnBlur: false,
           tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="file-word-o"
@@ -102,7 +108,7 @@ export default function BottomTab({ navigation }: any) {
         options={{
           title: "프로필",
           tabBarLabelStyle: { color: "#640233" },
-          unmountOnBlur: true,
+          unmountOnBlur: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="person"
