@@ -25,6 +25,7 @@ export default function Login({ navigation }: any) {
       })
         .then(async (response) => {
           await AsyncStorage.setItem("access", response.data.access);
+          await AsyncStorage.setItem("refresh", response.data.refresh);
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.access}`;

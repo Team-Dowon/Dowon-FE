@@ -15,6 +15,7 @@ export default function Profile({ navigation }: any) {
   const islogin = async (key: string) => {
     try {
       const token = await AsyncStorage.getItem(key);
+      console.log(token);
       if (token !== null) {
         userContext.setUserlogin(true);
         getUserData("access");
@@ -39,6 +40,15 @@ export default function Profile({ navigation }: any) {
       .catch(function (error) {
         console.log("유저정보 못가져옴");
         console.log(error.message);
+        AsyncStorage.clear();
+        userContext.setUserlogin(false);
+        userContext.setUserId("");
+        userContext.setUserName("");
+        userContext.setUserEmail("");
+        Toast.show({
+          type: "success",
+          text1: "자동 로그아웃되었습니다! 🖐",
+        });
       });
   };
 
