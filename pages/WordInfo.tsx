@@ -40,14 +40,16 @@ export default function WordInfo({ route }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.title}>{Slang.name} </Text>
+        <View style={styles.underline}>
+          <Text style={styles.title}>{Slang.name} </Text>
+        </View>
         <Text style={styles.sub}>의미 : </Text>
         <Text style={styles.text}>{Slang.mean}</Text>
         <Text style={styles.sub}>예시문장 :</Text>
         <Text style={styles.text}> {Slang.example}</Text>
         <Text style={styles.sub}>대체단어 :</Text>
         <Text style={styles.text}>{Slang.replace.replace(/⠀/gi, " ")} </Text>
-      </ScrollView> 
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -74,11 +76,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   scrollView: {
-    marginHorizontal: 20,
+    marginHorizontal: 8,
   },
   title: {
     fontSize: 40,
     fontFamily: "notosanskr-bold",
+  },
+  underline: {
+    flex: 1,
     borderBottomWidth: 4,
     borderColor: "#200364",
     marginBottom: 20,

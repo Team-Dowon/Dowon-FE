@@ -8,6 +8,7 @@ import UserContext from "../service/UserContext";
 import BottomWindow from "../component/BottomWindow";
 import Toast from "react-native-toast-message";
 import moment from "moment";
+import { Avatar } from "@rneui/themed";
 
 type Posttype = {
   id: number;
@@ -83,20 +84,28 @@ export default function Community({ navigation }: any) {
     return (
       <Card>
         <View style={styles.row}>
-          <View>
-            <Text style={styles.titletext}>{item.title}</Text>
-            <Text style={styles.user}>{item.user_nickname}</Text>
+          <Text style={styles.titletext}>{item.title}</Text>
+          <View style={styles.profile}>
+            <View style={styles.who}>
+              <Avatar
+                size={32}
+                rounded
+                title={item.user_nickname.slice(-2)}
+                containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }}
+              />
+              <Text style={styles.user}>{item.user_nickname}</Text>
+            </View>
+            <SimpleLineIcons
+              name="options-vertical"
+              size={24}
+              color="black"
+              onPress={() => {
+                setBottomVisible(true);
+                setPostid(item.id);
+                setUsername(item.user_nickname);
+              }}
+            />
           </View>
-          <SimpleLineIcons
-            name="options-vertical"
-            size={24}
-            color="black"
-            onPress={() => {
-              setBottomVisible(true);
-              setPostid(item.id);
-              setUsername(item.user_nickname);
-            }}
-          />
         </View>
 
         <Card.Divider />
@@ -123,7 +132,12 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListPost}
+        renderItem={renderItem}
+        keyExtractor={(item: Posttype, index: number) => index.toString()}
+      />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
@@ -163,11 +177,10 @@ const styles = StyleSheet.create({
   titletext: {
     fontSize: 20,
     textAlign: "left",
+    marginBottom: 5,
   },
   row: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
     marginBottom: 10,
   },
   user: {
@@ -178,5 +191,12 @@ const styles = StyleSheet.create({
     fontSize: 11,
     textAlign: "right",
     marginBottom: 20,
+  },
+  profile: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  who: {
+    flexDirection: "row",
   },
 });

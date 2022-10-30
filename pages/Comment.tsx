@@ -10,6 +10,7 @@ import BottomWindow from "../component/BottomWindow";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 import moment from "moment";
+import { Avatar } from "@rneui/themed";
 
 type Commenttype = {
   id: number;
@@ -150,7 +151,15 @@ export default function Comment({ route, navigation }: any) {
       <>
         <View style={styles.title}>
           <View>
-            <Text style={styles.nickname}>{item.user_nickname}</Text>
+            <View style={styles.who}>
+              <Avatar
+                size={32}
+                rounded
+                title={item.user_nickname.slice(-2)}
+                containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }}
+              />
+              <Text style={styles.nickname}>{item.user_nickname}</Text>
+            </View>
             <Text style={styles.content}>{item.content}</Text>
           </View>
           <SimpleLineIcons
@@ -173,13 +182,26 @@ export default function Comment({ route, navigation }: any) {
     <SafeAreaView style={styles.container}>
       <Card>
         <View>
-          <Text style={styles.parentUser}>{itemUser}</Text>
+          <View style={styles.who}>
+            <Avatar
+              size={32}
+              rounded
+              title={itemUser.slice(-2)}
+              containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }}
+            />
+            <Text style={styles.parentUser}>{itemUser}</Text>
+          </View>
           <Text style={styles.parentDate}>{itemDate}</Text>
           <Card.Divider />
           <Text style={styles.parentContext}>{itemContext}</Text>
         </View>
       </Card>
-      <Input style={styles.input} placeholder="댓글을 입력하세요.." onChangeText={setComment} value={comment} />
+      <Input
+        style={styles.input}
+        placeholder="댓글을 입력하세요.."
+        onChangeText={setComment}
+        value={comment}
+      />
       {ismodify ? (
         <View style={styles.row}>
           <PrimaryButton
@@ -203,7 +225,12 @@ export default function Comment({ route, navigation }: any) {
       ) : (
         <PrimaryButton onPress={PostComment}>등록하기</PrimaryButton>
       )}
-      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListComment}
+        renderItem={renderItem}
+        keyExtractor={(item: Commenttype, index: number) => index.toString()}
+      />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
@@ -231,7 +258,11 @@ export default function Comment({ route, navigation }: any) {
         }}
         text2="로그인 하셔야 합니다!"
       />
-      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
+      <ModalWindow
+        open={blankModal}
+        okPress={() => setBlankModal(false)}
+        text2="빈칸을 다 채워주세요!"
+      />
     </SafeAreaView>
   );
 }
@@ -287,7 +318,6 @@ const styles = StyleSheet.create({
     fontFamily: "notosanskr-bold",
   },
   parentDate: {
-    marginTop: -15,
     fontSize: 11,
     marginBottom: 10,
   },
@@ -297,5 +327,9 @@ const styles = StyleSheet.create({
   },
   date: {
     marginLeft: 20,
+  },
+  who: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
