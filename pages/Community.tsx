@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
-import { Card } from "@rneui/themed";
+import { Card, Avatar } from "@rneui/themed";
 import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -8,7 +8,6 @@ import UserContext from "../service/UserContext";
 import BottomWindow from "../component/BottomWindow";
 import Toast from "react-native-toast-message";
 import moment from "moment";
-import { Avatar } from "@rneui/themed";
 
 type Posttype = {
   id: number;
