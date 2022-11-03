@@ -12,6 +12,7 @@ import moment from "moment";
 type Posttype = {
   id: number;
   user_nickname: string;
+  user_profile_pic: string;
   title: string;
   content: string;
   date: string;
@@ -86,12 +87,17 @@ export default function Community({ navigation }: any) {
           <Text style={styles.titletext}>{item.title}</Text>
           <View style={styles.profile}>
             <View style={styles.who}>
-              <Avatar
-                size={32}
-                rounded
-                title={item.user_nickname.slice(-2)}
-                containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }}
-              />
+              {item.user_profile_pic ? (
+                <Avatar
+                  size={32}
+                  rounded
+                  source={{ uri: item.user_profile_pic }}
+                  title={item.user_nickname}
+                  containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
+                />
+              ) : (
+                <Avatar size={32} rounded title={item.user_nickname.slice(-2)} containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }} />
+              )}
               <Text style={styles.user}>{item.user_nickname}</Text>
             </View>
             <SimpleLineIcons
@@ -120,6 +126,7 @@ export default function Community({ navigation }: any) {
                 postid: item.id,
                 writer: item.user_nickname,
                 itemContent: item.content,
+                itemProfilePic: item.user_profile_pic,
                 itemDate: date,
               });
             }}
@@ -131,12 +138,7 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.scroll}
-        data={ListPost}
-        renderItem={renderItem}
-        keyExtractor={(item: Posttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}

@@ -14,6 +14,7 @@ import { Avatar } from "@rneui/themed";
 
 type Commenttype = {
   id: number;
+  user_profile_pic: string;
   user_nickname: string;
   content: string;
   date: string;
@@ -33,6 +34,7 @@ export default function Comment({ route, navigation }: any) {
   const itemUser = route.params.writer;
   const itemContext = route.params.itemContent;
   const itemDate = route.params.itemDate;
+  const itemProfilePic = route.params.itemProfilePic;
 
   // 댓글 작성 하는 함수
   const PostComment = async () => {
@@ -152,12 +154,17 @@ export default function Comment({ route, navigation }: any) {
         <View style={styles.title}>
           <View>
             <View style={styles.who}>
-              <Avatar
-                size={32}
-                rounded
-                title={item.user_nickname.slice(-2)}
-                containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }}
-              />
+              {item.user_profile_pic ? (
+                <Avatar
+                  size={32}
+                  rounded
+                  source={{ uri: item.user_profile_pic }}
+                  title={item.user_nickname}
+                  containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
+                />
+              ) : (
+                <Avatar size={32} rounded title={item.user_nickname.slice(-2)} containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }} />
+              )}
               <Text style={styles.nickname}>{item.user_nickname}</Text>
             </View>
             <Text style={styles.content}>{item.content}</Text>
@@ -183,12 +190,17 @@ export default function Comment({ route, navigation }: any) {
       <Card>
         <View>
           <View style={styles.who}>
-            <Avatar
-              size={32}
-              rounded
-              title={itemUser.slice(-2)}
-              containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }}
-            />
+            {itemProfilePic ? (
+              <Avatar
+                size={32}
+                rounded
+                source={{ uri: itemProfilePic }}
+                title={itemUser.slice(-2)}
+                containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
+              />
+            ) : (
+              <Avatar size={32} rounded title={itemUser.slice(-2)} containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }} />
+            )}
             <Text style={styles.parentUser}>{itemUser}</Text>
           </View>
           <Text style={styles.parentDate}>{itemDate}</Text>
@@ -196,12 +208,7 @@ export default function Comment({ route, navigation }: any) {
           <Text style={styles.parentContext}>{itemContext}</Text>
         </View>
       </Card>
-      <Input
-        style={styles.input}
-        placeholder="댓글을 입력하세요.."
-        onChangeText={setComment}
-        value={comment}
-      />
+      <Input style={styles.input} placeholder="댓글을 입력하세요.." onChangeText={setComment} value={comment} />
       {ismodify ? (
         <View style={styles.row}>
           <PrimaryButton
@@ -225,12 +232,7 @@ export default function Comment({ route, navigation }: any) {
       ) : (
         <PrimaryButton onPress={PostComment}>등록하기</PrimaryButton>
       )}
-      <FlatList
-        style={styles.scroll}
-        data={ListComment}
-        renderItem={renderItem}
-        keyExtractor={(item: Commenttype, index: number) => index.toString()}
-      />
+      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
@@ -258,11 +260,7 @@ export default function Comment({ route, navigation }: any) {
         }}
         text2="로그인 하셔야 합니다!"
       />
-      <ModalWindow
-        open={blankModal}
-        okPress={() => setBlankModal(false)}
-        text2="빈칸을 다 채워주세요!"
-      />
+      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
     </SafeAreaView>
   );
 }
