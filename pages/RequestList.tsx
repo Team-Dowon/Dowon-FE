@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
-import { Card } from "@rneui/themed";
+import { Card, Avatar } from "@rneui/themed";
 import { axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons } from "@expo/vector-icons";
@@ -13,6 +13,7 @@ import moment from "moment";
 type Posttype = {
   id: number;
   user_nickname: string;
+  user_profile_pic: string;
   name: string;
   title: string;
   content: string;
@@ -85,21 +86,35 @@ export default function RequestList({ navigation }: any) {
     return (
       <Card>
         <View style={styles.row}>
-          <View>
-            <Text style={styles.titletext}>{item.title}</Text>
-            <Text style={styles.user}>{item.user_nickname}</Text>
+          <Text style={styles.titletext}>{item.title}</Text>
+          <View style={styles.profile}>
+            <View style={styles.who}>
+              {item.user_profile_pic ? (
+                <Avatar
+                  size={32}
+                  rounded
+                  source={{ uri: item.user_profile_pic }}
+                  title={item.user_nickname}
+                  containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
+                />
+              ) : (
+                <Avatar size={32} rounded title={item.user_nickname.slice(-2)} containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }} />
+              )}
+              <Text style={styles.user}>{item.user_nickname}</Text>
+            </View>
+            <SimpleLineIcons
+              name="options-vertical"
+              size={24}
+              color="black"
+              onPress={() => {
+                setBottomVisible(true);
+                setRequestid(item.id);
+                setUsername(item.user_nickname);
+              }}
+            />
           </View>
-          <SimpleLineIcons
-            name="options-vertical"
-            size={24}
-            color="black"
-            onPress={() => {
-              setBottomVisible(true);
-              setRequestid(item.id);
-              setUsername(item.user_nickname);
-            }}
-          />
         </View>
+
         <Card.Divider />
         <Text style={styles.date}>작성 일자 : {date}</Text>
         <Text>요청 신조어 : {item.name}</Text>
@@ -159,11 +174,10 @@ const styles = StyleSheet.create({
   titletext: {
     fontSize: 20,
     textAlign: "left",
+    marginBottom: 5,
   },
   row: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
     marginBottom: 10,
   },
   user: {
@@ -174,5 +188,12 @@ const styles = StyleSheet.create({
     fontSize: 11,
     textAlign: "right",
     marginBottom: 20,
+  },
+  profile: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  who: {
+    flexDirection: "row",
   },
 });
