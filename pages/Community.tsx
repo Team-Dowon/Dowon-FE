@@ -93,10 +93,21 @@ export default function Community({ navigation }: any) {
                   rounded
                   source={{ uri: item.user_profile_pic }}
                   title={item.user_nickname}
-                  containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
+                  containerStyle={{
+                    backgroundColor: "#63646d",
+                    marginRight: 10,
+                  }}
                 />
               ) : (
-                <Avatar size={32} rounded title={item.user_nickname.slice(-2)} containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }} />
+                <Avatar
+                  size={32}
+                  rounded
+                  title={item.user_nickname.slice(-2)}
+                  containerStyle={{
+                    backgroundColor: "#3d4db7",
+                    marginRight: 10,
+                  }}
+                />
               )}
               <Text style={styles.user}>{item.user_nickname}</Text>
             </View>
@@ -138,7 +149,12 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList style={styles.scroll} data={ListPost} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListPost}
+        renderItem={renderItem}
+        keyExtractor={(item: Posttype, index: number) => index.toString()}
+      />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}

@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   Pressable,
 } from "react-native";
-import { ListItem } from "@rneui/themed";
 import { axios_post } from "../api/api";
 
 type Slangtype = {
@@ -20,7 +19,6 @@ type Slangtype = {
 
 export default function SlangList({ navigation, route }: any) {
   const [ListSlang, setListSlang] = useState<Slangtype[]>([]);
-
   // 각 초성으로 시작하는 신조어 가져오기
   const getListSlang = async () => {
     axios_post("dictionary_cho", {

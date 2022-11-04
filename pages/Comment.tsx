@@ -160,10 +160,21 @@ export default function Comment({ route, navigation }: any) {
                   rounded
                   source={{ uri: item.user_profile_pic }}
                   title={item.user_nickname}
-                  containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
+                  containerStyle={{
+                    backgroundColor: "#63646d",
+                    marginRight: 10,
+                  }}
                 />
               ) : (
-                <Avatar size={32} rounded title={item.user_nickname.slice(-2)} containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }} />
+                <Avatar
+                  size={32}
+                  rounded
+                  title={item.user_nickname.slice(-2)}
+                  containerStyle={{
+                    backgroundColor: "#3d4db7",
+                    marginRight: 10,
+                  }}
+                />
               )}
               <Text style={styles.nickname}>{item.user_nickname}</Text>
             </View>
@@ -187,28 +198,44 @@ export default function Comment({ route, navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Card>
-        <View>
-          <View style={styles.who}>
-            {itemProfilePic ? (
-              <Avatar
-                size={32}
-                rounded
-                source={{ uri: itemProfilePic }}
-                title={itemUser.slice(-2)}
-                containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
-              />
-            ) : (
-              <Avatar size={32} rounded title={itemUser.slice(-2)} containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }} />
-            )}
-            <Text style={styles.parentUser}>{itemUser}</Text>
-          </View>
-          <Text style={styles.parentDate}>{itemDate}</Text>
-          <Card.Divider />
-          <Text style={styles.parentContext}>{itemContext}</Text>
+      <View style={styles.width}>
+        <View style={styles.who}>
+          {itemProfilePic ? (
+            <Avatar
+              size={32}
+              rounded
+              source={{ uri: itemProfilePic }}
+              title={itemUser.slice(-2)}
+              containerStyle={{
+                backgroundColor: "#63646d",
+                marginRight: 10,
+              }}
+            />
+          ) : (
+            <Avatar
+              size={32}
+              rounded
+              title={itemUser.slice(-2)}
+              containerStyle={{
+                backgroundColor: "#3d4db7",
+                marginRight: 10,
+              }}
+            />
+          )}
+          <Text style={styles.parentUser}>{itemUser}</Text>
         </View>
-      </Card>
-      <Input style={styles.input} placeholder="댓글을 입력하세요.." onChangeText={setComment} value={comment} />
+        <Text style={styles.parentDate}>{itemDate}</Text>
+        <Card.Divider />
+
+        <Text style={styles.parentContext}>{itemContext}</Text>
+      </View>
+
+      <Input
+        style={styles.input}
+        placeholder="댓글을 입력하세요.."
+        onChangeText={setComment}
+        value={comment}
+      />
       {ismodify ? (
         <View style={styles.row}>
           <PrimaryButton
@@ -232,7 +259,12 @@ export default function Comment({ route, navigation }: any) {
       ) : (
         <PrimaryButton onPress={PostComment}>등록하기</PrimaryButton>
       )}
-      <FlatList style={styles.scroll} data={ListComment} renderItem={renderItem} keyExtractor={(item: Commenttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListComment}
+        renderItem={renderItem}
+        keyExtractor={(item: Commenttype, index: number) => index.toString()}
+      />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
@@ -260,7 +292,11 @@ export default function Comment({ route, navigation }: any) {
         }}
         text2="로그인 하셔야 합니다!"
       />
-      <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸을 다 채워주세요!" />
+      <ModalWindow
+        open={blankModal}
+        okPress={() => setBlankModal(false)}
+        text2="빈칸을 다 채워주세요!"
+      />
     </SafeAreaView>
   );
 }
@@ -320,8 +356,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   parentContext: {
+    marginTop: 20,
     fontSize: 16,
-    marginBottom: 20,
   },
   date: {
     marginLeft: 20,
@@ -329,5 +365,8 @@ const styles = StyleSheet.create({
   who: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  width: {
+    width: "80%",
   },
 });
