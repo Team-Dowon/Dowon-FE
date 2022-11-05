@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
@@ -9,7 +9,9 @@ import { axios_post } from "../api/api";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 
+// 사용자가 앱에 로그인 하는 모듈
 export default function Login({ navigation }: any) {
+  // 유저 id, password, 로그인 모달에 따른 설정값 설정 -> useState
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginModal, setLoginModal] = useState(false);
@@ -51,6 +53,7 @@ export default function Login({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <LogoTitle />
+      {/* 아이디와 비밀번호는 Input에 설정된 onChangeText와 value를 통해 관리되며 로그인 함수인 logInHandler에 의해 활용됨 */}
       <Input
         style={styles.input}
         placeholder="아이디"

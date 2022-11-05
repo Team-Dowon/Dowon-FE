@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StyleSheet, SafeAreaView, TextInput } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post, axios_put, axios_get } from "../api/api";
@@ -7,6 +7,7 @@ import UserContext from "../service/UserContext";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 
+// 게시글을 작성 및 수정하는 모듈
 export default function Post({ navigation, route }: any) {
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);
@@ -104,6 +105,7 @@ export default function Post({ navigation, route }: any) {
         onChangeText={setContent}
         value={content}
       />
+      {/* 파라미터로 넘어온 postid의 여부에 따라 수정하기 or 등록하기로 나뉘어짐 -> 게시글의 최초 등록이냐? 수정이냐? 로 나뉘어짐 */}
       {route.params.postid ? (
         <PrimaryButton
           onPress={() => {

@@ -18,6 +18,7 @@ type Posttype = {
   date: string;
 };
 
+// 커뮤니티의 게시글을 관리하는 모듈 -> Post로 넘어가서 게시글을 작성 및 수정하거나 Comment로 넘어가 댓글을 작성할 수 있음
 export default function Community({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
   const [postid, setPostid] = useState<number>(0);
@@ -79,9 +80,11 @@ export default function Community({ navigation }: any) {
     getListPost();
   }, [isFocused]);
 
+  // 커뮤니티에 작성된 날짜들을 불러오는 함수
   const renderItem = ({ item }: { item: Posttype }) => {
     const date = moment(item.date).format("YYYY/MM/DD HH:mm");
     return (
+      // Card 형태로 게시글들을 표현 -> 제목, 작성자, 게시 날짜, 내용 등으로 구성
       <Card>
         <View style={styles.row}>
           <Text style={styles.titletext}>{item.title}</Text>
@@ -128,6 +131,7 @@ export default function Community({ navigation }: any) {
         <Text style={styles.date}>{date}</Text>
         <Text>{item.content}</Text>
         <View style={{ alignItems: "flex-end", marginTop: 10 }}>
+          {/* 댓글 아이콘 입력 시 onPress를 통해 Comment.tsx로 넘어감, 넘어갈 때 게시글 관련 내용들을 같이 전달 */}
           <MaterialCommunityIcons
             name="comment-text-outline"
             size={24}
@@ -149,6 +153,7 @@ export default function Community({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* 게시글들을 FlatList의 형태로 나열, 각 item(게시글)들을 나타내며 index를 통해 구분 가능 */}
       <FlatList
         style={styles.scroll}
         data={ListPost}

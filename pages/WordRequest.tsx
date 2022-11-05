@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post, axios_put, axios_get } from "../api/api";
@@ -7,6 +7,7 @@ import UserContext from "../service/UserContext";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 
+// 특정 단어에 대해 등재를 요청하는 모듈 -> 요청 단어, 요청 내용들을 작성함
 export default function WordRequest({ navigation, route }: any) {
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);

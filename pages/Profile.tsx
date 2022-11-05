@@ -4,7 +4,7 @@ import PrimaryButton from "../component/PrimaryButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import UserContext from "../service/UserContext";
-import { axios_post, axios_get, axios_patch } from "../api/api";
+import { axios_post, axios_patch } from "../api/api";
 import * as ImagePicker from "expo-image-picker";
 import { Avatar } from "@rneui/themed";
 import Toast from "react-native-toast-message";
@@ -158,6 +158,7 @@ export default function Profile({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* 로그인 되어있는 경우 or 로그인이 안되있는 경우에 따라 나뉘어짐 */}
       {userContext.userlogin ? (
         <>
           <View
@@ -167,6 +168,7 @@ export default function Profile({ navigation }: any) {
               marginBottom: 20,
             }}
           >
+            {/* 프로필 사진 여부에 따라 나뉘어짐 -> 사진 or 닉네임 표시  */}
             {userProfilePic ? (
               <Avatar
                 size={150}

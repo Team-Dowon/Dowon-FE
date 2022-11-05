@@ -12,6 +12,7 @@ type Slangtype = {
   replace: string;
 };
 
+// 초성별로 들어가지 않고도 직접적으로 사용자가 단어를 검색할 수 있는 모듈
 export default function Search({ navigation }: any) {
   const [searchslang, setSearchSlang] = useState<string>("");
   const [ListSlang, setListSlang] = useState<Slangtype[]>([]);

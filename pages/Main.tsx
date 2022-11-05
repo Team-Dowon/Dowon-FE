@@ -77,6 +77,7 @@ export default function Main({ navigation }: any) {
       });
   };
 
+  // 입력초기화를 누를 시 실행되는 함수 -> useState로 관리되는 값들을 초기 상태의 빈 값으로 바꿔줌
   function clearInput() {
     setSentence("");
     setResult("");
@@ -105,6 +106,7 @@ export default function Main({ navigation }: any) {
       <PrimaryButton onPress={() => Conversion(sentence)}>
         문장 변환
       </PrimaryButton>
+      {/* 입력 초기화 버튼을 누를 시 입력된 문장, 변환된 문장 등이 초기화 되어 손 쉽게 다시 문장을 입력할 수 있음 */}
       <PrimaryButton onPress={clearInput}>입력 초기화</PrimaryButton>
       <Card>
         {result ? (

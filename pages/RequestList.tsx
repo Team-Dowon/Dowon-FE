@@ -20,6 +20,7 @@ type Posttype = {
   date: string;
 };
 
+// 새롭게 생겨난 은어의 경우는 DB에 존재하지 않기 때문에 새로운 단어 기재 요청 글을 관리하는 모듈
 export default function RequestList({ navigation }: any) {
   const [BottomVisible, setBottomVisible] = useState(false);
   const [requestid, setRequestid] = useState<number>(0);
@@ -95,10 +96,21 @@ export default function RequestList({ navigation }: any) {
                   rounded
                   source={{ uri: item.user_profile_pic }}
                   title={item.user_nickname}
-                  containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
+                  containerStyle={{
+                    backgroundColor: "#63646d",
+                    marginRight: 10,
+                  }}
                 />
               ) : (
-                <Avatar size={32} rounded title={item.user_nickname.slice(-2)} containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }} />
+                <Avatar
+                  size={32}
+                  rounded
+                  title={item.user_nickname.slice(-2)}
+                  containerStyle={{
+                    backgroundColor: "#3d4db7",
+                    marginRight: 10,
+                  }}
+                />
               )}
               <Text style={styles.user}>{item.user_nickname}</Text>
             </View>
@@ -134,7 +146,12 @@ export default function RequestList({ navigation }: any) {
       >
         신조어 요청
       </PrimaryButton>
-      <FlatList style={styles.scroll} data={ListRequest} renderItem={renderItem} keyExtractor={(item: Posttype, index: number) => index.toString()} />
+      <FlatList
+        style={styles.scroll}
+        data={ListRequest}
+        renderItem={renderItem}
+        keyExtractor={(item: Posttype, index: number) => index.toString()}
+      />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
