@@ -71,6 +71,7 @@ export default function Main({ navigation }: any) {
           type: "success",
           text1: `이 문장은 ${response.data.예측값}으로 보여집니다!`,
         });
+        setLoading(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -78,6 +79,7 @@ export default function Main({ navigation }: any) {
           type: "error",
           text1: "감성 분석 실패 😥",
         });
+        setLoading(false);
       });
   };
 
