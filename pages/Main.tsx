@@ -6,6 +6,7 @@ import { axios_post } from "../api/api";
 import { Switch, Dialog } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import SecondButton from "../component/SecondButton";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const CustomTextInput = (props: any) => {
   return (
@@ -111,7 +112,15 @@ export default function Main({ navigation }: any) {
       </PrimaryButton>
       {/* 입력 초기화 버튼을 누를 시 입력된 문장, 변환된 문장 등이 초기화 되어 손 쉽게 다시 문장을 입력할 수 있음 */}
       <PrimaryButton onPress={clearInput}>입력 초기화</PrimaryButton>
-      <Card>{result ? <Text> {result} </Text> : isloading ? <Text>로딩중 입니다...</Text> : <Text> 변환된 문장이 출력되는 곳 입니다. </Text>}</Card>
+      <Card>
+        {result ? (
+          <Text> {result} </Text>
+        ) : isloading ? (
+          <Spinner visible={isloading} textContent={"로딩중입니다..."} textStyle={styles.spinnerTextStyle} />
+        ) : (
+          <Text> 변환된 문장이 출력되는 곳 입니다. </Text>
+        )}
+      </Card>
       {isChanged && <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>}
       {isChanged && (
         <SecondButton
@@ -161,5 +170,8 @@ const styles = StyleSheet.create({
   emotion: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  spinnerTextStyle: {
+    color: "#FFF",
   },
 });
