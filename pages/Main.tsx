@@ -91,7 +91,13 @@ export default function Main({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <CustomTextInput multiline numberOfLines={4} onChangeText={(text: any) => setSentence(text)} value={sentence} style={styles.input} />
+      <CustomTextInput
+        multiline
+        numberOfLines={4}
+        onChangeText={(text: any) => setSentence(text)}
+        value={sentence}
+        style={styles.input}
+      />
       <View style={styles.emotion}>
         <Switch
           value={checked}
@@ -116,16 +122,26 @@ export default function Main({ navigation }: any) {
         {result ? (
           <Text> {result} </Text>
         ) : isloading ? (
-          <Spinner visible={isloading} textContent={"로딩중입니다..."} textStyle={styles.spinnerTextStyle} />
+          <Spinner
+            visible={isloading}
+            textContent={"로딩중입니다..."}
+            textStyle={styles.spinnerTextStyle}
+          />
         ) : (
           <Text> 변환된 문장이 출력되는 곳 입니다. </Text>
         )}
       </Card>
-      {isChanged && <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>}
+      {isChanged && (
+        <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>
+      )}
       {isChanged && (
         <SecondButton
           onPress={() => {
-            navigation.navigate("UnlikeChange"), clearInput();
+            navigation.navigate("UnlikeChange", {
+              originSentecne: sentence,
+              changeSentence: result,
+            }),
+              clearInput();
           }}
         >
           클릭해주세요!

@@ -13,12 +13,14 @@ import PrimaryButton from "../component/PrimaryButton";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 
-export default function UnlikeChange({ navigation }: any) {
+export default function UnlikeChange({ route, navigation }: any) {
   const [defaultRating, setdefuaultRating] = useState(2);
   const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
   const [isClicked, setClick] = useState(false);
   const [geonuiModal, setGeonuiModal] = useState(false);
   const [betterTransfer, setbetterTransfer] = useState("");
+  const originSentence = route.params.originSentecne;
+  const changeSentence = route.params.changeSentence;
 
   const starImgFilled =
     "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
@@ -61,18 +63,28 @@ export default function UnlikeChange({ navigation }: any) {
         {defaultRating + " / " + maxRating.length}
       </Text>
       {isClicked && (
-        <View style={styles.input}>
-          <KeyboardAvoidingView>
-            <TextInput
-              multiline
-              numberOfLines={5}
-              editable
-              maxLength={100}
-              onChangeText={(text: any) => setbetterTransfer(text)}
-              placeholder="개선을 위해 깔끔한 번역문장을 입력해주세요&#13;&#10;(100자 이내) &#13;&#10; "
-            />
-          </KeyboardAvoidingView>
-        </View>
+        <>
+          <View>
+            <Text style={styles.fontStyle}>
+              사용자 입력 문장 : {originSentence}
+            </Text>
+            <Text style={styles.fontStyle}>
+              시스템 번역 문장 : {changeSentence}
+            </Text>
+          </View>
+          <View style={styles.input}>
+            <KeyboardAvoidingView>
+              <TextInput
+                multiline
+                numberOfLines={5}
+                editable
+                maxLength={100}
+                onChangeText={(text: any) => setbetterTransfer(text)}
+                placeholder="개선을 위해 깔끔한 번역문장을 입력해주세요&#13;&#10;(100자 이내) &#13;&#10; "
+              />
+            </KeyboardAvoidingView>
+          </View>
+        </>
       )}
       {isClicked && (
         <PrimaryButton
@@ -127,6 +139,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontsize: 20,
     marginTop: 20,
+    marginBottom: 20,
   },
   input: {
     width: "80%",
@@ -136,5 +149,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     elevation: 3,
     backgroundColor: "#ffffff",
+  },
+  fontStyle: {
+    fontSize: 18,
+    fontFamily: "notosanskr-bold",
   },
 });
