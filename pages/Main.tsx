@@ -3,9 +3,10 @@ import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import Card from "../component/Card";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
-import { Switch } from "@rneui/themed";
+import { Switch, Dialog } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import SecondButton from "../component/SecondButton";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const CustomTextInput = (props: any) => {
   return (
@@ -21,6 +22,7 @@ const CustomTextInput = (props: any) => {
 export default function Main({ navigation }: any) {
   const [sentence, setSentence] = useState<string>("");
   const [result, setResult] = useState<string>("");
+  const [isloading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
   const [isChanged, setChanged] = useState(false);
   // 신조어 문장 변환
@@ -32,18 +34,19 @@ export default function Main({ navigation }: any) {
         console.log(response.data); //변환 완료
         {
           response.data.normalize === ""
-            ? Toast.show({
+            ? (Toast.show({
                 type: "success",
                 text1: "문장을 입력해주세요! 😥",
-              })
-            : // 감성 분석 키면 문장 변환 완료 메세지가 안뜨게 했는데 뜨게 할까 고민중
-              (setResult(response.data.normalize.replace(/⠀/gi, " ")),
+              }),
+              setLoading(false))
+            : (setResult(response.data.normalize.replace(/⠀/gi, " ")),
               checked
                 ? SentimentAnalysis(response.data.normalize)
-                : Toast.show({
+                : (Toast.show({
                     type: "success",
                     text1: "문장 변환 완료! 🎉",
-                  }));
+                  }),
+                  setLoading(false)));
         }
       })
       .catch(function (error) {
@@ -52,6 +55,7 @@ export default function Main({ navigation }: any) {
           type: "error",
           text1: "문장 변환 실패 😥",
         });
+        setLoading(false);
       });
     if (sentence.length != 0) setChanged(true);
   };
@@ -82,17 +86,12 @@ export default function Main({ navigation }: any) {
     setSentence("");
     setResult("");
     setChanged(false);
+    setLoading(false);
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <CustomTextInput
-        multiline
-        numberOfLines={4}
-        onChangeText={(text: any) => setSentence(text)}
-        value={sentence}
-        style={styles.input}
-      />
+      <CustomTextInput multiline numberOfLines={4} onChangeText={(text: any) => setSentence(text)} value={sentence} style={styles.input} />
       <View style={styles.emotion}>
         <Switch
           value={checked}
@@ -103,7 +102,12 @@ export default function Main({ navigation }: any) {
         />
         <Text>감성 분석</Text>
       </View>
-      <PrimaryButton onPress={() => Conversion(sentence)}>
+      <PrimaryButton
+        onPress={() => {
+          Conversion(sentence);
+          setLoading(true);
+        }}
+      >
         문장 변환
       </PrimaryButton>
       {/* 입력 초기화 버튼을 누를 시 입력된 문장, 변환된 문장 등이 초기화 되어 손 쉽게 다시 문장을 입력할 수 있음 */}
@@ -111,13 +115,13 @@ export default function Main({ navigation }: any) {
       <Card>
         {result ? (
           <Text> {result} </Text>
+        ) : isloading ? (
+          <Spinner visible={isloading} textContent={"로딩중입니다..."} textStyle={styles.spinnerTextStyle} />
         ) : (
-          <Text>변환된 문장이 출력되는 곳 입니다. </Text>
+          <Text> 변환된 문장이 출력되는 곳 입니다. </Text>
         )}
       </Card>
-      {isChanged && (
-        <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>
-      )}
+      {isChanged && <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>}
       {isChanged && (
         <SecondButton
           onPress={() => {
@@ -166,5 +170,8 @@ const styles = StyleSheet.create({
   emotion: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  spinnerTextStyle: {
+    color: "#FFF",
   },
 });
