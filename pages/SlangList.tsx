@@ -17,6 +17,7 @@ type Slangtype = {
   replace: string;
 };
 
+// Dictionary에서 선택한 초성으로 시작하는 단어들을 가져오는 모듈
 export default function SlangList({ navigation, route }: any) {
   const [ListSlang, setListSlang] = useState<Slangtype[]>([]);
   // 각 초성으로 시작하는 신조어 가져오기

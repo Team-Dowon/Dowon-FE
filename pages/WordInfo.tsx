@@ -10,6 +10,7 @@ type Slangtype = {
   replace: string;
 };
 
+// 단어의 상세정보를 확인하는 모듈 -> 단어 제목, 뜻, 예시, 대체 단어 등이 있음
 export default function WordInfo({ route }: any) {
   const [Slang, setSlang] = useState<Slangtype>({
     id: 0,

@@ -13,6 +13,7 @@ import { Card } from "@rneui/themed";
 import { axios_post } from "../api/api";
 import Toast from "react-native-toast-message";
 
+// 사용자가 입력한 문장에서 DB에 저장된 신조어 및 은어들을 추출하는 모듈
 export default function WordExtract({ navigation }: any) {
   const [sentence, setSentence] = useState<string>("");
   const [extractlist, setExtractList] = useState<string[]>([]);

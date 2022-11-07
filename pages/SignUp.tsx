@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Input } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import LogoTitle from "../component/LogoTitle";
@@ -8,6 +8,7 @@ import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+// 사용자가 회원가입하는 모듈
 export default function Signup({ navigation }: any) {
   const [blankModal, setBlankModal] = useState(false);
   const [coincideModal, setCoincideModal] = useState(false);
@@ -66,16 +67,56 @@ export default function Signup({ navigation }: any) {
     >
       <SafeAreaView style={styles.container}>
         <LogoTitle />
-        <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
-        <Input style={styles.input} placeholder="닉네임" onChangeText={setNickname} value={nickname} />
-        <Input style={styles.input} placeholder="이메일" onChangeText={setEmail} value={email} />
-        <Input style={styles.input} placeholder="전화번호" onChangeText={setPhone} value={phone} />
-        <Input style={styles.input} placeholder="비밀번호" onChangeText={setPassword} secureTextEntry={true} value={password} />
-        <Input style={styles.input} placeholder="비밀번호 확인" onChangeText={setCheckPassword} secureTextEntry={true} value={checkpassword} />
+        <Input
+          style={styles.input}
+          placeholder="아이디"
+          onChangeText={setUserId}
+          value={userid}
+        />
+        <Input
+          style={styles.input}
+          placeholder="닉네임"
+          onChangeText={setNickname}
+          value={nickname}
+        />
+        <Input
+          style={styles.input}
+          placeholder="이메일"
+          onChangeText={setEmail}
+          value={email}
+        />
+        <Input
+          style={styles.input}
+          placeholder="전화번호"
+          onChangeText={setPhone}
+          value={phone}
+        />
+        <Input
+          style={styles.input}
+          placeholder="비밀번호"
+          onChangeText={setPassword}
+          secureTextEntry={true}
+          value={password}
+        />
+        <Input
+          style={styles.input}
+          placeholder="비밀번호 확인"
+          onChangeText={setCheckPassword}
+          secureTextEntry={true}
+          value={checkpassword}
+        />
         <View style={styles.div} />
         <PrimaryButton onPress={submitSignUpData}>회원가입</PrimaryButton>
-        <ModalWindow open={blankModal} okPress={() => setBlankModal(false)} text2="빈칸은 다 채우셔야합니다!" />
-        <ModalWindow open={coincideModal} okPress={() => setCoincideModal(false)} text2="비밀번호가 일치하지 않습니다!" />
+        <ModalWindow
+          open={blankModal}
+          okPress={() => setBlankModal(false)}
+          text2="빈칸은 다 채우셔야합니다!"
+        />
+        <ModalWindow
+          open={coincideModal}
+          okPress={() => setCoincideModal(false)}
+          text2="비밀번호가 일치하지 않습니다!"
+        />
       </SafeAreaView>
     </KeyboardAwareScrollView>
   );

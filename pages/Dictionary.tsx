@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -32,11 +32,12 @@ const ListConsonant: string[] = [
 ];
 
 export default function Dictionary({ navigation }: any) {
+  // pressHandler 실행 시 Search.tsx로 이동
   function pressHandler() {
     navigation.navigate("Search");
   }
 
-  // 초성클릭하면 초성변수 SlangList에 파라미터로 전달
+  // 초성클릭하면 초성변수 SlangList에 파라미터(alphabet)로 전달
   function SlangListHandler(params: any) {
     //console.log(params);
     navigation.navigate("SlangList", { alphabet: params });
@@ -62,6 +63,7 @@ export default function Dictionary({ navigation }: any) {
           //     </ListItem.Title>
           //   </ListItem.Content>
           // </ListItem>
+          //  각 map으로 형성된 초성 리스트(ListConsonant)를 클릭시 SlangListHandler 실행
           <Pressable key={i} onPress={() => SlangListHandler(consonant)}>
             <View style={styles.listItem}>
               <Text>{consonant}</Text>

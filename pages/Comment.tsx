@@ -12,6 +12,7 @@ import Toast from "react-native-toast-message";
 import moment from "moment";
 import { Avatar } from "@rneui/themed";
 
+// type를 통해 댓글 형태 정의
 type Commenttype = {
   id: number;
   user_profile_pic: string;
@@ -88,6 +89,7 @@ export default function Comment({ route, navigation }: any) {
           text1: "댓글 삭제 완료! 🎉",
         });
       })
+      // 댓글 작성자 postid와 동일치 않을 시 삭제 실패
       .catch(function (error) {
         console.log(error);
         Toast.show({
@@ -131,6 +133,7 @@ export default function Comment({ route, navigation }: any) {
             text1: "댓글 수정 완료! 🎉",
           });
         })
+        // 삭제와 마찬가지 postid가 동일해야 수정 가능
         .catch(function (error) {
           console.log(error);
           Toast.show({
@@ -147,13 +150,16 @@ export default function Comment({ route, navigation }: any) {
     getListComment();
   }, [isFocused]);
 
+  // 게시글들의 댓글을 렌더링해주는 함수
   const renderItem = ({ item }: { item: Commenttype }) => {
+    // 날짜 형식을 YYYY/MM/DD 형태로 변환해줌
     const date = moment(item.date).format("YYYY/MM/DD HH:mm");
     return (
       <>
         <View style={styles.title}>
           <View>
             <View style={styles.who}>
+              {/* 유저의 프로필 사진 여부에 따라 닉네임 출력 or 사진 출력 */}
               {item.user_profile_pic ? (
                 <Avatar
                   size={32}
@@ -198,6 +204,7 @@ export default function Comment({ route, navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* 게시글의 내용을 불러옴 -> 작성자, 작성 내용, 작성 일자 등 */}
       <View style={styles.width}>
         <View style={styles.who}>
           {itemProfilePic ? (
@@ -259,6 +266,7 @@ export default function Comment({ route, navigation }: any) {
       ) : (
         <PrimaryButton onPress={PostComment}>등록하기</PrimaryButton>
       )}
+      {/* 게시글마다 입력된 댓글들을 renderItem 함수를 통해 불러옴 */}
       <FlatList
         style={styles.scroll}
         data={ListComment}

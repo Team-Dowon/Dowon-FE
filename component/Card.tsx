@@ -1,5 +1,6 @@
 import { View, StyleSheet, Dimensions } from "react-native";
 
+// 커뮤니티의 게시글에 대한 디자인을 설정하고 재활용하는 식으로 사용
 function Card({ children }: any) {
   return <View style={styles.card}>{children}</View>;
 }

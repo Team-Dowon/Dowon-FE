@@ -1,5 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
+// PrimaryButton과 동일하게 재사용되는 버튼 디자인
 function SecondButton({ children, onPress }: any) {
   return (
     <View>
