@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Card, Avatar } from "@rneui/themed";
-import { axios_get, axios_delete } from "../api/api";
+import { axios_post, axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import UserContext from "../service/UserContext";
@@ -16,6 +16,7 @@ type Posttype = {
   id: number;
   user_nickname: string;
   user_profile_pic: string;
+  like_users: [];
   name: string;
   title: string;
   content: string;
@@ -79,6 +80,17 @@ export default function RequestList({ navigation }: any) {
     }
   }
 
+  // 추천 누르면 추천을 한 사람 pk 전달
+  function PostLike(params: number) {
+    axios_post(`request/${params}/like`, {})
+      .then((response) => {
+        getListRequest();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   // 페이지가 새로고침 될 때마다 신조어 요청 목록 가져오기
   useEffect(() => {
     getListRequest();
@@ -136,7 +148,9 @@ export default function RequestList({ navigation }: any) {
         <View style={styles.buttons}>
           <SecondButton
             onPress={() => {
-              console.log("따봉");
+              {
+                userContext.username ? PostLike(item.id) : null;
+              }
             }}
           >
             <View>
@@ -149,23 +163,7 @@ export default function RequestList({ navigation }: any) {
             </View>
             <Text style={styles.vote}>추천</Text>
           </SecondButton>
-          {/* 여기에 카운트 수정하고 주석 삭제해주랑 */}
-          <Text style={styles.count}>카운트</Text>
-          <SecondButton
-            onPress={() => {
-              console.log("비추");
-            }}
-          >
-            <View>
-              <Icon
-                name="thumbs-down"
-                size={23}
-                style={{ marginRight: 10 }}
-                color="white"
-              />
-            </View>
-            <Text style={styles.vote}>비추천</Text>
-          </SecondButton>
+          <Text style={styles.count}>{item.like_users.length}</Text>
         </View>
       </Card>
     );
@@ -252,7 +250,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
   },
@@ -264,6 +262,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "notosanskr-bold",
     fontWeight: "100",
+    marginLeft: 20,
   },
   content: {
     fontSize: 18,

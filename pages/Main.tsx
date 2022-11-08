@@ -41,7 +41,12 @@ export default function Main({ navigation }: any) {
               setLoading(false))
             : (setResult(response.data.normalize.replace(/⠀/gi, " ")),
               checked
-                ? SentimentAnalysis(response.data.normalize)
+                ? (SentimentAnalysis(response.data.normalize),
+                  Toast.show({
+                    type: "success",
+                    text1: "문장 변환 완료! 🎉",
+                    text2: "감성분석이 다 될때까지 기다려주세요...",
+                  }))
                 : (Toast.show({
                     type: "success",
                     text1: "문장 변환 완료! 🎉",
@@ -70,7 +75,9 @@ export default function Main({ navigation }: any) {
         Toast.show({
           type: "success",
           text1: `이 문장은 ${response.data.예측값}으로 보여집니다!`,
+          text2: `${response.data.확률}%로 ${response.data.예측값}입니다.`,
         });
+        setLoading(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -78,6 +85,7 @@ export default function Main({ navigation }: any) {
           type: "error",
           text1: "감성 분석 실패 😥",
         });
+        setLoading(false);
       });
   };
 
@@ -121,12 +129,6 @@ export default function Main({ navigation }: any) {
       <Card>
         {result ? (
           <Text> {result} </Text>
-        ) : isloading ? (
-          <Spinner
-            visible={isloading}
-            textContent={"로딩중입니다..."}
-            textStyle={styles.spinnerTextStyle}
-          />
         ) : (
           <Text> 변환된 문장이 출력되는 곳 입니다. </Text>
         )}
@@ -147,6 +149,13 @@ export default function Main({ navigation }: any) {
           클릭해주세요!
         </SecondButton>
       )}
+      {isloading ? (
+        <Spinner
+          visible={isloading}
+          textContent={"로딩중입니다..."}
+          textStyle={styles.spinnerTextStyle}
+        />
+      ) : null}
     </SafeAreaView>
   );
 }
