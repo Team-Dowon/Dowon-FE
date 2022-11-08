@@ -149,7 +149,12 @@ export default function RequestList({ navigation }: any) {
           <SecondButton
             onPress={() => {
               {
-                userContext.username ? PostLike(item.id) : null;
+                userContext.username
+                  ? PostLike(item.id)
+                  : Toast.show({
+                      type: "error",
+                      text1: "추천하려면 로그인해야합니다! 😥",
+                    });
               }
             }}
           >
