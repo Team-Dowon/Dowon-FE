@@ -1,19 +1,22 @@
 import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { Card, Avatar } from "@rneui/themed";
-import { axios_get, axios_delete } from "../api/api";
+import { axios_post, axios_get, axios_delete } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import UserContext from "../service/UserContext";
 import BottomWindow from "../component/BottomWindow";
 import PrimaryButton from "../component/PrimaryButton";
+import SecondButton from "../component/SecondButton";
 import Toast from "react-native-toast-message";
 import moment from "moment";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 type Posttype = {
   id: number;
   user_nickname: string;
   user_profile_pic: string;
+  like_users: [];
   name: string;
   title: string;
   content: string;
@@ -77,6 +80,17 @@ export default function RequestList({ navigation }: any) {
     }
   }
 
+  // 추천 누르면 추천을 한 사람 pk 전달
+  function PostLike(params: number) {
+    axios_post(`request/${params}/like`, {})
+      .then((response) => {
+        getListRequest();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   // 페이지가 새로고침 될 때마다 신조어 요청 목록 가져오기
   useEffect(() => {
     getListRequest();
@@ -129,8 +143,28 @@ export default function RequestList({ navigation }: any) {
 
         <Card.Divider />
         <Text style={styles.date}>작성 일자 : {date}</Text>
-        <Text>요청 신조어 : {item.name}</Text>
-        <Text>{item.content}</Text>
+        <Text style={styles.content}>요청 신조어 : {item.name}</Text>
+        <Text style={styles.content}>{item.content}</Text>
+        <View style={styles.buttons}>
+          <SecondButton
+            onPress={() => {
+              {
+                userContext.username ? PostLike(item.id) : null;
+              }
+            }}
+          >
+            <View>
+              <Icon
+                name="thumbs-up"
+                size={23}
+                style={{ marginRight: 10 }}
+                color="white"
+              />
+            </View>
+            <Text style={styles.vote}>추천</Text>
+          </SecondButton>
+          <Text style={styles.count}>{item.like_users.length}</Text>
+        </View>
       </Card>
     );
   };
@@ -202,7 +236,7 @@ const styles = StyleSheet.create({
     fontFamily: "notosanskr-bold",
   },
   date: {
-    fontSize: 11,
+    fontSize: 13,
     textAlign: "right",
     marginBottom: 20,
   },
@@ -212,5 +246,25 @@ const styles = StyleSheet.create({
   },
   who: {
     flexDirection: "row",
+  },
+  buttons: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  vote: {
+    marginLeft: 20,
+    fontSize: 25,
+  },
+  count: {
+    fontSize: 20,
+    fontFamily: "notosanskr-bold",
+    fontWeight: "100",
+    marginLeft: 20,
+  },
+  content: {
+    fontSize: 18,
   },
 });

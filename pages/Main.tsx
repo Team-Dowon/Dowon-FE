@@ -41,7 +41,12 @@ export default function Main({ navigation }: any) {
               setLoading(false))
             : (setResult(response.data.normalize.replace(/⠀/gi, " ")),
               checked
-                ? SentimentAnalysis(response.data.normalize)
+                ? (SentimentAnalysis(response.data.normalize),
+                  Toast.show({
+                    type: "success",
+                    text1: "문장 변환 완료! 🎉",
+                    text2: "감성분석이 다 될때까지 기다려주세요...",
+                  }))
                 : (Toast.show({
                     type: "success",
                     text1: "문장 변환 완료! 🎉",
@@ -70,6 +75,7 @@ export default function Main({ navigation }: any) {
         Toast.show({
           type: "success",
           text1: `이 문장은 ${response.data.예측값}으로 보여집니다!`,
+          text2: `${response.data.확률}%로 ${response.data.예측값}입니다.`,
         });
         setLoading(false);
       })
@@ -93,7 +99,13 @@ export default function Main({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <CustomTextInput multiline numberOfLines={4} onChangeText={(text: any) => setSentence(text)} value={sentence} style={styles.input} />
+      <CustomTextInput
+        multiline
+        numberOfLines={4}
+        onChangeText={(text: any) => setSentence(text)}
+        value={sentence}
+        style={styles.input}
+      />
       <View style={styles.emotion}>
         <Switch
           value={checked}
@@ -117,22 +129,33 @@ export default function Main({ navigation }: any) {
       <Card>
         {result ? (
           <Text> {result} </Text>
-        ) : isloading ? (
-          <Spinner visible={isloading} textContent={"로딩중입니다..."} textStyle={styles.spinnerTextStyle} />
         ) : (
           <Text> 변환된 문장이 출력되는 곳 입니다. </Text>
         )}
       </Card>
-      {isChanged && <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>}
+      {isChanged && (
+        <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>
+      )}
       {isChanged && (
         <SecondButton
           onPress={() => {
-            navigation.navigate("UnlikeChange"), clearInput();
+            navigation.navigate("UnlikeChange", {
+              originSentecne: sentence,
+              changeSentence: result,
+            }),
+              clearInput();
           }}
         >
           클릭해주세요!
         </SecondButton>
       )}
+      {isloading ? (
+        <Spinner
+          visible={isloading}
+          textContent={"로딩중입니다..."}
+          textStyle={styles.spinnerTextStyle}
+        />
+      ) : null}
     </SafeAreaView>
   );
 }
