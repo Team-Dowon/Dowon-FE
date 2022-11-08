@@ -7,8 +7,10 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import UserContext from "../service/UserContext";
 import BottomWindow from "../component/BottomWindow";
 import PrimaryButton from "../component/PrimaryButton";
+import SecondButton from "../component/SecondButton";
 import Toast from "react-native-toast-message";
 import moment from "moment";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 type Posttype = {
   id: number;
@@ -129,8 +131,42 @@ export default function RequestList({ navigation }: any) {
 
         <Card.Divider />
         <Text style={styles.date}>작성 일자 : {date}</Text>
-        <Text>요청 신조어 : {item.name}</Text>
-        <Text>{item.content}</Text>
+        <Text style={styles.content}>요청 신조어 : {item.name}</Text>
+        <Text style={styles.content}>{item.content}</Text>
+        <View style={styles.buttons}>
+          <SecondButton
+            onPress={() => {
+              console.log("따봉");
+            }}
+          >
+            <View>
+              <Icon
+                name="thumbs-up"
+                size={23}
+                style={{ marginRight: 10 }}
+                color="white"
+              />
+            </View>
+            <Text style={styles.vote}>추천</Text>
+          </SecondButton>
+          {/* 여기에 카운트 수정하고 주석 삭제해주랑 */}
+          <Text style={styles.count}>카운트</Text>
+          <SecondButton
+            onPress={() => {
+              console.log("비추");
+            }}
+          >
+            <View>
+              <Icon
+                name="thumbs-down"
+                size={23}
+                style={{ marginRight: 10 }}
+                color="white"
+              />
+            </View>
+            <Text style={styles.vote}>비추천</Text>
+          </SecondButton>
+        </View>
       </Card>
     );
   };
@@ -202,7 +238,7 @@ const styles = StyleSheet.create({
     fontFamily: "notosanskr-bold",
   },
   date: {
-    fontSize: 11,
+    fontSize: 13,
     textAlign: "right",
     marginBottom: 20,
   },
@@ -212,5 +248,24 @@ const styles = StyleSheet.create({
   },
   who: {
     flexDirection: "row",
+  },
+  buttons: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  vote: {
+    marginLeft: 20,
+    fontSize: 25,
+  },
+  count: {
+    fontSize: 20,
+    fontFamily: "notosanskr-bold",
+    fontWeight: "100",
+  },
+  content: {
+    fontSize: 18,
   },
 });
