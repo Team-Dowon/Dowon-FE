@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import PrimaryButton from "../component/PrimaryButton";
 
+// 초성순으로 리스트 나열
 const ListConsonant: string[] = [
   "ㄱ",
   "ㄲ",
@@ -31,8 +32,9 @@ const ListConsonant: string[] = [
   "ㅎ",
 ];
 
+// 신조어 사전 페이지
 export default function Dictionary({ navigation }: any) {
-  // pressHandler 실행 시 Search.tsx로 이동
+  // pressHandler 실행 시 신조어 검색창으로 이동
   function pressHandler() {
     navigation.navigate("Search");
   }
@@ -48,21 +50,6 @@ export default function Dictionary({ navigation }: any) {
       <PrimaryButton onPress={pressHandler}>단어 바로 검색</PrimaryButton>
       <ScrollView style={styles.scroll}>
         {ListConsonant.map((consonant: Partial<string>, i: number) => (
-          // <ListItem
-          //   key={i}
-          //   onPress={() => {
-          //     alert(`${consonant}`);
-          //     navigation.navigate("SlangList");
-          //   }}
-          //   bottomDivider
-          //   style={styles.listItem}
-          // >
-          //   <ListItem.Content>
-          //     <ListItem.Title>
-          //       <Text>{consonant}</Text>
-          //     </ListItem.Title>
-          //   </ListItem.Content>
-          // </ListItem>
           //  각 map으로 형성된 초성 리스트(ListConsonant)를 클릭시 SlangListHandler 실행
           <Pressable key={i} onPress={() => SlangListHandler(consonant)}>
             <View style={styles.listItem}>

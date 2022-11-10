@@ -52,6 +52,7 @@ export default function WordExtract({ navigation }: any) {
       });
   };
 
+  // 입력한 문장 초기화하는 함수
   function clearInput() {
     setSentence("");
     setExtractList([]);

@@ -12,6 +12,7 @@ import Toast from "react-native-toast-message";
 import moment from "moment";
 import Icon from "react-native-vector-icons/FontAwesome";
 
+// type를 통해 신조어 요청 게시글 형태 정의
 type Posttype = {
   id: number;
   user_nickname: string;
@@ -25,6 +26,7 @@ type Posttype = {
 
 // 새롭게 생겨난 은어의 경우는 DB에 존재하지 않기 때문에 새로운 단어 기재 요청 글을 관리하는 모듈
 export default function RequestList({ navigation }: any) {
+  // requestid, username, ListRequest, Bottom창에 따른 설정값 설정 -> useState
   const [BottomVisible, setBottomVisible] = useState(false);
   const [requestid, setRequestid] = useState<number>(0);
   const [username, setUsername] = useState<string>("");

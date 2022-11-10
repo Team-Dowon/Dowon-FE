@@ -20,12 +20,14 @@ const CustomTextInput = (props: any) => {
 };
 
 export default function Main({ navigation }: any) {
+  // sentence, result, 로그인중 여부, 변경 여부, 확인 여부에 따른 설정값 설정 -> useState
   const [sentence, setSentence] = useState<string>("");
   const [result, setResult] = useState<string>("");
   const [isloading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
   const [isChanged, setChanged] = useState(false);
-  // 신조어 문장 변환
+
+  // 신조어가 들어있는 문장을 이해할 수 있도록 대체 문장으로 변환
   const Conversion = async (key: string) => {
     axios_post("sentence", {
       text: key,

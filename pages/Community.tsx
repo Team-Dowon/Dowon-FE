@@ -9,6 +9,7 @@ import BottomWindow from "../component/BottomWindow";
 import Toast from "react-native-toast-message";
 import moment from "moment";
 
+// type를 통해 게시글 형태 정의
 type Posttype = {
   id: number;
   user_nickname: string;
@@ -20,6 +21,7 @@ type Posttype = {
 
 // 커뮤니티의 게시글을 관리하는 모듈 -> Post로 넘어가서 게시글을 작성 및 수정하거나 Comment로 넘어가 댓글을 작성할 수 있음
 export default function Community({ navigation }: any) {
+  // post id, username, Bottom창, ListPost에 따른 설정값 설정 -> useState
   const [BottomVisible, setBottomVisible] = useState(false);
   const [postid, setPostid] = useState<number>(0);
   const [username, setUsername] = useState<string>("");

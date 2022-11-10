@@ -53,12 +53,14 @@ export default function BottomWindow(props: any) {
     })
   ).current;
 
+  // BottomVisible이면 BottomSheet를 초기 위치로 움직이는 함수 실행
   useEffect(() => {
     if (props.BottomVisible) {
       resetBottomSheet.start();
     }
   }, [props.BottomVisible]);
 
+  // BottomSheet를 닫는 함수입니다.
   const closeModal = () => {
     closeBottomSheet.start(() => {
       setBottomVisible(false);

@@ -10,6 +10,7 @@ import { Avatar } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import FormData from "form-data";
 
+// 개인 프로필 페이지
 export default function Profile({ navigation }: any) {
   const [userProfilePic, setUserProfilePic] = useState(""); // 유저 이미지 저장
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions(); // 권한 요청을 위한 hooks
@@ -58,7 +59,7 @@ export default function Profile({ navigation }: any) {
       });
   };
 
-  //로그아웃
+  // 로그아웃
   const logouthandler = async (key: string) => {
     axios_post("user/logout", {
       Token: await AsyncStorage.getItem(key),
@@ -131,14 +132,17 @@ export default function Profile({ navigation }: any) {
       });
   };
 
+  // 로그인 페이지로 이동하는 함수
   function goToLogin() {
     navigation.navigate("Login");
   }
 
+  // 회원가입 페이지로 이동하는 함수
   function goToSignUp() {
     navigation.navigate("SignUp");
   }
 
+  // 강제 로그아웃하는 함수
   function reset() {
     AsyncStorage.clear();
     userContext.setUserlogin(false);
@@ -152,6 +156,7 @@ export default function Profile({ navigation }: any) {
     });
   }
 
+  // 로그인 여부 계속 확인
   useEffect(() => {
     islogin("access");
   }, [isFocused]);

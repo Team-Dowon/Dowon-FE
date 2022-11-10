@@ -7,6 +7,7 @@ import WordExtract from "../pages/WordExtract";
 import Main from "../pages/Main";
 import StackDictionary from "../navigation/StackDictionary";
 
+// BottomTab을 이용하여 페이지를 이동할 수 있음
 export default function BottomTab({ navigation }: any) {
   const Tab = createBottomTabNavigator();
 

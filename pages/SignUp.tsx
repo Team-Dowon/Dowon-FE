@@ -10,6 +10,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 // 사용자가 회원가입하는 모듈
 export default function Signup({ navigation }: any) {
+  // userid, nickname, email, phone, password, checkpassword, 빈칸 여부, 비밀번호 일치 여부에 따른 설정값 설정 -> useState
   const [blankModal, setBlankModal] = useState(false);
   const [coincideModal, setCoincideModal] = useState(false);
   const [userid, setUserId] = useState<string>("");
@@ -21,7 +22,6 @@ export default function Signup({ navigation }: any) {
 
   // 회원가입 기능 연동
   const submitSignUpData = async () => {
-    //modal 같은 거 만들어서 화면에 띄어주게 할 예정
     if (!(userid && nickname && email && phone && password && checkpassword)) {
       setBlankModal(true);
     } else if (password !== checkpassword) {

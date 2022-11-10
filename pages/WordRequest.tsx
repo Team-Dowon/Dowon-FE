@@ -16,7 +16,7 @@ export default function WordRequest({ navigation, route }: any) {
   const [name, setName] = useState<string>("");
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
-  //신조어 요청
+  // 신조어 요청 함수
   const PostRequest = async () => {
     if (!userContext.userlogin) {
       setLoginModal(true);
@@ -46,7 +46,7 @@ export default function WordRequest({ navigation, route }: any) {
     }
   };
 
-  //신조어 요청 수정
+  // 신조어 요청 수정 함수
   const modifyRequest = async (key: number) => {
     if (!(title && content)) {
       setBlankModal(true);

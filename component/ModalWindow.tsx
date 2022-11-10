@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-native-modal";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 
+// 모달 안내창 띄우게 하는 module
 export default function ModalWindow({
   open,
   okPress,
@@ -39,7 +40,6 @@ export default function ModalWindow({
   );
 }
 
-// 이쪽이 문제 여기 좀 손봐야댐
 const styles = StyleSheet.create({
   modal: {
     backgroundColor: "#ffffff",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { axios_get } from "../api/api";
 
+// type를 통해 신조어 단어 형태 정의
 type Slangtype = {
   id: number;
   name: string;

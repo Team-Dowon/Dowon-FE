@@ -4,6 +4,7 @@ import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
 
+// type를 통해 신조어 단어 형태 정의
 type Slangtype = {
   id: number;
   name: string;

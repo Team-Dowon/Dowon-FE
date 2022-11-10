@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { axios_post } from "../api/api";
 
+// type를 통해 신조어 단어 형태 정의
 type Slangtype = {
   id: number;
   name: string;
@@ -42,16 +43,6 @@ export default function SlangList({ navigation, route }: any) {
 
   const renderItem = ({ item }: { item: Slangtype }) => {
     return (
-      // <ListItem
-      //   onPress={() => {
-      //     navigation.navigate("WordInfo", { slang: item.name });
-      //   }}
-      //   bottomDivider
-      // >
-      //   <ListItem.Content>
-      //     <ListItem.Title>{item.name}</ListItem.Title>
-      //   </ListItem.Content>
-      // </ListItem>
       <Pressable
         key={item}
         onPress={() => navigation.navigate("WordInfo", { slang: item.name })}

@@ -16,7 +16,7 @@ export default function Login({ navigation }: any) {
   const [password, setPassword] = useState<string>("");
   const [loginModal, setLoginModal] = useState(false);
 
-  // 로그인 기능 연동
+  // Bearer 토큰을 이용한 로그인 기능 연동
   const logInHandler = async () => {
     if (!(userid && password)) {
       setLoginModal(true);
@@ -32,15 +32,15 @@ export default function Login({ navigation }: any) {
             "Authorization"
           ] = `Bearer ${response.data.access}`;
           navigation.navigate("Profile");
-          console.log(response.data); //로그인 성공하면 로그인 완료라고 뜸
+          //console.log(response.data);
           Toast.show({
             type: "success",
             text1: `로그인되었습니다 ${response.data.nickname}님! 😊`,
           });
         })
         .catch(function (error) {
-          console.log(error);
-          console.log("로그인 실패");
+          //console.log(error);
+          //console.log("로그인 실패");
           Toast.show({
             type: "error",
             text1: "로그인 실패 😥",

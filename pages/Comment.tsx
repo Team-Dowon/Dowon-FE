@@ -21,7 +21,9 @@ type Commenttype = {
   date: string;
 };
 
+// 댓글 관련 페이지
 export default function Comment({ route, navigation }: any) {
+  // commment id, comment, username, Bottom창, 로그인여부, 빈칸여부, 수정여부, ListComment에 따른 설정값 설정 -> useState
   const [BottomVisible, setBottomVisible] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);

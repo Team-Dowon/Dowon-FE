@@ -15,7 +15,7 @@ import Toast, { BaseToast } from "react-native-toast-message";
 import UserContext from "./service/UserContext";
 import UnlikeChange from "./pages//UnlikeChange";
 
-// Toast는 짧게 메시지 표시해주는 거
+// Toast를 이용하여 화면 상단에 메세지 표시
 const toastConfig = {
   success: (props: any) => (
     <BaseToast
@@ -86,11 +86,12 @@ export default function App() {
     }
   }, [fontLoad]);
 
+  // 폰트 로드 안되면 null
   if (!fontLoad) {
     return null;
   }
 
-  // font Loading 여부에 따라 return
+  // font Loading 여부에 따라 페이지 return
   return (
     <>
       <UserContext.Provider value={user}>
