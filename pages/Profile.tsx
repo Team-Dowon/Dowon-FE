@@ -14,6 +14,7 @@ import FormData from "form-data";
 export default function Profile({ navigation }: any) {
   const [userProfilePic, setUserProfilePic] = useState(""); // 유저 이미지 저장
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions(); // 권한 요청을 위한 hooks
+  const [username, setUsername] = useState<string>("");
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
@@ -42,6 +43,7 @@ export default function Profile({ navigation }: any) {
         userContext.setUserId(response.data.u_id);
         userContext.setUserName(response.data.nickname);
         userContext.setUserEmail(response.data.email);
+        setUsername(response.data.nickname);
       })
       .catch(function (error) {
         console.log("유저정보 못가져옴");
@@ -51,6 +53,7 @@ export default function Profile({ navigation }: any) {
         userContext.setUserId("");
         userContext.setUserName("");
         userContext.setUserEmail("");
+        setUsername("");
         setUserProfilePic("");
         Toast.show({
           type: "success",
@@ -71,6 +74,7 @@ export default function Profile({ navigation }: any) {
         userContext.setUserId("");
         userContext.setUserName("");
         userContext.setUserEmail("");
+        setUsername("");
         setUserProfilePic("");
         Toast.show({
           type: "success",
@@ -179,20 +183,20 @@ export default function Profile({ navigation }: any) {
                 size={150}
                 rounded
                 source={{ uri: userProfilePic }}
-                title={userContext.username}
+                title={username}
                 containerStyle={{ backgroundColor: "#63646d", marginRight: 10 }}
               />
             ) : (
               <Avatar
                 size={150}
                 rounded
-                title={userContext.username.slice(-2)}
+                title={username.slice(-2)}
                 containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }}
               />
             )}
             <Avatar.Accessory size={45} onPress={uploadImage} />
           </View>
-          <Text style={styles.text}>안녕하세요! {userContext.username}님</Text>
+          <Text style={styles.text}>안녕하세요! {username}님</Text>
           <PrimaryButton onPress={() => logouthandler("access")}>
             로그아웃
           </PrimaryButton>

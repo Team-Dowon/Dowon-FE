@@ -106,6 +106,7 @@ export default function WordRequest({ navigation, route }: any) {
         value={name}
       />
       <Input
+        multiline
         style={styles.input}
         placeholder="요청 내용을 입력하세요&#13;&#10;(뜻, 대체 단어, 예시 문장을 적어주세요!)"
         onChangeText={setContent}
