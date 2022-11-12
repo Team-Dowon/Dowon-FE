@@ -186,7 +186,7 @@ export default function Profile({ navigation }: any) {
               <Avatar
                 size={150}
                 rounded
-                title={userContext.username}
+                title={userContext.username.slice(-2)}
                 containerStyle={{ backgroundColor: "#3d4db7", marginRight: 10 }}
               />
             )}
