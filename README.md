@@ -9,7 +9,7 @@
 
 |                     konlpy                      |                     kobert                     | 
 |:-----------------------------------------------:|:----------------------------------------------:|
-| <img src="img_1.png" width="100" height="120"/> | <img src="img_2.png" width="200" height="80"/> |
+| <img src="https://user-images.githubusercontent.com/62326659/201982878-ecad8e50-3210-4b8c-a010-5fcef6cd621d.png" width="100" height="120"/> | <img src="https://user-images.githubusercontent.com/62326659/201983024-3b69b8e2-be3e-4ebf-ba5b-a7e8e19c6e6b.png" width="200" height="80"/> |
 <br>
 
 ## 구현 기능
