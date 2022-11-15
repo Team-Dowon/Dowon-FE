@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "graduate-project",
-    "slug": "graduate-project",
-    "version": "1.0.0",
+    "name": "Slang Encyclopedia",
+    "slug": "slang-encyclopedia",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,18 +14,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.slangencyclopedia.slangencyclopedia",
+      "versionCode": 4,
+      "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.graduate_project"
+      "package": "com.slang_encyclopedia"
     },
     "web": {
       "favicon": "./assets/favicon.png"
