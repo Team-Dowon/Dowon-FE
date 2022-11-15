@@ -1,4 +1,4 @@
-# Dowon-FE : 🇰🇷 💬
+# 은어 탐지 변환 앱-프론트엔드 : 🇰🇷 💬
 
 <img src="https://img.shields.io/badge/React Native-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Expo Go-000020?style=for-the-badge&logo=Expo&logoColor=white"> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
 
