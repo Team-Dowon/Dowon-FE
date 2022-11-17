@@ -4,10 +4,22 @@ import axios from "axios";
 const baseUrl =
   "http://ec2-54-180-119-169.ap-northeast-2.compute.amazonaws.com/api/";
 
+const sentimentUrl =
+  "http://ec2-13-209-64-199.ap-northeast-2.compute.amazonaws.com/api/";
+
 //url은 string 타입 sendData는 json 형식으로 받음
 //axios의 post(데이터 보내기)를 하기 위한 함수
 export const axios_post = async (url: string, sendData: any) => {
   const response = await axios.post(`${baseUrl}${url}`, sendData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+export const axios_sentiment_post = async (url: string, sendData: any) => {
+  const response = await axios.post(`${sentimentUrl}${url}`, sendData, {
     headers: {
       "Content-Type": "application/json",
     },

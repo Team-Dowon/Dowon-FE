@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, SafeAreaView } from "react-native";
 import Card from "../component/Card";
 import PrimaryButton from "../component/PrimaryButton";
-import { axios_post } from "../api/api";
+import { axios_post, axios_sentiment_post } from "../api/api";
 import { Switch, Dialog } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import SecondButton from "../component/SecondButton";
@@ -69,7 +69,7 @@ export default function Main({ navigation }: any) {
 
   // 신조어 문장 감성 분석
   const SentimentAnalysis = async (key: string) => {
-    axios_post("test", {
+    axios_sentiment_post("test", {
       sentence: key,
     })
       .then(async (response) => {
