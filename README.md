@@ -32,6 +32,9 @@ npm --force install
 visual studio code 재실행
 ```
 
+## 요구사항명세서 및 설
+[요구사항명세서+설계명세서.pdf](https://github.com/Team-Dowon/Dowon-FE/files/10682441/%2B.pdf)
+
 ## 라이센스
 
 MIT &copy; [나규태](mailto:ncb6206@gmail.com) [양영재](mailto:y2336789@gmail.com)
