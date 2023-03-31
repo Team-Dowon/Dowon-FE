@@ -21,12 +21,10 @@
 | <img src="https://user-images.githubusercontent.com/62326659/201983024-3b69b8e2-be3e-4ebf-ba5b-a7e8e19c6e6b.png" width="200" height="80"/> | 은어가 들어간 문장을 감성분석을 통해 대략적인 분위기를 알 수 있도록 하기 위해 사용하였습니다. | 
 <br>
 
-## 구현 기능
+## 실제 어플리케이션 화면
+![image](https://user-images.githubusercontent.com/62326659/229184695-bdfc9d79-a2f6-444c-8cd8-7a636e8b132d.png)
 
-- 은어 검색 기능
-- 은어 변환 기능
-- 감성 분석 기능
-- 커뮤니티 기능
+
 <br>
 
 ## 환경 설정 과정
