@@ -13,7 +13,7 @@ import moment from "moment";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 // type를 통해 신조어 요청 게시글 형태 정의
-type Posttype = {
+interface PostType {
   id: number;
   user_nickname: string;
   user_profile_pic: string;
@@ -22,15 +22,15 @@ type Posttype = {
   title: string;
   content: string;
   date: string;
-};
+}
 
 // 새롭게 생겨난 은어의 경우는 DB에 존재하지 않기 때문에 새로운 단어 기재 요청 글을 관리하는 모듈
-export default function RequestList({ navigation }: any) {
+export default function RequestList({ navigation }) {
   // requestid, username, ListRequest, Bottom창에 따른 설정값 설정 -> useState
   const [BottomVisible, setBottomVisible] = useState(false);
   const [requestid, setRequestid] = useState<number>(0);
   const [username, setUsername] = useState<string>("");
-  const [ListRequest, setListRequest] = useState<Posttype[]>([]);
+  const [ListRequest, setListRequest] = useState<PostType[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
@@ -98,7 +98,7 @@ export default function RequestList({ navigation }: any) {
     getListRequest();
   }, [isFocused]);
 
-  const renderItem = ({ item }: { item: Posttype }) => {
+  const renderItem = ({ item }: { item: PostType }) => {
     const date = moment(item.date).format("YYYY/MM/DD HH:mm");
     return (
       <Card>
@@ -151,7 +151,7 @@ export default function RequestList({ navigation }: any) {
           <SecondButton
             onPress={() => {
               {
-                userContext.username
+                userContext?.username
                   ? PostLike(item.id)
                   : Toast.show({
                       type: "error",
@@ -161,12 +161,7 @@ export default function RequestList({ navigation }: any) {
             }}
           >
             <View>
-              <Icon
-                name="thumbs-up"
-                size={23}
-                style={{ marginRight: 10 }}
-                color="white"
-              />
+              <Icon name="thumbs-up" size={23} style={{ marginRight: 10 }} color="white" />
             </View>
             <Text style={styles.vote}>추천</Text>
           </SecondButton>
@@ -191,17 +186,17 @@ export default function RequestList({ navigation }: any) {
         style={styles.scroll}
         data={ListRequest}
         renderItem={renderItem}
-        keyExtractor={(item: Posttype, index: number) => index.toString()}
+        keyExtractor={(item: PostType, index: number) => index.toString()}
       />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
           setBottomVisible={setBottomVisible}
-          modifyfunc={() => {
+          modifyFunc={() => {
             RequestidHandler(requestid, username);
             setBottomVisible(false);
           }}
-          deletefunc={() => {
+          deleteFunc={() => {
             deleteRequest(requestid);
             setBottomVisible(false);
           }}

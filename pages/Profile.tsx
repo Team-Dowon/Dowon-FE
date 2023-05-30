@@ -11,7 +11,7 @@ import Toast from "react-native-toast-message";
 import FormData from "form-data";
 
 // 개인 프로필 페이지
-export default function Profile({ navigation }: any) {
+export default function Profile({ navigation }) {
   const [userProfilePic, setUserProfilePic] = useState(""); // 유저 이미지 저장
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions(); // 권한 요청을 위한 hooks
   const [username, setUsername] = useState<string>("");
@@ -23,11 +23,11 @@ export default function Profile({ navigation }: any) {
     try {
       const token = await AsyncStorage.getItem(key);
       if (token !== null) {
-        userContext.setUserlogin(true);
+        userContext?.setUserlogin(true);
         getUserData("access");
       }
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
     }
   };
 
@@ -40,19 +40,19 @@ export default function Profile({ navigation }: any) {
         console.log("유저정보 불러오기 완료");
         console.log(response.data);
         setUserProfilePic(response.data.profile_pic);
-        userContext.setUserId(response.data.u_id);
-        userContext.setUserName(response.data.nickname);
-        userContext.setUserEmail(response.data.email);
+        userContext?.setUserId(response.data.u_id);
+        userContext?.setUserName(response.data.nickname);
+        userContext?.setUserEmail(response.data.email);
         setUsername(response.data.nickname);
       })
       .catch(function (error) {
         console.log("유저정보 못가져옴");
         console.log(error.message);
         AsyncStorage.clear();
-        userContext.setUserlogin(false);
-        userContext.setUserId("");
-        userContext.setUserName("");
-        userContext.setUserEmail("");
+        userContext?.setUserlogin(false);
+        userContext?.setUserId("");
+        userContext?.setUserName("");
+        userContext?.setUserEmail("");
         setUsername("");
         setUserProfilePic("");
         Toast.show({
@@ -149,10 +149,10 @@ export default function Profile({ navigation }: any) {
   // 강제 로그아웃하는 함수
   function reset() {
     AsyncStorage.clear();
-    userContext.setUserlogin(false);
-    userContext.setUserId("");
-    userContext.setUserName("");
-    userContext.setUserEmail("");
+    userContext?.setUserlogin(false);
+    userContext?.setUserId("");
+    userContext?.setUserName("");
+    userContext?.setUserEmail("");
     setUserProfilePic("");
     Toast.show({
       type: "success",
@@ -168,7 +168,7 @@ export default function Profile({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       {/* 로그인 되어있는 경우 or 로그인이 안되있는 경우에 따라 나뉘어짐 */}
-      {userContext.userlogin ? (
+      {userContext?.userlogin ? (
         <>
           <View
             style={{
@@ -197,9 +197,7 @@ export default function Profile({ navigation }: any) {
             <Avatar.Accessory size={45} onPress={uploadImage} />
           </View>
           <Text style={styles.text}>안녕하세요! {username}님</Text>
-          <PrimaryButton onPress={() => logouthandler("access")}>
-            로그아웃
-          </PrimaryButton>
+          <PrimaryButton onPress={() => logouthandler("access")}>로그아웃</PrimaryButton>
           <View style={{ marginTop: 20 }}>
             <Text style={styles.text}>
               <Text style={styles.navitext} onPress={reset}>

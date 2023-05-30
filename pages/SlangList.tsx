@@ -1,28 +1,21 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  SafeAreaView,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, FlatList, SafeAreaView, Pressable } from "react-native";
 import { axios_post } from "../api/api";
 
 // type를 통해 신조어 단어 형태 정의
-type Slangtype = {
+interface SlangType {
   id: number;
   name: string;
   mean: string;
   example: string;
   replace: string;
-};
+}
 
 // Dictionary에서 선택한 초성으로 시작하는 단어들을 가져오는 모듈
-export default function SlangList({ navigation, route }: any) {
-  const [ListSlang, setListSlang] = useState<Slangtype[]>([]);
+export default function SlangList({ navigation, route }) {
+  const [ListSlang, setListSlang] = useState<SlangType[]>([]);
   // 각 초성으로 시작하는 신조어 가져오기
-  const getListSlang = async () => {
+  const getListSlang = () => {
     axios_post("dictionary_cho", {
       cho: route.params.alphabet,
     })
@@ -41,10 +34,10 @@ export default function SlangList({ navigation, route }: any) {
     getListSlang();
   }, []);
 
-  const renderItem = ({ item }: { item: Slangtype }) => {
+  const renderItem = ({ item }: { item: SlangType }) => {
     return (
       <Pressable
-        key={item}
+        key={item.id}
         onPress={() => navigation.navigate("WordInfo", { slang: item.name })}
       >
         <View style={styles.listItem}>
@@ -60,7 +53,7 @@ export default function SlangList({ navigation, route }: any) {
         style={styles.scroll}
         data={ListSlang}
         renderItem={renderItem}
-        keyExtractor={(item: Slangtype, index: number) => index.toString()}
+        keyExtractor={(item: SlangType, index: number) => index.toString()}
       />
     </SafeAreaView>
   );

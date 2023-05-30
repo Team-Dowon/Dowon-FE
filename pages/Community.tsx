@@ -20,7 +20,7 @@ type Posttype = {
 };
 
 // 커뮤니티의 게시글을 관리하는 모듈 -> Post로 넘어가서 게시글을 작성 및 수정하거나 Comment로 넘어가 댓글을 작성할 수 있음
-export default function Community({ navigation }: any) {
+export default function Community({ navigation }) {
   // post id, username, Bottom창, ListPost에 따른 설정값 설정 -> useState
   const [BottomVisible, setBottomVisible] = useState(false);
   const [postid, setPostid] = useState<number>(0);
@@ -64,7 +64,7 @@ export default function Community({ navigation }: any) {
 
   // 수정 클릭하면 postid변수 Post에 파라미터로 전달
   function PostidHandler(params: number, username: string) {
-    if (userContext.username !== username) {
+    if (userContext?.username !== username) {
       Toast.show({
         type: "error",
         text1: "신조어 요청 수정 실패 😥",
@@ -166,11 +166,11 @@ export default function Community({ navigation }: any) {
         <BottomWindow
           BottomVisible={BottomVisible}
           setBottomVisible={setBottomVisible}
-          modifyfunc={() => {
+          modifyFunc={() => {
             PostidHandler(postid, username);
             setBottomVisible(false);
           }}
-          deletefunc={() => {
+          deleteFunc={() => {
             deletePost(postid);
             setBottomVisible(false);
           }}

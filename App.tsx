@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { Feather } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./pages/Login";
@@ -17,7 +16,7 @@ import UnlikeChange from "./pages//UnlikeChange";
 
 // Toast를 이용하여 화면 상단에 메세지 표시
 const toastConfig = {
-  success: (props: any) => (
+  success: (props: { type?: string; text1?: string }) => (
     <BaseToast
       {...props}
       style={{ borderLeftColor: "#D2F39A" }}
@@ -27,7 +26,7 @@ const toastConfig = {
       }}
     />
   ),
-  error: (props: any) => (
+  error: (props: { type?: string; text1?: string }) => (
     <BaseToast
       {...props}
       style={{ borderLeftColor: "#FF5E5E" }}
@@ -40,29 +39,21 @@ const toastConfig = {
 };
 
 export default function App() {
-  const [fontLoad, setFontLoad] = useState<boolean>(false); // 폰트 불러오기
-  const [userId, setUserId] = useState<string | null>(null); // 전역 아이디 변수
-  const [username, setUserName] = useState<string | null>(null); // 전역 닉네임 변수
-  const [useremail, setUserEmail] = useState<string | null>(null); // 전역 이메일 변수
-  const [userlogin, setUserlogin] = useState<boolean>(false); // 전역 로그인 여부 변수
+  const [fontLoad, setFontLoad] = useState(false); // 폰트 불러오기
+  const [userId, setUserId] = useState(""); // 전역 아이디 변수
+  const [userName, setUserName] = useState(""); // 전역 닉네임 변수
+  const [userEmail, setUserEmail] = useState(""); // 전역 이메일 변수
+  const [userLogin, setUserLogin] = useState(false); // 전역 로그인 여부 변수
   const Stack = createStackNavigator();
-  const user = {
-    userId,
-    username,
-    useremail,
-    userlogin,
-    setUserId,
-    setUserName,
-    setUserEmail,
-    setUserlogin,
-  };
+  // prettier-ignore
+  const user = { userId, userName, userEmail, userLogin, setUserId, setUserName, setUserEmail, setUserLogin };
 
   // font 불러오기
   useEffect(() => {
     const Load = async () => {
       try {
-        await SplashScreen.preventAutoHideAsync();
-        await Font.loadAsync({
+        SplashScreen.preventAutoHideAsync();
+        Font.loadAsync({
           "notosanskr-black": require("./assets/fonts/NotoSansKR-Black.otf"),
           "notosanskr-bold": require("./assets/fonts/NotoSansKR-Bold.otf"),
           "notosanskr-light": require("./assets/fonts/NotoSansKR-Light.otf"),
@@ -72,7 +63,7 @@ export default function App() {
         });
         await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (e) {
-        console.warn(e);
+        console.error(e);
       } finally {
         setFontLoad(true);
       }
@@ -80,9 +71,9 @@ export default function App() {
     Load();
   }, []);
 
-  const onFontLoadView = useCallback(async () => {
+  const onFontLoadView = useCallback(() => {
     if (fontLoad) {
-      await SplashScreen.hideAsync();
+      SplashScreen.hideAsync();
     }
   }, [fontLoad]);
 
@@ -105,11 +96,7 @@ export default function App() {
               },
             }}
           >
-            <Stack.Screen
-              name="BottomTab"
-              component={BottomTab}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name="BottomTab" component={BottomTab} options={{ headerShown: false }} />
             <Stack.Screen
               name="Login"
               component={Login}

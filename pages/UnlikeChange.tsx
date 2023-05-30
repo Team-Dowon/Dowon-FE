@@ -15,25 +15,22 @@ import { axios_post } from "../api/api";
 import Toast from "react-native-toast-message";
 import UserContext from "../service/UserContext";
 
-export default function UnlikeChange({ route, navigation }: any) {
+export default function UnlikeChange({ route, navigation }) {
   const [defaultRating, setdefaultRating] = useState(2);
   const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
   const [isClicked, setClick] = useState(false);
   const [geonuiModal, setGeonuiModal] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [betterTransfer, setbetterTransfer] = useState("");
-  const originSentence = route.params.originSentecne;
-  const changeSentence = route.params.changeSentence;
+  const { originSentence, changeSentence } = route.params;
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
 
-  const starImgFilled =
-    "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
-  const starImgCorner =
-    "https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png";
+  const starImgFilled = "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
+  const starImgCorner = "https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png";
 
   // 개선문장 post
   const postImprovement = async () => {
-    if (!userContext.userlogin) {
+    if (!userContext?.userlogin) {
       setLoginModal(true);
     } else {
       axios_post("improvement", {
@@ -67,11 +64,7 @@ export default function UnlikeChange({ route, navigation }: any) {
             >
               <Image
                 style={styles.starImgStyle}
-                source={
-                  item <= defaultRating
-                    ? { uri: starImgFilled }
-                    : { uri: starImgCorner }
-                }
+                source={item <= defaultRating ? { uri: starImgFilled } : { uri: starImgCorner }}
               />
             </TouchableOpacity>
           );
@@ -84,18 +77,12 @@ export default function UnlikeChange({ route, navigation }: any) {
       <Text style={styles.title}>번역이 마음에 드시지 않으신가요?</Text>
       <Text style={styles.title}>별점을 입력해주세요!</Text>
       <CustomRatingBar />
-      <Text style={styles.textStyle}>
-        {defaultRating + " / " + maxRating.length}
-      </Text>
+      <Text style={styles.textStyle}>{defaultRating + " / " + maxRating.length}</Text>
       {isClicked && (
         <>
           <View>
-            <Text style={styles.fontStyle}>
-              사용자 입력 문장 : {originSentence}
-            </Text>
-            <Text style={styles.fontStyle}>
-              시스템 번역 문장 : {changeSentence}
-            </Text>
+            <Text style={styles.fontStyle}>사용자 입력 문장 : {originSentence}</Text>
+            <Text style={styles.fontStyle}>시스템 번역 문장 : {changeSentence}</Text>
           </View>
           <View style={styles.input}>
             <KeyboardAvoidingView>
@@ -104,7 +91,7 @@ export default function UnlikeChange({ route, navigation }: any) {
                 numberOfLines={5}
                 editable
                 maxLength={100}
-                onChangeText={(text: any) => setbetterTransfer(text)}
+                onChangeText={(text) => setbetterTransfer(text)}
                 placeholder="개선을 위해 깔끔한 번역문장을 입력해주세요&#13;&#10;(100자 이내) &#13;&#10; "
               />
             </KeyboardAvoidingView>

@@ -9,7 +9,7 @@ import Toast from "react-native-toast-message";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 // 사용자가 회원가입하는 모듈
-export default function Signup({ navigation }: any) {
+export default function Signup({ navigation }) {
   // userid, nickname, email, phone, password, checkpassword, 빈칸 여부, 비밀번호 일치 여부에 따른 설정값 설정 -> useState
   const [blankModal, setBlankModal] = useState(false);
   const [coincideModal, setCoincideModal] = useState(false);
@@ -67,30 +67,15 @@ export default function Signup({ navigation }: any) {
     >
       <SafeAreaView style={styles.container}>
         <LogoTitle />
-        <Input
-          style={styles.input}
-          placeholder="아이디"
-          onChangeText={setUserId}
-          value={userid}
-        />
+        <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
         <Input
           style={styles.input}
           placeholder="닉네임"
           onChangeText={setNickname}
           value={nickname}
         />
-        <Input
-          style={styles.input}
-          placeholder="이메일"
-          onChangeText={setEmail}
-          value={email}
-        />
-        <Input
-          style={styles.input}
-          placeholder="전화번호"
-          onChangeText={setPhone}
-          value={phone}
-        />
+        <Input style={styles.input} placeholder="이메일" onChangeText={setEmail} value={email} />
+        <Input style={styles.input} placeholder="전화번호" onChangeText={setPhone} value={phone} />
         <Input
           style={styles.input}
           placeholder="비밀번호"

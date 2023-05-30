@@ -8,21 +8,10 @@ import Toast from "react-native-toast-message";
 import SecondButton from "../component/SecondButton";
 import Spinner from "react-native-loading-spinner-overlay";
 
-const CustomTextInput = (props: any) => {
-  return (
-    <TextInput
-      {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
-      editable
-      maxLength={100}
-      placeholder="문장을 입력하세요. (길이 제한 100자)"
-    />
-  );
-};
-
-export default function Main({ navigation }: any) {
+export default function Main({ navigation }) {
   // sentence, result, 로그인중 여부, 변경 여부, 확인 여부에 따른 설정값 설정 -> useState
-  const [sentence, setSentence] = useState<string>("");
-  const [result, setResult] = useState<string>("");
+  const [sentence, setSentence] = useState("");
+  const [result, setResult] = useState("");
   const [isloading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
   const [isChanged, setChanged] = useState(false);
@@ -101,12 +90,15 @@ export default function Main({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <CustomTextInput
+      <TextInput
         multiline
         numberOfLines={4}
-        onChangeText={(text: any) => setSentence(text)}
+        onChangeText={(text: string) => setSentence(text)}
         value={sentence}
         style={styles.input}
+        editable
+        maxLength={100}
+        placeholder="문장을 입력하세요. (길이 제한 100자)"
       />
       <View style={styles.emotion}>
         <Switch
@@ -129,15 +121,9 @@ export default function Main({ navigation }: any) {
       {/* 입력 초기화 버튼을 누를 시 입력된 문장, 변환된 문장 등이 초기화 되어 손 쉽게 다시 문장을 입력할 수 있음 */}
       <PrimaryButton onPress={clearInput}>입력 초기화</PrimaryButton>
       <Card>
-        {result ? (
-          <Text> {result} </Text>
-        ) : (
-          <Text> 변환된 문장이 출력되는 곳 입니다. </Text>
-        )}
+        {result ? <Text> {result} </Text> : <Text> 변환된 문장이 출력되는 곳 입니다. </Text>}
       </Card>
-      {isChanged && (
-        <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>
-      )}
+      {isChanged && <Text style={styles.unlike}>결과가 마음에 드시지 않으신가요?</Text>}
       {isChanged && (
         <SecondButton
           onPress={() => {

@@ -3,17 +3,17 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { axios_get } from "../api/api";
 
 // type를 통해 신조어 단어 형태 정의
-type Slangtype = {
+interface SlangType {
   id: number;
   name: string;
   mean: string;
   example: string;
   replace: string;
-};
+}
 
 // 단어의 상세정보를 확인하는 모듈 -> 단어 제목, 뜻, 예시, 대체 단어 등이 있음
-export default function WordInfo({ route }: any) {
-  const [Slang, setSlang] = useState<Slangtype>({
+export default function WordInfo({ route }) {
+  const [Slang, setSlang] = useState<SlangType>({
     id: 0,
     name: "",
     mean: "",

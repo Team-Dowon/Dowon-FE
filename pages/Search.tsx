@@ -5,18 +5,18 @@ import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
 
 // type를 통해 신조어 단어 형태 정의
-type Slangtype = {
+interface SlangType {
   id: number;
   name: string;
   mean: string;
   example: string;
   replace: string;
-};
+}
 
 // 초성별로 들어가지 않고도 직접적으로 사용자가 단어를 검색할 수 있는 모듈
-export default function Search({ navigation }: any) {
+export default function Search({ navigation }) {
   const [searchslang, setSearchSlang] = useState<string>("");
-  const [ListSlang, setListSlang] = useState<Slangtype[]>([]);
+  const [ListSlang, setListSlang] = useState<SlangType[]>([]);
 
   // 검색한 신조어 가져오기
   const searchWord = async () => {
@@ -33,7 +33,7 @@ export default function Search({ navigation }: any) {
       });
   };
 
-  const renderItem = ({ item }: { item: Slangtype }) => {
+  const renderItem = ({ item }: { item: SlangType }) => {
     return (
       <ListItem
         onPress={() => {
@@ -61,7 +61,7 @@ export default function Search({ navigation }: any) {
           style={styles.scroll}
           data={ListSlang}
           renderItem={renderItem}
-          keyExtractor={(item: Slangtype, index: number) => index.toString()}
+          keyExtractor={(item: SlangType, index: number) => index.toString()}
         />
       )}
       <PrimaryButton onPress={searchWord}>단어 검색</PrimaryButton>

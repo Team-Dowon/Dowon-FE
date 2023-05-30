@@ -1,13 +1,11 @@
+import { ReactNode } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
 // PrimaryButton과 동일하게 재사용되는 버튼 디자인
-function SecondButton({ children, onPress }: any) {
+function SecondButton({ children, onPress }: { children: ReactNode; onPress: () => void }) {
   return (
     <View>
-      <Pressable
-        onPress={onPress}
-        style={({ pressed }) => pressed && styles.pressed}
-      >
+      <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
         <View style={[styles.button]}>
           <Text style={[styles.buttonText]}>{children}</Text>
         </View>

@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import Modal from "react-native-modal";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 
+interface IModalWindow {
+  open: boolean;
+  okPress: () => void;
+  cancelPress?: () => void;
+  title?: string;
+  text1?: string;
+  text2?: string;
+  cancel?: boolean;
+}
+
 // 모달 안내창 띄우게 하는 module
-export default function ModalWindow({
-  open,
-  okPress,
-  cancelPress,
-  title,
-  text1,
-  text2,
-  cancel,
-}: any) {
+export default function ModalWindow(props: IModalWindow) {
+  const { open, okPress, cancelPress, title, text1, text2, cancel } = props;
   return (
     <>
       <Modal isVisible={open} style={styles.modal}>

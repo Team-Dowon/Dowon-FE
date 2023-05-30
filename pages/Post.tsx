@@ -8,7 +8,7 @@ import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 
 // 게시글을 작성 및 수정하는 모듈
-export default function Post({ navigation, route }: any) {
+export default function Post({ navigation, route }) {
   // title, content, 로그인 여부, 변경 여부에 따른 설정값 설정 -> useState
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);
@@ -18,7 +18,7 @@ export default function Post({ navigation, route }: any) {
 
   //게시글 작성 게시
   const postHandler = async () => {
-    if (!userContext.userlogin) {
+    if (!userContext?.userlogin) {
       setLoginModal(true);
     } else if (!(title && content)) {
       setBlankModal(true);
@@ -47,7 +47,7 @@ export default function Post({ navigation, route }: any) {
 
   //게시글 수정
   const modifyPost = async (key: number) => {
-    if (!userContext.userlogin) {
+    if (!userContext?.userlogin) {
       setLoginModal(true);
     } else if (!(title && content)) {
       setBlankModal(true);

@@ -8,7 +8,7 @@ import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 
 // 특정 단어에 대해 등재를 요청하는 모듈 -> 요청 단어, 요청 내용들을 작성함
-export default function WordRequest({ navigation, route }: any) {
+export default function WordRequest({ navigation, route }) {
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);
   const [title, setTitle] = useState<string>("");
@@ -18,7 +18,7 @@ export default function WordRequest({ navigation, route }: any) {
 
   // 신조어 요청 함수
   const PostRequest = async () => {
-    if (!userContext.userlogin) {
+    if (!userContext?.userlogin) {
       setLoginModal(true);
     } else if (!(title && content && name)) {
       setBlankModal(true);

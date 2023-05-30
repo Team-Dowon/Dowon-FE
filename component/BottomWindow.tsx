@@ -12,9 +12,16 @@ import {
 } from "react-native";
 import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 
+interface IPros {
+  modifyFunc: () => void;
+  deleteFunc: () => void;
+  BottomVisible: boolean;
+  setBottomVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 // 창 아래에서 modal창 나오게 하는 컴포넌트
-export default function BottomWindow(props: any) {
-  const { modifyfunc, deletefunc, BottomVisible, setBottomVisible } = props;
+export default function BottomWindow(props: IPros) {
+  const { modifyFunc, deleteFunc, BottomVisible, setBottomVisible } = props;
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -68,12 +75,7 @@ export default function BottomWindow(props: any) {
   };
 
   return (
-    <Modal
-      visible={BottomVisible}
-      animationType={"fade"}
-      transparent
-      statusBarTranslucent
-    >
+    <Modal visible={BottomVisible} animationType={"fade"} transparent statusBarTranslucent>
       <View style={styles.overlay}>
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.background} />
@@ -86,7 +88,7 @@ export default function BottomWindow(props: any) {
           {...panResponders.panHandlers}
         >
           <View style={{ marginTop: 20 }}>
-            <TouchableHighlight onPress={modifyfunc} underlayColor="#acacac">
+            <TouchableHighlight onPress={modifyFunc} underlayColor="#acacac">
               <View style={styles.modalButton}>
                 <Text style={styles.buttontextstyle}>
                   <SimpleLineIcons name="pencil" size={24} color="black" />
@@ -94,7 +96,7 @@ export default function BottomWindow(props: any) {
                 </Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight onPress={deletefunc} underlayColor="#acacac">
+            <TouchableHighlight onPress={deleteFunc} underlayColor="#acacac">
               <View style={styles.modalButton}>
                 <Text style={styles.buttontextstyle}>
                   <MaterialIcons name="delete" size={24} color="black" />

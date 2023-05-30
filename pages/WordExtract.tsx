@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  SafeAreaView,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, TextInput, SafeAreaView, FlatList } from "react-native";
 import PrimaryButton from "../component/PrimaryButton";
 import { AntDesign } from "@expo/vector-icons";
 import { Card } from "@rneui/themed";
@@ -14,7 +7,7 @@ import { axios_post } from "../api/api";
 import Toast from "react-native-toast-message";
 
 // 사용자가 입력한 문장에서 DB에 저장된 신조어 및 은어들을 추출하는 모듈
-export default function WordExtract({ navigation }: any) {
+export default function WordExtract({ navigation }) {
   const [sentence, setSentence] = useState<string>("");
   const [extractlist, setExtractList] = useState<string[]>([]);
 
@@ -86,9 +79,7 @@ export default function WordExtract({ navigation }: any) {
         onChangeText={setSentence}
         value={sentence}
       />
-      <PrimaryButton onPress={() => Extract(sentence)}>
-        신조어 추출
-      </PrimaryButton>
+      <PrimaryButton onPress={() => Extract(sentence)}>신조어 추출</PrimaryButton>
       <PrimaryButton onPress={clearInput}>입력 초기화</PrimaryButton>
       {extractlist.length === 0 ? null : (
         <FlatList
@@ -99,15 +90,10 @@ export default function WordExtract({ navigation }: any) {
         />
       )}
       <View>
-        <Text style={styles.textrequest}>
-          {"찾으시는 신조어가 없으신가요? "}
-        </Text>
+        <Text style={styles.textrequest}>{"찾으시는 신조어가 없으신가요? "}</Text>
       </View>
       <View>
-        <Text
-          style={styles.navitext}
-          onPress={() => navigation.navigate("RequestList")}
-        >
+        <Text style={styles.navitext} onPress={() => navigation.navigate("RequestList")}>
           {"신조어 등록 요청하기"}
         </Text>
       </View>

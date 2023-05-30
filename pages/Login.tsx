@@ -10,7 +10,7 @@ import Toast from "react-native-toast-message";
 import axios from "axios";
 
 // 사용자가 앱에 로그인 하는 모듈
-export default function Login({ navigation }: any) {
+export default function Login({ navigation }) {
   // 유저 id, password, 로그인 모달에 따른 설정값 설정 -> useState
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -28,9 +28,7 @@ export default function Login({ navigation }: any) {
         .then(async (response) => {
           await AsyncStorage.setItem("access", response.data.access);
           await AsyncStorage.setItem("refresh", response.data.refresh);
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${response.data.access}`;
+          axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`;
           navigation.navigate("Profile");
           //console.log(response.data);
           Toast.show({
@@ -54,12 +52,7 @@ export default function Login({ navigation }: any) {
     <SafeAreaView style={styles.container}>
       <LogoTitle />
       {/* 아이디와 비밀번호는 Input에 설정된 onChangeText와 value를 통해 관리되며 로그인 함수인 logInHandler에 의해 활용됨 */}
-      <Input
-        style={styles.input}
-        placeholder="아이디"
-        onChangeText={setUserId}
-        value={userid}
-      />
+      <Input style={styles.input} placeholder="아이디" onChangeText={setUserId} value={userid} />
       <Input
         style={styles.input}
         placeholder="비밀번호"
@@ -72,10 +65,7 @@ export default function Login({ navigation }: any) {
       <View>
         <Text style={styles.text}>
           {"아이디가 없으면? "}
-          <Text
-            style={styles.navitext}
-            onPress={() => navigation.navigate("SignUp")}
-          >
+          <Text style={styles.navitext} onPress={() => navigation.navigate("SignUp")}>
             {"회원가입"}
           </Text>
         </Text>

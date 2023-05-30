@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
-import { Input, Card } from "@rneui/themed";
+import { Input, Card, Avatar } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_get, axios_post, axios_delete, axios_put } from "../api/api";
 import { useIsFocused } from "@react-navigation/native";
@@ -10,46 +10,43 @@ import BottomWindow from "../component/BottomWindow";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 import moment from "moment";
-import { Avatar } from "@rneui/themed";
 
 // type를 통해 댓글 형태 정의
-type Commenttype = {
+interface CommentType {
   id: number;
   user_profile_pic: string;
   user_nickname: string;
   content: string;
   date: string;
-};
+}
 
 // 댓글 관련 페이지
-export default function Comment({ route, navigation }: any) {
+export default function Comment({ route, navigation }) {
   // commment id, comment, username, Bottom창, 로그인여부, 빈칸여부, 수정여부, ListComment에 따른 설정값 설정 -> useState
   const [BottomVisible, setBottomVisible] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);
   const [ismodify, setIsModify] = useState(false);
-  const [commentid, setCommentid] = useState<number>(0);
-  const [comment, setComment] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
-  const [ListComment, setListComment] = useState<Commenttype[]>([]);
+  const [commentid, setCommentid] = useState(0);
+  const [comment, setComment] = useState("");
+  const [username, setUsername] = useState("");
+  const [ListComment, setListComment] = useState<CommentType[]>([]);
   const isFocused = useIsFocused(); // navigation으로 화면 이동시 새로고침하기 위해
   const userContext = useContext(UserContext); // 전역변수 사용하기 위한 변수
-  const itemUser = route.params.writer;
-  const itemContext = route.params.itemContent;
-  const itemDate = route.params.itemDate;
-  const itemProfilePic = route.params.itemProfilePic;
+
+  const { writer, itemContent, itemDate, itemProfilePic, postid } = route.params;
 
   // 댓글 작성 하는 함수
-  const PostComment = async () => {
-    if (!userContext.userlogin) {
+  const PostComment = () => {
+    if (!userContext?.userLogin) {
       setLoginModal(true);
     } else if (!comment) {
       setBlankModal(true);
     } else {
-      axios_post(`post/${route.params.postid}/comment`, {
+      axios_post(`post/${postid}/comment`, {
         content: comment,
       })
-        .then(async (response) => {
+        .then(() => {
           setComment("");
           getListComment();
           Toast.show({
@@ -68,8 +65,8 @@ export default function Comment({ route, navigation }: any) {
   };
 
   //댓글 목록 가져오기
-  const getListComment = async () => {
-    axios_get(`post/${route.params.postid}/comment`)
+  const getListComment = () => {
+    axios_get(`post/${postid}/comment`)
       .then((response) => {
         console.log(response.data);
         setListComment(response.data);
@@ -81,8 +78,8 @@ export default function Comment({ route, navigation }: any) {
   };
 
   //댓글 삭제 하는 함수
-  const deleteComment = async (key: number) => {
-    axios_delete(`post/${route.params.postid}/comment/${key}`)
+  const deleteComment = (key: number) => {
+    axios_delete(`post/${postid}/comment/${key}`)
       .then((response) => {
         console.log(response.data);
         getListComment();
@@ -103,8 +100,8 @@ export default function Comment({ route, navigation }: any) {
   };
 
   // 특정 댓글 정보 가져오는 함수
-  const getComment = async (key: number) => {
-    axios_get(`post/${route.params.postid}/comment/${key}`)
+  const getComment = (key: number) => {
+    axios_get(`post/${postid}/comment/${key}`)
       .then((response) => {
         console.log(response.data);
         setComment(response.data.content);
@@ -117,13 +114,13 @@ export default function Comment({ route, navigation }: any) {
   };
 
   // 특정 댓글 수정하는 함수
-  const modifyComment = async (key: number) => {
-    if (!userContext.userlogin) {
+  const modifyComment = (key: number) => {
+    if (!userContext?.userlogin) {
       setLoginModal(true);
     } else if (!comment) {
       setBlankModal(true);
     } else {
-      axios_put(`post/${route.params.postid}/comment/${key}`, {
+      axios_put(`post/${postid}/comment/${key}`, {
         content: comment,
       })
         .then((response) => {
@@ -153,7 +150,7 @@ export default function Comment({ route, navigation }: any) {
   }, [isFocused]);
 
   // 게시글들의 댓글을 렌더링해주는 함수
-  const renderItem = ({ item }: { item: Commenttype }) => {
+  const renderItem = ({ item }: { item: CommentType }) => {
     // 날짜 형식을 YYYY/MM/DD 형태로 변환해줌
     const date = moment(item.date).format("YYYY/MM/DD HH:mm");
     return (
@@ -214,7 +211,7 @@ export default function Comment({ route, navigation }: any) {
               size={32}
               rounded
               source={{ uri: itemProfilePic }}
-              title={itemUser.slice(-2)}
+              title={writer.slice(-2)}
               containerStyle={{
                 backgroundColor: "#63646d",
                 marginRight: 10,
@@ -224,19 +221,19 @@ export default function Comment({ route, navigation }: any) {
             <Avatar
               size={32}
               rounded
-              title={itemUser.slice(-2)}
+              title={writer.slice(-2)}
               containerStyle={{
                 backgroundColor: "#3d4db7",
                 marginRight: 10,
               }}
             />
           )}
-          <Text style={styles.parentUser}>{itemUser}</Text>
+          <Text style={styles.parentUser}>{writer}</Text>
         </View>
         <Text style={styles.parentDate}>{itemDate}</Text>
         <Card.Divider />
 
-        <Text style={styles.parentContext}>{itemContext}</Text>
+        <Text style={styles.parentContext}>{itemContent}</Text>
       </View>
 
       <Input
@@ -256,7 +253,6 @@ export default function Comment({ route, navigation }: any) {
             수정하기
           </PrimaryButton>
           <PrimaryButton
-            style={{ backgroundColor: "#a7a7a7" }}
             onPress={() => {
               setIsModify(false);
               setComment("");
@@ -273,14 +269,14 @@ export default function Comment({ route, navigation }: any) {
         style={styles.scroll}
         data={ListComment}
         renderItem={renderItem}
-        keyExtractor={(item: Commenttype, index: number) => index.toString()}
+        keyExtractor={(item: CommentType, index: number) => index.toString()}
       />
       {BottomVisible ? (
         <BottomWindow
           BottomVisible={BottomVisible}
           setBottomVisible={setBottomVisible}
-          modifyfunc={() => {
-            userContext.username !== username
+          modifyFunc={() => {
+            userContext?.username !== username
               ? Toast.show({
                   type: "error",
                   text1: "신조어 요청 수정 실패 😥",
@@ -289,7 +285,7 @@ export default function Comment({ route, navigation }: any) {
               : getComment(commentid);
             setBottomVisible(false);
           }}
-          deletefunc={() => {
+          deleteFunc={() => {
             deleteComment(commentid);
             setBottomVisible(false);
           }}
@@ -356,7 +352,6 @@ const styles = StyleSheet.create({
   content: {
     marginVertical: 3,
   },
-
   parentUser: {
     fontSize: 18,
     fontFamily: "notosanskr-bold",
