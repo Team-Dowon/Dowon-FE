@@ -10,6 +10,10 @@ import BottomWindow from "../component/BottomWindow";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
 import moment from "moment";
+import { RootStackParamList } from "../App";
+import { StackScreenProps } from "@react-navigation/stack";
+
+export type CommentProps = StackScreenProps<RootStackParamList, "Comment">;
 
 // type를 통해 댓글 형태 정의
 interface CommentType {
@@ -21,7 +25,7 @@ interface CommentType {
 }
 
 // 댓글 관련 페이지
-export default function Comment({ route, navigation }) {
+export default function Comment({ route, navigation }: CommentProps) {
   // commment id, comment, username, Bottom창, 로그인여부, 빈칸여부, 수정여부, ListComment에 따른 설정값 설정 -> useState
   const [BottomVisible, setBottomVisible] = useState(false);
   const [loginModal, setLoginModal] = useState(false);

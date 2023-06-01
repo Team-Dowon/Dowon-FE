@@ -7,8 +7,12 @@ import { Switch, Dialog } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import SecondButton from "../component/SecondButton";
 import Spinner from "react-native-loading-spinner-overlay";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../App";
 
-export default function Main({ navigation }) {
+export type MainProps = StackScreenProps<RootStackParamList, "UnlikeChange">;
+
+export default function Main({ navigation }: MainProps) {
   // sentence, result, 로그인중 여부, 변경 여부, 확인 여부에 따른 설정값 설정 -> useState
   const [sentence, setSentence] = useState("");
   const [result, setResult] = useState("");

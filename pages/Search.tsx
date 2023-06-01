@@ -3,6 +3,10 @@ import { StyleSheet, TextInput, SafeAreaView, FlatList } from "react-native";
 import { ListItem } from "@rneui/themed";
 import PrimaryButton from "../component/PrimaryButton";
 import { axios_post } from "../api/api";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../navigation/StackDictionary";
+
+export type SearchProps = StackScreenProps<RootStackParamList, "Search">;
 
 // type를 통해 신조어 단어 형태 정의
 interface SlangType {
@@ -14,7 +18,7 @@ interface SlangType {
 }
 
 // 초성별로 들어가지 않고도 직접적으로 사용자가 단어를 검색할 수 있는 모듈
-export default function Search({ navigation }) {
+export default function Search({ navigation }: SearchProps) {
   const [searchslang, setSearchSlang] = useState<string>("");
   const [ListSlang, setListSlang] = useState<SlangType[]>([]);
 

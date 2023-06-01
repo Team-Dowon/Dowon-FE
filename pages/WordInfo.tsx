@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
+import { StackScreenProps } from "@react-navigation/stack";
 import { axios_get } from "../api/api";
+import { RootStackParamList } from "../navigation/StackDictionary";
+
+export type WordInfoProps = StackScreenProps<RootStackParamList, "WordInfo">;
 
 // type를 통해 신조어 단어 형태 정의
 interface SlangType {
@@ -12,7 +16,7 @@ interface SlangType {
 }
 
 // 단어의 상세정보를 확인하는 모듈 -> 단어 제목, 뜻, 예시, 대체 단어 등이 있음
-export default function WordInfo({ route }) {
+export default function WordInfo({ route }: WordInfoProps) {
   const [Slang, setSlang] = useState<SlangType>({
     id: 0,
     name: "",
@@ -22,7 +26,7 @@ export default function WordInfo({ route }) {
   });
 
   // 해당 신조어 상세정보 가져오기
-  const getSlang = async () => {
+  const getSlang = () => {
     axios_get(`dictionary/${route.params.slang}`)
       .then((response) => {
         console.log(response.data);

@@ -4,9 +4,20 @@ import Search from "../pages/Search";
 import Dictionary from "../pages/Dictionary";
 import SlangList from "../pages/SlangList";
 
+export type RootStackParamList = {
+  Dictionary: undefined;
+  SlangList: {
+    alphabet: string;
+  };
+  Search: undefined;
+  WordInfo: {
+    slang: string;
+  };
+};
+
 // Stack을 쌓아가면서 페이지를 이동 시킬 수 있음
 export default function StackDictionary() {
-  const Stack = createStackNavigator();
+  const Stack = createStackNavigator<RootStackParamList>();
 
   return (
     <Stack.Navigator

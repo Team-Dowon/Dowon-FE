@@ -6,9 +6,19 @@ import { axios_post, axios_put, axios_get } from "../api/api";
 import UserContext from "../service/UserContext";
 import ModalWindow from "../component/ModalWindow";
 import Toast from "react-native-toast-message";
+import { CompositeScreenProps } from "@react-navigation/native";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { StackScreenProps } from "@react-navigation/stack";
+import { BottomTabParamList } from "../navigation/BottomTab";
+import { RootStackParamList } from "../App";
+
+export type PostProps = CompositeScreenProps<
+  BottomTabScreenProps<BottomTabParamList, "Community">,
+  StackScreenProps<RootStackParamList>
+>;
 
 // 게시글을 작성 및 수정하는 모듈
-export default function Post({ navigation, route }) {
+export default function Post({ navigation, route }: PostProps) {
   // title, content, 로그인 여부, 변경 여부에 따른 설정값 설정 -> useState
   const [loginModal, setLoginModal] = useState(false);
   const [blankModal, setBlankModal] = useState(false);

@@ -18,7 +18,7 @@ export default function WordRequest({ navigation, route }) {
 
   // 신조어 요청 함수
   const PostRequest = async () => {
-    if (!userContext?.userlogin) {
+    if (!userContext?.userLogin) {
       setLoginModal(true);
     } else if (!(title && content && name)) {
       setBlankModal(true);

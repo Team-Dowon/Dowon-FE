@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, NavigatorScreenParams } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./pages/Login";
 import Comment from "./pages/Comment";
@@ -9,7 +9,7 @@ import SignUp from "./pages/SignUp";
 import WordRequest from "./pages/WordRequest";
 import Post from "./pages/Post";
 import RequestList from "./pages/RequestList";
-import BottomTab from "./navigation/BottomTab";
+import BottomTab, { BottomTabParamList } from "./navigation/BottomTab";
 import Toast, { BaseToast } from "react-native-toast-message";
 import UserContext from "./service/UserContext";
 import UnlikeChange from "./pages//UnlikeChange";
@@ -38,13 +38,35 @@ const toastConfig = {
   ),
 };
 
+export type RootStackParamList = {
+  BottomTab: NavigatorScreenParams<BottomTabParamList>;
+  Login: undefined;
+  SignUp: undefined;
+  RequestList: undefined;
+  WordRequest: undefined;
+  Post: {
+    postid: number;
+  };
+  Comment: {
+    writer: string;
+    itemContent: string;
+    itemDate: string;
+    itemProfilePic: string;
+    postid: number;
+  };
+  UnlikeChange: {
+    originSentecne: string;
+    changeSentence: string;
+  };
+};
+
 export default function App() {
   const [fontLoad, setFontLoad] = useState(false); // 폰트 불러오기
   const [userId, setUserId] = useState(""); // 전역 아이디 변수
   const [userName, setUserName] = useState(""); // 전역 닉네임 변수
   const [userEmail, setUserEmail] = useState(""); // 전역 이메일 변수
   const [userLogin, setUserLogin] = useState(false); // 전역 로그인 여부 변수
-  const Stack = createStackNavigator();
+  const Stack = createStackNavigator<RootStackParamList>();
   // prettier-ignore
   const user = { userId, userName, userEmail, userLogin, setUserId, setUserName, setUserEmail, setUserLogin };
 

@@ -8,6 +8,10 @@ import UserContext from "../service/UserContext";
 import BottomWindow from "../component/BottomWindow";
 import Toast from "react-native-toast-message";
 import moment from "moment";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../App";
+
+export type CommunityProps = StackScreenProps<RootStackParamList>;
 
 // type를 통해 게시글 형태 정의
 type Posttype = {
@@ -20,7 +24,7 @@ type Posttype = {
 };
 
 // 커뮤니티의 게시글을 관리하는 모듈 -> Post로 넘어가서 게시글을 작성 및 수정하거나 Comment로 넘어가 댓글을 작성할 수 있음
-export default function Community({ navigation }) {
+export default function Community({ navigation }: CommunityProps) {
   // post id, username, Bottom창, ListPost에 따른 설정값 설정 -> useState
   const [BottomVisible, setBottomVisible] = useState(false);
   const [postid, setPostid] = useState<number>(0);

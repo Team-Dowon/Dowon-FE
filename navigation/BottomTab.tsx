@@ -6,10 +6,22 @@ import Profile from "../pages/Profile";
 import WordExtract from "../pages/WordExtract";
 import Main from "../pages/Main";
 import StackDictionary from "../navigation/StackDictionary";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../App";
+
+export type BottomTabParamList = {
+  Main: undefined;
+  StackDictionary: undefined;
+  Community: undefined;
+  WordExtract: undefined;
+  Profile: undefined;
+};
+
+export type BottomTabProps = StackScreenProps<RootStackParamList, "Post">;
 
 // BottomTab을 이용하여 페이지를 이동할 수 있음
-export default function BottomTab({ navigation }) {
-  const Tab = createBottomTabNavigator();
+export default function BottomTab({ navigation }: BottomTabProps) {
+  const Tab = createBottomTabNavigator<BottomTabParamList>();
 
   return (
     <Tab.Navigator

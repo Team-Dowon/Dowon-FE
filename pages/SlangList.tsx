@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, SafeAreaView, Pressable } from "react-native";
 import { axios_post } from "../api/api";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../navigation/StackDictionary";
+
+export type SlangListProps = StackScreenProps<RootStackParamList, "SlangList">;
 
 // type를 통해 신조어 단어 형태 정의
 interface SlangType {
@@ -12,7 +16,7 @@ interface SlangType {
 }
 
 // Dictionary에서 선택한 초성으로 시작하는 단어들을 가져오는 모듈
-export default function SlangList({ navigation, route }) {
+export default function SlangList({ navigation, route }: SlangListProps) {
   const [ListSlang, setListSlang] = useState<SlangType[]>([]);
   // 각 초성으로 시작하는 신조어 가져오기
   const getListSlang = () => {

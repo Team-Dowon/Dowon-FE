@@ -8,9 +8,19 @@ import LogoTitle from "../component/LogoTitle";
 import { axios_post } from "../api/api";
 import Toast from "react-native-toast-message";
 import axios from "axios";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../App";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { BottomTabParamList } from "../navigation/BottomTab";
+import { CompositeScreenProps } from "@react-navigation/native";
+
+export type LoginProps = CompositeScreenProps<
+  BottomTabScreenProps<BottomTabParamList, "Profile">,
+  StackScreenProps<RootStackParamList, "SignUp">
+>;
 
 // 사용자가 앱에 로그인 하는 모듈
-export default function Login({ navigation }) {
+export default function Login({ navigation }: LoginProps) {
   // 유저 id, password, 로그인 모달에 따른 설정값 설정 -> useState
   const [userid, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
