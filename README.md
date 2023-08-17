@@ -20,7 +20,7 @@
 
 | 커뮤니티 기능 | 
 | :-----------------------------------------------: | 
-| <img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/bfac5cd8-0cc9-4f9e-b931-43c716b014a0" width="270" height="380" />&nbsp;<img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/fbd221a3-0638-4679-9875-8a3c07e97680" width="270" height="380" />&nbsp;<img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/b81fca15-5135-420c-9227-62cc5b7f6278" width="270" height="380" /> | 
+| <img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/b81fca15-5135-420c-9227-62cc5b7f6278" width="330" height="380" />&nbsp;<img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/d3212561-2031-4767-bdc5-4f4b328c6b1f" width="330" height="380" /><br/><img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/bfac5cd8-0cc9-4f9e-b931-43c716b014a0" width="330" height="380" />&nbsp;<img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/fbd221a3-0638-4679-9875-8a3c07e97680" width="330" height="380" /> | 
 - 자체 커뮤니티를 만들어 새로 생겨나는 은어에 대한 여론 및 정보를 수집하고 공유할 수 있습니다.
 
 | 회원 관리 기능 | 
