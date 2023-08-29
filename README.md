@@ -31,8 +31,9 @@
 ## 기술 스택
 | 범위 | 스택 | 
 | :-----------------------------------------------: | ---------------------------------------------- |
-| Front End | <img src="https://cdn.simpleicons.org/typescript/#3178C6" alt="" height="70"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://github.com/Team-DumdiDumdi/Derm.D-client/assets/62326659/a7801908-311b-4745-934b-777baa73cc04" alt="react native" height="70"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://cdn.simpleicons.org/expo/#000020" alt="" height="70"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 
-| 자연어 처리 | <img src="https://user-images.githubusercontent.com/62326659/201982878-ecad8e50-3210-4b8c-a010-5fcef6cd621d.png" height="70"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://user-images.githubusercontent.com/62326659/201983024-3b69b8e2-be3e-4ebf-ba5b-a7e8e19c6e6b.png" height="70"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 
+| 언어 | <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"> | 
+| 메인 라이브러리 | <img src="https://img.shields.io/badge/react native-61DAFB?style=for-the-badge&logo=react&logoColor=white"><img src="https://img.shields.io/badge/expo-000020?style=for-the-badge&logo=expo&logoColor=white"> | 
+| 자연어 처리 라이브러리 | <img src="https://user-images.githubusercontent.com/62326659/201982878-ecad8e50-3210-4b8c-a010-5fcef6cd621d.png" height="60"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://user-images.githubusercontent.com/62326659/201983024-3b69b8e2-be3e-4ebf-ba5b-a7e8e19c6e6b.png" height="60"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 
 
 <br/>
 
