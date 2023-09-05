@@ -21,7 +21,7 @@
 ### 은어 사전 기능
 | 예시 사진 | 
 | :-----------------------------------------------: | 
-| <img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/cc08cb39-e950-47a2-9ff0-002ec6ad233c" width="330" height="400" />&nbsp;<img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/29360aa2-6665-44a1-9995-60d241893cab" width="330" height="400" />&nbsp;<img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/f1ae8e34-9a8d-4a37-9170-547171c290bf" width="330" height="400" /><br/><img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/f4f77051-db86-41a1-ae1f-a4a36881d7a6" width="330" height="400" /> | 
+| <img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/cc08cb39-e950-47a2-9ff0-002ec6ad233c" width="330" height="400" />&nbsp;<img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/29360aa2-6665-44a1-9995-60d241893cab" width="330" height="400" /><br/><img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/f1ae8e34-9a8d-4a37-9170-547171c290bf" width="330" height="400" />&nbsp;<img src="https://github.com/Team-Dowon/Dowon-FE/assets/62326659/f4f77051-db86-41a1-ae1f-a4a36881d7a6" width="330" height="400" /> | 
 - 커뮤니티 웹사이트에서 데이터를 수집하기 위해 **크롤링 기술**을 활용하고, 이를 수집한 데이터를 가공하여 **고유한 은어 사전**을 자체적으로 구축하였습니다.
 - 사용자는 은어 목록을 **초성별로 살펴보거나 원하는 은어를 검색함**으로써 특정 은어를 조회할 수 있습니다.
 - 사용자는 은어의 **상세 정보 페이지에서 해당 은어의 명칭, 정의, 예시 문장, 대체어**를 확인할 수 있습니다.
