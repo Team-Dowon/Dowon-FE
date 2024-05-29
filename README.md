@@ -3,7 +3,6 @@
   <br />
   <h2>은어에 대한 정보와 대체단어를 이용한 문장변환 앱 서비스</h2>
   <p> 자체 은어 사전을 개발하여 은어 변환 및 추출 기능을 통해 <br/> 은어에 대한 정보를 공유하면서 은어로 인한 세대 차이를 해결하고자 합니다.<p/>
-  <h3><a href="https://play.google.com/store/apps/details?id=com.slang_encyclopedia&hl=ko-KR" target="_blank">플레이스토어 배포링크</a></p>
 </div>
 
 <br/>
